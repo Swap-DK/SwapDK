@@ -1,0 +1,79 @@
+docs:
+- changed-files:
+    any-glob-to-any-file:
+      - 'internal/playground/**/*'
+      - 'docs/**/*'
+core:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/core/src/**/*'
+      - 'packages/helpers/src/**/*'
+plugin:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/plugins/src/**/*'
+toolbox:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/toolboxes/src/**/*'
+
+hardware-wallet:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/wallets-hardware/src/**/*'
+
+mobile-wallet:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/wallets/src/coinbase/**/*'
+      - 'packages/wallets/src/passkeys/**/*'
+      - 'packages/wallets/src/walletconnect/**/*'
+
+browser-extensions:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/wallet-extensions/src'
+
+evm:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/toolboxes/src/evm/**/*'
+      - 'packages/plugins/src/evm/**/*'
+
+thorchain:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/plugins/src/thorchain/**/*'
+      - 'packages/toolboxes/src/cosmos/thorchainUtils/**/*'
+      - 'packages/toolboxes/src/cosmos/toolbox/thorchain.*'
+
+chainflip:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/plugins/src/chainflip/**/*'
+
+cosmos:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/toolboxes/src/cosmos/**/*'
+
+solana:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/plugins/src/solana/**/*'
+      - 'packages/toolboxes/src/solana/**/*'
+
+substrate:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/toolboxes/src/substrate/**/*'
+
+utxo:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/toolboxes/src/utxo/**/*'
+
+keystore:
+- changed-files:
+    any-glob-to-any-file:
+      - 'packages/wallet-keystore/src/**/*'
