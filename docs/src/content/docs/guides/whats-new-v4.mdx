@@ -19,7 +19,7 @@ SwapDK v4 brings significant improvements to developer experience, runtime flexi
     import { SKConfig } from '@swapdk/sdk';
 
 
-    SKConfig.setRpcUrl(Chain.Ethereum, "https:
+    SKConfig.setRpcUrl(Chain.Ethereum, "https://rpc.example.com");
     SKConfig.setApiKey("swapKit", "new-api-key");
     ```
 
@@ -117,7 +117,7 @@ SwapDK v4 brings significant improvements to developer experience, runtime flexi
 
 const client = SwapKit({
   apis: { [Chain.Ethereum]: customApi },
-  rpcUrls: { [Chain.Ethereum]: "https:
+  rpcUrls: { [Chain.Ethereum]: "https://rpc.example.com" },
   config: { stagenet: false },
   plugins: { ...ThorchainPlugin },
   wallets: { ...keystoreWallet }
@@ -126,7 +126,7 @@ const client = SwapKit({
 
 const client = createSwapKit({
   config: {
-    rpcUrls: { [Chain.Ethereum]: "https:
+    rpcUrls: { [Chain.Ethereum]: "https://rpc.example.com" },
     apiKeys: { blockchair: "your-key" }
   },
   plugins: { ...ThorchainPlugin },
@@ -140,7 +140,7 @@ const client = createSwapKit({
 // @noErrorValidation
 
 SKConfig.setEnv("isStagenet", true);
-SKConfig.setRpcUrl(Chain.THORChain, "https:
+SKConfig.setRpcUrl(Chain.THORChain, "https://rpc.example.com");
 
 
 const balance = await swapKit.getBalance(Chain.THORChain);
@@ -187,8 +187,8 @@ SKConfig.setApiKey("swapKit", "premium-key");
 SKConfig.setApiKey("blockchair", "enterprise-key");
 
 
-SKConfig.setRpcUrl(Chain.Ethereum, "https:
-SKConfig.setRpcUrl(Chain.Arbitrum, "https:
+SKConfig.setRpcUrl(Chain.Ethereum, "https://rpc.example.com");
+SKConfig.setRpcUrl(Chain.Arbitrum, "https://rpc.example.com");
 ```
 
 ### Bulk Configuration
@@ -198,8 +198,8 @@ SKConfig.setRpcUrl(Chain.Arbitrum, "https:
 
 SKConfig.set({
   rpcUrls: {
-    [Chain.Ethereum]: "https:
-    [Chain.Arbitrum]: "https:
+    [Chain.Ethereum]: "https://rpc.example.com",
+    [Chain.Arbitrum]: "https://rpc.example.com"
   },
   apiKeys: {
     blockchair: "enterprise-key",
@@ -220,7 +220,7 @@ SKConfig.set({
 SKConfig.set({
   envs: { isDev: false, isStagenet: false },
   apiKeys: {
-    swapKit: process.env.SWAPKIT_PROD_KEY,
+    swapKit: process.env.SWAPDK_PROD_KEY,
     blockchair: process.env.BLOCKCHAIR_PROD_KEY,
   },
 });
@@ -228,7 +228,7 @@ SKConfig.set({
 SKConfig.set({
   envs: { isDev: true, isStagenet: true },
   apiKeys: {
-    swapKit: process.env.SWAPKIT_DEV_KEY,
+    swapKit: process.env.SWAPDK_DEV_KEY,
     blockchair: process.env.BLOCKCHAIR_DEV_KEY,
   },
 });
@@ -249,17 +249,17 @@ Ready to upgrade? Follow our comprehensive migration guide:
 <CardGrid>
   <Card title="Migration Help" icon="github">
     Need help migrating? Our community is here to help with specific migration
-    challenges. [Get Migration Support →](https:
+    challenges. [Get Migration Support →](https://discord.gg/swapdk)
   </Card>
 
   <Card title="Bug Reports" icon="warning">
     Found an issue in v4? Report it on GitHub with detailed reproduction steps.
-    [Report Issues →](https:
+    [Report Issues →](https://github.com/Swap-DK/SwapDK/issues)
   </Card>
 
   <Card title="Feature Requests" icon="star">
     Have ideas for v4 improvements? We'd love to hear your feedback and
-    suggestions. [Share Ideas →](https:
+    suggestions. [Share Ideas →](https://github.com/Swap-DK/SwapDK/issues/new/choose)
   </Card>
 </CardGrid>
 

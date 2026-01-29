@@ -37,9 +37,9 @@ bun add @swapdk/toolboxes @swapdk/plugins
 // @noErrorValidation
 import { createSwapKit, Chain } from '@swapdk/sdk';
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-const xrpWallet = await swapKit.getWallet(Chain.Ripple);
+const xrpWallet = await swapDK.getWallet(Chain.Ripple);
 
 ````
 </TabItem>
@@ -75,11 +75,11 @@ Connect to XRP Ledger using various wallet types:
 // @noErrorValidation
 import { Chain, FeeOption } from "@swapdk/sdk";
 
-await swapKit.connectKeystore([Chain.Ripple], "your mnemonic phrase");
+await swapDK.connectKeystore([Chain.Ripple], "your mnemonic phrase");
 
-await swapKit.connectXumm([Chain.Ripple]);
+await swapDK.connectXumm([Chain.Ripple]);
 
-await swapKit.connectLedger([Chain.Ripple]);
+await swapDK.connectLedger([Chain.Ripple]);
 ```
 
 ### Address Generation and Validation
@@ -89,7 +89,7 @@ XRP addresses are base58-encoded and start with 'r':
 ```typescript
 // @noErrorValidation
 
-const xrpAddress = swapKit.getAddress(Chain.Ripple);
+const xrpAddress = swapDK.getAddress(Chain.Ripple);
 
 console.log("XRP address:", xrpAddress);
 
@@ -113,7 +113,7 @@ console.log("Account info:", {
 // @noErrorValidation
 import { AssetValue } from "@swapdk/sdk";
 
-const txHash = await swapKit.transfer({
+const txHash = await swapDK.transfer({
   recipient: "rN7n7otQDd6FczFgLdSqtcsAUxDkw6fzRH",
   assetValue: AssetValue.from({
     chain: Chain.Ripple,
@@ -200,7 +200,7 @@ const transferIssuedCurrency = async () => {
 
 const getTrustlines = async () => {
   const trustlines = await xrpToolbox.getTrustlines(
-    swapKit.getAddress(Chain.Ripple)
+    swapDK.getAddress(Chain.Ripple)
   );
 
   console.log("Account trustlines:");
@@ -356,7 +356,7 @@ const createEscrow = async () => {
 
 const finishEscrow = async (offerSequence: number) => {
   const finishTx = await xrpToolbox.finishEscrow({
-    owner: swapKit.getAddress(Chain.Ripple),
+    owner: swapDK.getAddress(Chain.Ripple),
     offerSequence,
   });
 
@@ -365,7 +365,7 @@ const finishEscrow = async (offerSequence: number) => {
 
 const cancelEscrow = async (offerSequence: number) => {
   const cancelTx = await xrpToolbox.cancelEscrow({
-    owner: swapKit.getAddress(Chain.Ripple),
+    owner: swapDK.getAddress(Chain.Ripple),
     offerSequence,
   });
 
@@ -387,7 +387,7 @@ const createCryptoConditionEscrow = async () => {
   console.log("Crypto-condition escrow created:", escrowTx);
 
   const finishTx = await xrpToolbox.finishEscrow({
-    owner: swapKit.getAddress(Chain.Ripple),
+    owner: swapDK.getAddress(Chain.Ripple),
     offerSequence: escrowTx.Sequence,
     fulfillment,
   });
@@ -403,12 +403,12 @@ XRP is supported in various cross-chain protocols:
 ```typescript
 // @noErrorValidation
 
-const xrpToBtcQuote = await swapKit.getQuote({
+const xrpToBtcQuote = await swapDK.getQuote({
   sellAsset: "XRP.XRP",
   sellAmount: "1000",
   buyAsset: "BTC.BTC",
-  senderAddress: swapKit.getAddress(Chain.Ripple),
-  recipientAddress: swapKit.getAddress(Chain.Bitcoin),
+  senderAddress: swapDK.getAddress(Chain.Ripple),
+  recipientAddress: swapDK.getAddress(Chain.Bitcoin),
 });
 
 console.log("XRP -> BTC quote:", {
@@ -417,17 +417,17 @@ console.log("XRP -> BTC quote:", {
   timeEstimate: xrpToBtcQuote.timeEstimate,
 });
 
-const swapTx = await swapKit.swap({
+const swapTx = await swapDK.swap({
   route: xrpToBtcQuote.routes[0],
   feeOptionKey: FeeOption.Fast,
 });
 
-const xrpToUsdcQuote = await swapKit.getQuote({
+const xrpToUsdcQuote = await swapDK.getQuote({
   sellAsset: "XRP.XRP",
   sellAmount: "500",
   buyAsset: "ETH.USDC-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-  senderAddress: swapKit.getAddress(Chain.Ripple),
-  recipientAddress: swapKit.getAddress(Chain.Ethereum),
+  senderAddress: swapDK.getAddress(Chain.Ripple),
+  recipientAddress: swapDK.getAddress(Chain.Ethereum),
 });
 
 const arbitrageOpportunity = async () => {
@@ -492,7 +492,7 @@ const multiSignTransaction = async (txBlob: string) => {
   return {
     txBlob,
     signature,
-    account: swapKit.getAddress(Chain.Ripple),
+    account: swapDK.getAddress(Chain.Ripple),
   };
 };
 
@@ -572,7 +572,7 @@ const testnetToolbox = await getXRPToolbox({
 
 
 const faucetResponse = await testnetToolbox.requestFaucetFunds(
-  swapKit.getAddress(Chain.Ripple)
+  swapDK.getAddress(Chain.Ripple)
 );
 
 console.log("Faucet funding:", faucetResponse);
@@ -587,7 +587,7 @@ console.log("Faucet funding:", faucetResponse);
 
 const optimizeSequencing = async () => {
   const accountInfo = await xrpToolbox.getAccountInfo(
-    swapKit.getAddress(Chain.Ripple)
+    swapDK.getAddress(Chain.Ripple)
   );
 
   let sequence = accountInfo.Sequence;
@@ -666,7 +666,7 @@ const optimizeFees = {
    const checkReserve = async () => {
      const fees = await optimizeFees.getCurrentFees();
      const accountInfo = await xrpToolbox.getAccountInfo(
-       swapKit.getAddress(Chain.Ripple)
+       swapDK.getAddress(Chain.Ripple)
      );
 
      const reserveRequired =

@@ -37,9 +37,9 @@ bun add @swapdk/toolboxes @swapdk/plugins
 // @noErrorValidation
 import { createSwapKit, Chain } from '@swapdk/sdk';
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-const arbWallet = await swapKit.getWallet(Chain.Arbitrum);
+const arbWallet = await swapDK.getWallet(Chain.Arbitrum);
 
 ````
 </TabItem>
@@ -75,13 +75,13 @@ Connect to Arbitrum using Ethereum-compatible wallets:
 // @noErrorValidation
 import { Chain, FeeOption } from "@swapdk/sdk";
 
-await swapKit.connectKeystore([Chain.Arbitrum], "your mnemonic phrase");
+await swapDK.connectKeystore([Chain.Arbitrum], "your mnemonic phrase");
 
-await swapKit.connectBrowserWallet(Chain.Arbitrum);
+await swapDK.connectBrowserWallet(Chain.Arbitrum);
 
-await swapKit.connectWalletConnect([Chain.Arbitrum]);
+await swapDK.connectWalletConnect([Chain.Arbitrum]);
 
-await swapKit.connectLedger([Chain.Arbitrum]);
+await swapDK.connectLedger([Chain.Arbitrum]);
 ```
 
 ### Native ETH Transfers
@@ -92,7 +92,7 @@ ETH on Arbitrum is the same as Ethereum ETH, just on Layer 2:
 // @noErrorValidation
 import { AssetValue } from "@swapdk/sdk";
 
-const txHash = await swapKit.transfer({
+const txHash = await swapDK.transfer({
   recipient: "0x742c4B4F3e0b5b069F5DCF8A65Eaf8d3E888a3E7",
   assetValue: AssetValue.from({
     chain: Chain.Arbitrum,
@@ -111,7 +111,7 @@ Arbitrum supports the same ERC-20 standard with much lower gas costs:
 ```typescript
 // @noErrorValidation
 
-const usdcTransfer = await swapKit.transfer({
+const usdcTransfer = await swapDK.transfer({
   recipient: "0x742c4B4F3e0b5b069F5DCF8A65Eaf8d3E888a3E7",
   assetValue: AssetValue.from({
     chain: Chain.Arbitrum,
@@ -227,25 +227,25 @@ const eip1559Tx = await toolbox.buildTransaction({
 ```typescript
 // @noErrorValidation
 
-const bridgeQuote = await swapKit.getQuote({
+const bridgeQuote = await swapDK.getQuote({
   sellAsset: "ETH.ETH",
   sellAmount: "0.1",
   buyAsset: "ARB.ETH",
-  senderAddress: swapKit.getAddress(Chain.Ethereum),
-  recipientAddress: swapKit.getAddress(Chain.Arbitrum),
+  senderAddress: swapDK.getAddress(Chain.Ethereum),
+  recipientAddress: swapDK.getAddress(Chain.Arbitrum),
 });
 
-const bridgeTx = await swapKit.swap({
+const bridgeTx = await swapDK.swap({
   route: bridgeQuote.routes[0],
   feeOptionKey: FeeOption.Fast,
 });
 
-const usdcBridge = await swapKit.getQuote({
+const usdcBridge = await swapDK.getQuote({
   sellAsset: "ETH.USDC-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
   sellAmount: "1000",
   buyAsset: "ARB.USDC-0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-  senderAddress: swapKit.getAddress(Chain.Ethereum),
-  recipientAddress: swapKit.getAddress(Chain.Arbitrum),
+  senderAddress: swapDK.getAddress(Chain.Ethereum),
+  recipientAddress: swapDK.getAddress(Chain.Arbitrum),
 });
 ```
 
@@ -254,25 +254,25 @@ const usdcBridge = await swapKit.getQuote({
 ```typescript
 // @noErrorValidation
 
-const arbToBtcQuote = await swapKit.getQuote({
+const arbToBtcQuote = await swapDK.getQuote({
   sellAsset: "ARB.ARB-0x912CE59144191C1204E64559FE8253a0e49E6548",
   sellAmount: "100",
   buyAsset: "BTC.BTC",
-  senderAddress: swapKit.getAddress(Chain.Arbitrum),
-  recipientAddress: swapKit.getAddress(Chain.Bitcoin),
+  senderAddress: swapDK.getAddress(Chain.Arbitrum),
+  recipientAddress: swapDK.getAddress(Chain.Bitcoin),
 });
 
-const crossChainSwap = await swapKit.swap({
+const crossChainSwap = await swapDK.swap({
   route: arbToBtcQuote.routes[0],
   feeOptionKey: FeeOption.Fast,
 });
 
-const multiHopQuote = await swapKit.getQuote({
+const multiHopQuote = await swapDK.getQuote({
   sellAsset: "ARB.USDC-0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
   sellAmount: "500",
   buyAsset: "THOR.RUNE",
-  senderAddress: swapKit.getAddress(Chain.Arbitrum),
-  recipientAddress: swapKit.getAddress(Chain.THORChain),
+  senderAddress: swapDK.getAddress(Chain.Arbitrum),
+  recipientAddress: swapDK.getAddress(Chain.THORChain),
 });
 ```
 
@@ -283,30 +283,30 @@ Access native Arbitrum DEXs for optimal pricing:
 ```typescript
 // @noErrorValidation
 
-const camelotQuote = await swapKit.getQuote({
+const camelotQuote = await swapDK.getQuote({
   sellAsset: "ARB.ETH",
   sellAmount: "0.1",
   buyAsset: "ARB.USDC-0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-  senderAddress: swapKit.getAddress(Chain.Arbitrum),
-  recipientAddress: swapKit.getAddress(Chain.Arbitrum),
+  senderAddress: swapDK.getAddress(Chain.Arbitrum),
+  recipientAddress: swapDK.getAddress(Chain.Arbitrum),
   providers: ["CAMELOT"],
 });
 
-const traderjoeQuote = await swapKit.getQuote({
+const traderjoeQuote = await swapDK.getQuote({
   sellAsset: "ARB.USDC-0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
   sellAmount: "100",
   buyAsset: "ARB.ARB-0x912CE59144191C1204E64559FE8253a0e49E6548",
-  senderAddress: swapKit.getAddress(Chain.Arbitrum),
-  recipientAddress: swapKit.getAddress(Chain.Arbitrum),
+  senderAddress: swapDK.getAddress(Chain.Arbitrum),
+  recipientAddress: swapDK.getAddress(Chain.Arbitrum),
   providers: ["TRADERJOE_V2"],
 });
 
-const bestRateQuote = await swapKit.getQuote({
+const bestRateQuote = await swapDK.getQuote({
   sellAsset: "ARB.WETH-0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
   sellAmount: "1",
   buyAsset: "ARB.GMX-0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
-  senderAddress: swapKit.getAddress(Chain.Arbitrum),
-  recipientAddress: swapKit.getAddress(Chain.Arbitrum),
+  senderAddress: swapDK.getAddress(Chain.Arbitrum),
+  recipientAddress: swapDK.getAddress(Chain.Arbitrum),
   providers: ["CAMELOT", "TRADERJOE_V2", "SUSHISWAP"],
 });
 ```
@@ -319,7 +319,7 @@ const bestRateQuote = await swapKit.getQuote({
 // @noErrorValidation
 
 const arbBalance = await toolbox.getBalance(
-  swapKit.getAddress(Chain.Arbitrum),
+  swapDK.getAddress(Chain.Arbitrum),
   "0x912CE59144191C1204E64559FE8253a0e49E6548"
 );
 
@@ -345,7 +345,7 @@ const governanceVote = await toolbox.call({
 
 const batchOperations = async () => {
   const nonce = await toolbox.getTransactionCount(
-    swapKit.getAddress(Chain.Arbitrum)
+    swapDK.getAddress(Chain.Arbitrum)
   );
 
   const tx1 = await toolbox.buildTransaction({
@@ -379,15 +379,15 @@ import { SKConfig } from '@swapdk/sdk';
 
 
 SKConfig.setRpcUrl(Chain.Arbitrum, [
-  "https:
-  "https:
-  "https:
+  "https://example.com"
+  "https://example.com"
+  "https://example.com"
 ]);
 
 
 import { JsonRpcProvider } from 'ethers';
 
-const arbitrumProvider = new JsonRpcProvider("https:
+const arbitrumProvider = new JsonRpcProvider("https://example.com"
 const toolbox = await getArbitrumToolbox({
   phrase: "your mnemonic",
   provider: arbitrumProvider
@@ -399,7 +399,7 @@ const toolbox = await getArbitrumToolbox({
 ```typescript
 // @noErrorValidation
 
-SKConfig.setRpcUrl(Chain.Arbitrum, "https:
+SKConfig.setRpcUrl(Chain.Arbitrum, "https://example.com"
 SKConfig.setEnv('isMainnet', false);
 
 
@@ -418,7 +418,7 @@ Handle Arbitrum-specific errors:
 import { SwapKitError } from "@swapdk/sdk";
 
 try {
-  await swapKit.transfer({
+  await swapDK.transfer({
     /* ... */
   });
 } catch (error) {
@@ -530,7 +530,7 @@ const bundledOperations = async () => {
 4. **Optimize for Fast Settlement**:
 
    ```typescript
-   const fastTx = await swapKit.transfer({
+   const fastTx = await swapDK.transfer({
      recipient: "0x...",
      assetValue: AssetValue.from({ chain: Chain.Arbitrum, value: "0.1" }),
      feeOptionKey: FeeOption.Fastest,
@@ -574,7 +574,7 @@ const radiantSupply = await toolbox.call({
   funcParams: [
     "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
     "1000000000",
-    swapKit.getAddress(Chain.Arbitrum),
+    swapDK.getAddress(Chain.Arbitrum),
     0,
   ],
 });
@@ -609,9 +609,9 @@ const radiantSupply = await toolbox.call({
    ```typescript
 
    const providers = [
-     "https:
-     "https:
-     "https:
+     "https://example.com"
+     "https://example.com"
+     "https://example.com"
    ];
 
    SKConfig.setRpcUrl(Chain.Arbitrum, providers);

@@ -126,19 +126,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const chainImports = selectedChains.map(chain => `Chain.${chain}`).join(', ');
     
     let code = `import { createSwapKit, Chain, WalletOption } from '@swapdk/sdk';\n\n`;
-    code += `const swapKit = createSwapKit();\n\n`;
+    code += `const swapDK = createSwapKit();\n\n`;
     
     if (selectedWallet === 'metamask') {
-      code += `await swapKit.connectEVMWallet([${chainImports}], WalletOption.METAMASK);\n`;
+      code += `await swapDK.connectEVMWallet([${chainImports}], WalletOption.METAMASK);\n`;
     } else if (selectedWallet === 'keystore') {
-      code += `await swapKit.connectKeystore(\n  [${chainImports}],\n  'your twelve word mnemonic phrase here'\n);\n`;
+      code += `await swapDK.connectKeystore(\n  [${chainImports}],\n  'your twelve word mnemonic phrase here'\n);\n`;
     } else if (selectedWallet === 'walletconnect') {
-      code += `await swapKit.connectWalletConnect([${chainImports}]);\n`;
+      code += `await swapDK.connectWalletConnect([${chainImports}]);\n`;
     }
     
     code += `\n`;
     selectedChains.forEach(chain => {
-      code += `const ${chain.toLowerCase()}Address = swapKit.getAddress(Chain.${chain});\n`;
+      code += `const ${chain.toLowerCase()}Address = swapDK.getAddress(Chain.${chain});\n`;
     });
     
     return code;

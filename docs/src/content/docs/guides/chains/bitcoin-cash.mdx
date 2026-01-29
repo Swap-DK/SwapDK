@@ -37,9 +37,9 @@ bun add @swapdk/toolboxes @swapdk/plugins
 // @noErrorValidation
 import { createSwapKit, Chain } from '@swapdk/sdk';
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-const bchWallet = await swapKit.getWallet(Chain.BitcoinCash);
+const bchWallet = await swapDK.getWallet(Chain.BitcoinCash);
 
 ````
 </TabItem>
@@ -75,11 +75,11 @@ Connect to Bitcoin Cash using various wallet types:
 // @noErrorValidation
 import { Chain, FeeOption } from "@swapdk/sdk";
 
-await swapKit.connectKeystore([Chain.BitcoinCash], "your mnemonic phrase");
+await swapDK.connectKeystore([Chain.BitcoinCash], "your mnemonic phrase");
 
-await swapKit.connectLedger([Chain.BitcoinCash]);
+await swapDK.connectLedger([Chain.BitcoinCash]);
 
-await swapKit.connectTrezor([Chain.BitcoinCash]);
+await swapDK.connectTrezor([Chain.BitcoinCash]);
 ```
 
 ### Address Formats
@@ -90,7 +90,7 @@ Bitcoin Cash supports multiple address formats:
 // @noErrorValidation
 
 const addresses = {
-  cashaddr: swapKit.getAddress(Chain.BitcoinCash),
+  cashaddr: swapDK.getAddress(Chain.BitcoinCash),
 
   legacy: await bchToolbox.getAddress(0, false, "legacy"),
 
@@ -112,7 +112,7 @@ console.log("Legacy format:", legacy);
 // @noErrorValidation
 import { AssetValue } from "@swapdk/sdk";
 
-const txHash = await swapKit.transfer({
+const txHash = await swapDK.transfer({
   recipient: "bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy",
   assetValue: AssetValue.from({
     chain: Chain.BitcoinCash,
@@ -269,12 +269,12 @@ Bitcoin Cash is supported in THORChain cross-chain swaps:
 ```typescript
 // @noErrorValidation
 
-const bchToBtcQuote = await swapKit.getQuote({
+const bchToBtcQuote = await swapDK.getQuote({
   sellAsset: "BCH.BCH",
   sellAmount: "1",
   buyAsset: "BTC.BTC",
-  senderAddress: swapKit.getAddress(Chain.BitcoinCash),
-  recipientAddress: swapKit.getAddress(Chain.Bitcoin),
+  senderAddress: swapDK.getAddress(Chain.BitcoinCash),
+  recipientAddress: swapDK.getAddress(Chain.Bitcoin),
 });
 
 console.log("BCH -> BTC quote:", {
@@ -283,25 +283,25 @@ console.log("BCH -> BTC quote:", {
   priceImpact: bchToBtcQuote.priceImpact,
 });
 
-const swapTx = await swapKit.swap({
+const swapTx = await swapDK.swap({
   route: bchToBtcQuote.routes[0],
   feeOptionKey: FeeOption.Fast,
 });
 
-const bchToUsdtQuote = await swapKit.getQuote({
+const bchToUsdtQuote = await swapDK.getQuote({
   sellAsset: "BCH.BCH",
   sellAmount: "0.5",
   buyAsset: "ETH.USDT-0xdAC17F958D2ee523a2206206994597C13D831ec7",
-  senderAddress: swapKit.getAddress(Chain.BitcoinCash),
-  recipientAddress: swapKit.getAddress(Chain.Ethereum),
+  senderAddress: swapDK.getAddress(Chain.BitcoinCash),
+  recipientAddress: swapDK.getAddress(Chain.Ethereum),
 });
 
-const bchToRuneQuote = await swapKit.getQuote({
+const bchToRuneQuote = await swapDK.getQuote({
   sellAsset: "BCH.BCH",
   sellAmount: "0.1",
   buyAsset: "THOR.RUNE",
-  senderAddress: swapKit.getAddress(Chain.BitcoinCash),
-  recipientAddress: swapKit.getAddress(Chain.THORChain),
+  senderAddress: swapDK.getAddress(Chain.BitcoinCash),
+  recipientAddress: swapDK.getAddress(Chain.THORChain),
 });
 ```
 
@@ -351,7 +351,7 @@ const createPaymentRequest = async (amount: string, memo?: string) => {
     requiredFeeRate: 1,
     outputs: [
       {
-        address: swapKit.getAddress(Chain.BitcoinCash),
+        address: swapDK.getAddress(Chain.BitcoinCash),
         amount: parseFloat(amount) * 100000000,
         message: memo,
       },
@@ -398,20 +398,20 @@ import { SKConfig } from '@swapdk/sdk';
 
 
 SKConfig.setRpcUrl(Chain.BitcoinCash, [
-  "https:
-  "https:
-  "https:
+  "https://example.com"
+  "https://example.com"
+  "https://example.com"
 ]);
 
 
-const customBchRpc = "https:
+const customBchRpc = "https://example.com"
 SKConfig.setRpcUrl(Chain.BitcoinCash, customBchRpc);
 
 
 const bchToolbox = await getBitcoinCashToolbox({
   phrase: "your mnemonic",
   network: "mainnet",
-  apiUrl: "https:
+  apiUrl: "https://example.com"
 });
 ```
 
@@ -420,7 +420,7 @@ const bchToolbox = await getBitcoinCashToolbox({
 ```typescript
 // @noErrorValidation
 
-SKConfig.setRpcUrl(Chain.BitcoinCash, "https:
+SKConfig.setRpcUrl(Chain.BitcoinCash, "https://example.com"
 SKConfig.setEnv('isMainnet', false);
 
 
@@ -444,7 +444,7 @@ Handle Bitcoin Cash specific errors:
 import { SwapKitError } from "@swapdk/sdk";
 
 try {
-  await swapKit.transfer({
+  await swapDK.transfer({
     /* ... */
   });
 } catch (error) {
@@ -504,7 +504,7 @@ const optimizeForMicrotx = async (amount: string) => {
 // @noErrorValidation
 
 const manageUTXOs = async () => {
-  const address = swapKit.getAddress(Chain.BitcoinCash);
+  const address = swapDK.getAddress(Chain.BitcoinCash);
   const utxos = await bchToolbox.getUTXOs(address);
 
   const smallUTXOs = utxos.filter((utxo) => utxo.value < 10000);
@@ -646,11 +646,11 @@ testAddresses.forEach((address) => {
    const networkConfig = {
      mainnet: {
        prefix: "bitcoincash",
-       rpc: "https:
+       rpc: "https://example.com"
      },
      testnet: {
        prefix: "bchtest",
-       rpc: "https:
+       rpc: "https://example.com"
      }
    };
    ```

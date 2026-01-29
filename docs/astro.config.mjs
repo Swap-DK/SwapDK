@@ -2,15 +2,10 @@ import react from '@astrojs/react'
 import starlight from '@astrojs/starlight'
 import { rendererRich, transformerTwoslash } from '@shikijs/twoslash'
 import { defineConfig } from 'astro/config'
-import starlightOpenAPI, { openAPISidebarGroups } from 'starlight-openapi'
 import { createStarlightTypeDocPlugin } from 'starlight-typedoc'
 import { remarkRewriteLinks } from './remark-rewrite-links.mjs'
 
 const { plugins: docsPlugins, sidebarItems: docsSidebarItems } = createDocs()
-
-const openApiPlugin = starlightOpenAPI([
-  { base: 'api', schema: 'https://api.swapdk.com/docs/json' }
-])
 
 export default defineConfig({
   base: process.env.REFERENCES ? '/SwapDK' : undefined,
@@ -22,14 +17,16 @@ export default defineConfig({
         '@shikijs/twoslash/style-rich.css'
       ],
       disable404Route: true,
-      expressiveCode: false,
+      expressiveCode: {
+        copyButton: true
+      },
       lastUpdated: true,
       logo: {
         dark: './src/assets/logo-vertical-white.png',
         light: './src/assets/logo-vertical-black.png'
       },
       pagination: true,
-      plugins: [openApiPlugin, ...docsPlugins],
+      plugins: [...docsPlugins],
       sidebar: [
         {
           items: [
@@ -70,7 +67,6 @@ export default defineConfig({
           collapsed: true,
           label: 'Others'
         },
-        ...openAPISidebarGroups,
         {
           collapsed: true,
           items: process.env.REFERENCES
@@ -88,8 +84,10 @@ export default defineConfig({
     shikiConfig: {
       transformers: [
         transformerTwoslash({
-          renderer: rendererRich({ errorRendering: 'hover' }),
+          renderer: rendererRich({ errorRendering: 'none' }),
           twoslashOptions: {
+            noErrorValidation: true,
+            showEmit: false,
             filterNode: (node) => {
               if (node.type === 'hover') {
                 for (const keyword of [
@@ -104,8 +102,7 @@ export default defineConfig({
               }
 
               return true
-            },
-            handbookOptions: { noErrorValidation: true, showEmit: false }
+            }
           }
         })
       ],

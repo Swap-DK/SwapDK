@@ -29,17 +29,17 @@ Signing messages is useful for authentication, proving ownership of an address, 
 ```ts twoslash
 import { Chain, SwapKit, evmWallet } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
 async function signMessageExample() {
-  await swapKit.connectEVMWallet([Chain.Ethereum]);
+  await swapDK.connectEVMWallet([Chain.Ethereum]);
 
   const message = "I am proving ownership of this wallet address";
 
   try {
-    const signature = await swapKit.signMessage({
+    const signature = await swapDK.signMessage({
       chain: Chain.Ethereum,
       message,
     });
@@ -56,15 +56,15 @@ async function signMessageExample() {
 ```ts twoslash
 import { Chain, createSwapKit } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
 async function signMessageExample() {
-  await swapKit.connectKeystore([Chain.Ethereum], "your secret phrase here");
+  await swapDK.connectKeystore([Chain.Ethereum], "your secret phrase here");
 
   const message = "I am proving ownership of this wallet address";
 
   try {
-    const signature = await swapKit.signMessage({
+    const signature = await swapDK.signMessage({
       chain: Chain.Ethereum,
       message,
     });
@@ -83,24 +83,24 @@ Different blockchains have different message signing formats:
 ```ts twoslash
 import { Chain, SwapKit, evmWallet, keystoreWallet } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet, ...keystoreWallet },
 });
 
 async function setupWallets() {
-  await swapKit.connectKeystore(
+  await swapDK.connectKeystore(
     [Chain.Bitcoin, Chain.Cosmos, Chain.THORChain],
     "your secret phrase here"
   );
 
-  await swapKit.connectEVMWallet([Chain.Ethereum]);
+  await swapDK.connectEVMWallet([Chain.Ethereum]);
 }
 
 async function signCosmosMessage() {
   const message = "Sign this message to verify your THORChain address";
 
   try {
-    const signature = await swapKit.signMessage({
+    const signature = await swapDK.signMessage({
       chain: Chain.THORChain,
       message,
     });
@@ -119,7 +119,7 @@ After signing a message, you or others may want to verify the signature:
 ```ts twoslash
 import { Chain, SwapKit, keystoreWallet } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keystoreWallet },
 });
 
@@ -132,7 +132,7 @@ async function verifySignature() {
     "ac7bfd5b5c9f44788fb533b7f08b213a3e3856e75ecdb19c5e9138ba29c4c1681e82b7de139e0b92cd9442297ec7fdd2c14e7034a3aa417ff9756e9b591d93201";
 
   try {
-    const isValid = await swapKit.verifyMessage({
+    const isValid = await swapDK.verifyMessage({
       chain: Chain.THORChain,
       message,
       address,
@@ -161,7 +161,7 @@ import { Chain, getEvmToolbox, ethers } from "@swapdk/sdk";
 
 async function signEthereumTransaction() {
 
-  const provider = new ethers.JsonRpcProvider("https:
+  const provider = new ethers.JsonRpcProvider("https://example.com"
   const signer = new ethers.Wallet("your-eth-private-key", provider);
 
 
@@ -248,15 +248,15 @@ import {
   ledgerWallet,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...ledgerWallet },
 });
 
 async function signWithLedger() {
   try {
-    await swapKit.connectLedger([Chain.Ethereum]);
+    await swapDK.connectLedger([Chain.Ethereum]);
 
-    const ledgerWallet = swapKit.getWallet(Chain.Ethereum);
+    const ledgerWallet = swapDK.getWallet(Chain.Ethereum);
 
     const txHash = await ledgerWallet.transfer({
       assetValue: AssetValue.from({ chain: Chain.Ethereum, value: "0.01" }),

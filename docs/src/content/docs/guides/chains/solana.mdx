@@ -37,9 +37,9 @@ bun add @swapdk/toolboxes @swapdk/plugins
 // @noErrorValidation
 import { createSwapKit, Chain } from '@swapdk/sdk';
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-const solWallet = await swapKit.getWallet(Chain.Solana);
+const solWallet = await swapDK.getWallet(Chain.Solana);
 
 ````
 </TabItem>
@@ -75,13 +75,13 @@ Connect to Solana using various wallet types:
 // @noErrorValidation
 import { Chain, FeeOption } from "@swapdk/sdk";
 
-await swapKit.connectKeystore([Chain.Solana], "your mnemonic phrase");
+await swapDK.connectKeystore([Chain.Solana], "your mnemonic phrase");
 
-await swapKit.connectPhantom([Chain.Solana]);
+await swapDK.connectPhantom([Chain.Solana]);
 
-await swapKit.connectSolflare([Chain.Solana]);
+await swapDK.connectSolflare([Chain.Solana]);
 
-await swapKit.connectLedger([Chain.Solana]);
+await swapDK.connectLedger([Chain.Solana]);
 ```
 
 ### Address Generation
@@ -91,7 +91,7 @@ Solana addresses are base58-encoded public keys:
 ```typescript
 // @noErrorValidation
 
-const solanaAddress = swapKit.getAddress(Chain.Solana);
+const solanaAddress = swapDK.getAddress(Chain.Solana);
 
 console.log("Solana address:", solanaAddress);
 
@@ -110,7 +110,7 @@ console.log("Public key:", publicKey);
 // @noErrorValidation
 import { AssetValue } from "@swapdk/sdk";
 
-const txHash = await swapKit.transfer({
+const txHash = await swapDK.transfer({
   recipient: "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
   assetValue: AssetValue.from({
     chain: Chain.Solana,
@@ -155,7 +155,7 @@ Solana Program Library (SPL) tokens are equivalent to ERC-20 on Ethereum:
 ```typescript
 // @noErrorValidation
 
-const usdcTransfer = await swapKit.transfer({
+const usdcTransfer = await swapDK.transfer({
   recipient: "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
   assetValue: AssetValue.from({
     chain: Chain.Solana,
@@ -174,7 +174,7 @@ const tokenBalance = await solToolbox.getTokenBalance(
 console.log(`USDC balance: ${tokenBalance} USDC`);
 
 const tokenAccounts = await solToolbox.getTokenAccounts(
-  swapKit.getAddress(Chain.Solana)
+  swapDK.getAddress(Chain.Solana)
 );
 
 console.log("SPL token accounts:");
@@ -185,8 +185,8 @@ tokenAccounts.forEach((account) => {
 const createTokenAccount = async (mintAddress: string) => {
   const tokenAccountTx = await solToolbox.createAssociatedTokenAccount({
     mint: mintAddress,
-    owner: swapKit.getAddress(Chain.Solana),
-    payer: swapKit.getAddress(Chain.Solana),
+    owner: swapDK.getAddress(Chain.Solana),
+    payer: swapDK.getAddress(Chain.Solana),
   });
 
   console.log("Token account created:", tokenAccountTx);
@@ -208,7 +208,7 @@ const jupiterSwap = await solToolbox.executeProgram({
       { pubkey: "sourceTokenAccount", isSigner: false, isWritable: true },
       { pubkey: "destinationTokenAccount", isSigner: false, isWritable: true },
       {
-        pubkey: swapKit.getAddress(Chain.Solana),
+        pubkey: swapDK.getAddress(Chain.Solana),
         isSigner: true,
         isWritable: false,
       },
@@ -240,7 +240,7 @@ console.log("Program account data:", programAccount);
 // @noErrorValidation
 
 const transactions = await solToolbox.getTransactionHistory(
-  swapKit.getAddress(Chain.Solana),
+  swapDK.getAddress(Chain.Solana),
   20
 );
 
@@ -277,12 +277,12 @@ Solana is supported in cross-chain swaps via various protocols:
 ```typescript
 // @noErrorValidation
 
-const solToBtcQuote = await swapKit.getQuote({
+const solToBtcQuote = await swapDK.getQuote({
   sellAsset: "SOL.SOL",
   sellAmount: "10",
   buyAsset: "BTC.BTC",
-  senderAddress: swapKit.getAddress(Chain.Solana),
-  recipientAddress: swapKit.getAddress(Chain.Bitcoin),
+  senderAddress: swapDK.getAddress(Chain.Solana),
+  recipientAddress: swapDK.getAddress(Chain.Bitcoin),
 });
 
 console.log("SOL -> BTC quote:", {
@@ -291,25 +291,25 @@ console.log("SOL -> BTC quote:", {
   timeEstimate: solToBtcQuote.timeEstimate,
 });
 
-const swapTx = await swapKit.swap({
+const swapTx = await swapDK.swap({
   route: solToBtcQuote.routes[0],
   feeOptionKey: FeeOption.Fast,
 });
 
-const usdcBridge = await swapKit.getQuote({
+const usdcBridge = await swapDK.getQuote({
   sellAsset: "SOL.USDC-EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
   sellAmount: "1000",
   buyAsset: "ETH.USDC-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-  senderAddress: swapKit.getAddress(Chain.Solana),
-  recipientAddress: swapKit.getAddress(Chain.Ethereum),
+  senderAddress: swapDK.getAddress(Chain.Solana),
+  recipientAddress: swapDK.getAddress(Chain.Ethereum),
 });
 
-const solToStable = await swapKit.getQuote({
+const solToStable = await swapDK.getQuote({
   sellAsset: "SOL.SOL",
   sellAmount: "5",
   buyAsset: "SOL.USDC-EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-  senderAddress: swapKit.getAddress(Chain.Solana),
-  recipientAddress: swapKit.getAddress(Chain.Solana),
+  senderAddress: swapDK.getAddress(Chain.Solana),
+  recipientAddress: swapDK.getAddress(Chain.Solana),
   providers: ["JUPITER"],
 });
 ```
@@ -331,7 +331,7 @@ const jupiterAdvancedSwap = async () => {
 
   const swapTx = await solToolbox.executeJupiterSwap({
     quote,
-    userPublicKey: swapKit.getAddress(Chain.Solana),
+    userPublicKey: swapDK.getAddress(Chain.Solana),
     priorityFee: 10000,
   });
 
@@ -378,8 +378,8 @@ const stakeSol = async () => {
     stakeAmount: AssetValue.from({ chain: Chain.Solana, value: "10" }),
     validatorVoteAccount: goodValidator.votePubkey,
     stakePubkey: solToolbox.generateStakeAccount(),
-    authorizedStaker: swapKit.getAddress(Chain.Solana),
-    authorizedWithdrawer: swapKit.getAddress(Chain.Solana),
+    authorizedStaker: swapDK.getAddress(Chain.Solana),
+    authorizedWithdrawer: swapDK.getAddress(Chain.Solana),
   });
 
   console.log(`Staked 10 SOL with ${goodValidator.name}:`, stakeAccountTx);
@@ -389,7 +389,7 @@ const delegateStake = async (stakeAccount: string) => {
   const delegateTx = await solToolbox.delegateStake({
     stakeAccount,
     validatorVoteAccount: "ValidatorVoteAccount111111111111111111111111",
-    authorizedStaker: swapKit.getAddress(Chain.Solana),
+    authorizedStaker: swapDK.getAddress(Chain.Solana),
   });
 
   console.log("Stake delegated:", delegateTx);
@@ -398,7 +398,7 @@ const delegateStake = async (stakeAccount: string) => {
 const withdrawStake = async (stakeAccount: string) => {
   const deactivateTx = await solToolbox.deactivateStake({
     stakeAccount,
-    authorizedStaker: swapKit.getAddress(Chain.Solana),
+    authorizedStaker: swapDK.getAddress(Chain.Solana),
   });
 
   console.log("Stake deactivated:", deactivateTx);
@@ -406,7 +406,7 @@ const withdrawStake = async (stakeAccount: string) => {
   setTimeout(async () => {
     const withdrawTx = await solToolbox.withdrawStake({
       stakeAccount,
-      withdrawerPubkey: swapKit.getAddress(Chain.Solana),
+      withdrawerPubkey: swapDK.getAddress(Chain.Solana),
       amount: AssetValue.from({ chain: Chain.Solana, value: "10" }),
     });
 
@@ -421,7 +421,7 @@ const withdrawStake = async (stakeAccount: string) => {
 // @noErrorValidation
 
 const getNFTs = async () => {
-  const nfts = await solToolbox.getNFTs(swapKit.getAddress(Chain.Solana));
+  const nfts = await solToolbox.getNFTs(swapDK.getAddress(Chain.Solana));
 
   console.log("Owned NFTs:");
   nfts.forEach((nft) => {
@@ -436,9 +436,9 @@ const getNFTs = async () => {
 const transferNFT = async (nftMint: string, recipient: string) => {
   const transferTx = await solToolbox.transferNFT({
     mint: nftMint,
-    from: swapKit.getAddress(Chain.Solana),
+    from: swapDK.getAddress(Chain.Solana),
     to: recipient,
-    owner: swapKit.getAddress(Chain.Solana),
+    owner: swapDK.getAddress(Chain.Solana),
   });
 
   console.log("NFT transferred:", transferTx);
@@ -447,7 +447,7 @@ const transferNFT = async (nftMint: string, recipient: string) => {
 const listNFT = async (nftMint: string, price: number) => {
   const listingTx = await solToolbox.createMagicEdenListing({
     mint: nftMint,
-    seller: swapKit.getAddress(Chain.Solana),
+    seller: swapDK.getAddress(Chain.Solana),
     price: price * 1e9,
     expiry: Date.now() + 7 * 24 * 60 * 60 * 1000,
   });
@@ -466,17 +466,17 @@ import { SKConfig } from '@swapdk/sdk';
 
 
 SKConfig.setRpcUrl(Chain.Solana, [
-  "https:
-  "https:
-  "https:
+  "https://example.com"
+  "https://example.com"
+  "https://example.com"
 ]);
 
 
-const customSolanaRpc = "https:
+const customSolanaRpc = "https://example.com"
 SKConfig.setRpcUrl(Chain.Solana, customSolanaRpc);
 
 
-const heliusRpc = "https:
+const heliusRpc = "https://example.com"
 SKConfig.setRpcUrl(Chain.Solana, heliusRpc);
 ```
 
@@ -485,7 +485,7 @@ SKConfig.setRpcUrl(Chain.Solana, heliusRpc);
 ```typescript
 // @noErrorValidation
 
-SKConfig.setRpcUrl(Chain.Solana, "https:
+SKConfig.setRpcUrl(Chain.Solana, "https://example.com"
 SKConfig.setEnv('isMainnet', false);
 
 
@@ -496,7 +496,7 @@ const devnetToolbox = await getSolanaToolbox({
 
 
 const airdrop = await devnetToolbox.requestAirdrop(
-  swapKit.getAddress(Chain.Solana),
+  swapDK.getAddress(Chain.Solana),
   2 * 1e9
 );
 
@@ -512,7 +512,7 @@ Handle Solana-specific errors:
 import { SwapKitError } from "@swapdk/sdk";
 
 try {
-  await swapKit.transfer({
+  await swapDK.transfer({
     /* ... */
   });
 } catch (error) {
@@ -580,7 +580,7 @@ const optimizedTransfer = await solToolbox.transfer({
 const batchOptimization = async () => {
   const instructions = [
     await solToolbox.createTransferInstruction({
-      from: swapKit.getAddress(Chain.Solana),
+      from: swapDK.getAddress(Chain.Solana),
       to: "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
       amount: 0.1 * 1e9,
     }),
@@ -589,14 +589,14 @@ const batchOptimization = async () => {
       mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
       from: await solToolbox.getAssociatedTokenAddress(
         "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-        swapKit.getAddress(Chain.Solana)
+        swapDK.getAddress(Chain.Solana)
       ),
       to: await solToolbox.getAssociatedTokenAddress(
         "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
         "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM"
       ),
       amount: 100 * 1e6,
-      owner: swapKit.getAddress(Chain.Solana),
+      owner: swapDK.getAddress(Chain.Solana),
     }),
   ];
 

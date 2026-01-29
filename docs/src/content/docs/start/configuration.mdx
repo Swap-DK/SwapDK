@@ -27,13 +27,13 @@ When creating a SwapDK instance, you can provide configuration options:
 // @noErrorValidation
 import { createSwapKit } from '@swapdk/sdk';
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
 
     apiKeys: {
       walletConnectProjectId: 'your-project-id',
       blockchair: 'your-blockchair-key',
-      swapKit: 'your-swapkit-key'
+      swapKit: 'your-swapdk-key'
     },
 
     rpcUrls: {
@@ -42,8 +42,8 @@ const swapKit = createSwapKit({
     },
 
     midgardUrls: {
-      THOR: 'https:
-      MAYA: 'https:
+      THOR: 'https://example.com'
+      MAYA: 'https://example.com'
     },
 
     apiHeaders: {
@@ -71,7 +71,7 @@ Get your key at [api.swapdk.com](https://api.swapdk.com)
 ```typescript
 // @noErrorValidation
 apiKeys: {
-  swapKit: "your-swapkit-api-key";
+  swapKit: "your-swapdk-api-key";
 }
 ```
 
@@ -86,8 +86,7 @@ apiKeys: {
 }
 ```
 
-Get your project ID at [cloud.walletconnect.com](https:
-
+Get your project ID at [cloud.walletconnect.com](https://example.com)
 ### Blockchair API Key
 
 Enables full functionality for UTXO chains (Bitcoin, Litecoin, Dogecoin, etc.):
@@ -99,8 +98,7 @@ apiKeys: {
 }
 ```
 
-Without this key, UTXO chain functionality is limited. Get your key at [blockchair.com/api](https:
-
+Without this key, UTXO chain functionality is limited. Get your key at [blockchair.com/api](https://example.com)
 ## RPC URLs
 
 SwapDK provides default RPC URLs for all supported chains, but you can override them:
@@ -109,13 +107,13 @@ SwapDK provides default RPC URLs for all supported chains, but you can override 
 // @noErrorValidation
 import { createSwapKit, Chain } from '@swapdk/sdk';
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     rpcUrls: {
-      [Chain.Ethereum]: 'https:
-      [Chain.Avalanche]: 'https:
-      [Chain.BinanceSmartChain]: 'https:
-      [Chain.Polygon]: 'https:
+      [Chain.Ethereum]: 'https://example.com'
+      [Chain.Avalanche]: 'https://example.com'
+      [Chain.BinanceSmartChain]: 'https://example.com'
+      [Chain.Polygon]: 'https://example.com'
     }
   }
 });
@@ -133,11 +131,11 @@ Override the default Midgard endpoints:
 // @noErrorValidation
 import { createSwapKit, Chain } from '@swapdk/sdk';
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     midgardUrls: {
-      [Chain.THORChain]: 'https:
-      [Chain.Maya]: 'https:
+      [Chain.THORChain]: 'https://example.com'
+      [Chain.Maya]: 'https://example.com'
     }
   }
 });
@@ -160,7 +158,7 @@ SKConfig.setApiHeaders("midgard", {
   "X-Client-ID": "your-client-id",
 });
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiHeaders: {
       midgard: {
@@ -186,9 +184,7 @@ Update Midgard configuration at runtime:
 import { SKConfig, Chain } from '@swapdk/sdk';
 
 
-SKConfig.setMidgardUrl(Chain.THORChain, 'https:
-
-
+SKConfig.setMidgardUrl(Chain.THORChain, 'https://example.com');
 SKConfig.setApiHeaders('midgard', {
   'X-Client-ID': 'new-client-id'
 });
@@ -244,7 +240,7 @@ SKConfig.setApiHeaders("midgard", {
 ```typescript
 // @noErrorValidation
 
-SKConfig.setMidgardUrl(Chain.THORChain, 'https:
+SKConfig.setMidgardUrl(Chain.THORChain, 'https://example.com');
 SKConfig.setApiHeaders('midgard', {
   'X-Client-ID': 'your-client-id'
 });
@@ -274,9 +270,7 @@ You can update configuration after initialization using `SKConfig`:
 import { SKConfig, Chain } from '@swapdk/sdk';
 
 
-SKConfig.setRpcUrl(Chain.Ethereum, 'https:
-
-
+SKConfig.setRpcUrl(Chain.Ethereum, 'https://example.com');
 SKConfig.setApiKey('blockchair', 'new-api-key');
 
 
@@ -293,7 +287,7 @@ Control SwapDK's behavior with environment flags:
 
 ```typescript
 // @noErrorValidation
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     envs: {
       isDev: true,
@@ -331,7 +325,7 @@ Configure Chainflip integration:
 // @noErrorValidation
 SKConfig.setIntegrationConfig('chainflip', {
   useSDKBroker: true,
-  brokerUrl: 'https:
+  brokerUrl: 'https://example.com'
 });
 ```
 
@@ -361,12 +355,12 @@ SKConfig.set({
 
 ```typescript
 // @noErrorValidation
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: process.env.WALLETCONNECT_PROJECT_ID,
       blockchair: process.env.BLOCKCHAIR_API_KEY,
-      swapKit: process.env.SWAPKIT_API_KEY,
+      swapKit: process.env.SWAPDK_API_KEY,
     },
   },
 });
@@ -378,7 +372,7 @@ const swapKit = createSwapKit({
 // @noErrorValidation
 const isDevelopment = process.env.NODE_ENV === "development";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     envs: {
       isDev: isDevelopment,
@@ -404,7 +398,7 @@ const swapKit = createSwapKit({
     const evmChains = [Chain.Ethereum, Chain.Avalanche, Chain.Polygon];
     const evmRpcUrls = evmChains.reduce((acc, chain) => ({
       ...acc,
-      [chain]: `https:
+      [chain]: `https://example.com`
     }), {});
 
     SKConfig.set({ rpcUrls: evmRpcUrls });
@@ -414,9 +408,9 @@ const swapKit = createSwapKit({
   <TabItem label="Cosmos Chains">
     ```typescript
 
-    SKConfig.setRpcUrl(Chain.Cosmos, 'https:
-    SKConfig.setRpcUrl(Chain.THORChain, 'https:
-    SKConfig.setRpcUrl(Chain.Kujira, 'https:
+SKConfig.setRpcUrl(Chain.Cosmos, 'https://example.com');
+SKConfig.setRpcUrl(Chain.THORChain, 'https://example.com');
+SKConfig.setRpcUrl(Chain.Kujira, 'https://example.com');
     ```
 
   </TabItem>
@@ -445,7 +439,7 @@ const config = {
   apiKeys: {
     walletConnectProjectId: process.env.WALLETCONNECT_PROJECT_ID!,
     blockchair: process.env.BLOCKCHAIR_API_KEY,
-    swapKit: process.env.SWAPKIT_API_KEY
+    swapKit: process.env.SWAPDK_API_KEY
   },
 
 
@@ -456,9 +450,9 @@ const config = {
 
 
   rpcUrls: {
-    [Chain.Ethereum]: process.env.ETH_RPC_URL || 'https:
-    [Chain.Avalanche]: process.env.AVAX_RPC_URL || 'https:
-    [Chain.BinanceSmartChain]: process.env.BSC_RPC_URL || 'https:
+    [Chain.Ethereum]: process.env.ETH_RPC_URL || 'https://example.com'
+    [Chain.Avalanche]: process.env.AVAX_RPC_URL || 'https://example.com'
+    [Chain.BinanceSmartChain]: process.env.BSC_RPC_URL || 'https://example.com'
   },
 
 
@@ -483,18 +477,18 @@ const config = {
 };
 
 
-const swapKit = createSwapKit({ config });
+const swapDK = createSwapKit({ config });
 
 
 if (userPrefersFastNode) {
-  SKConfig.setRpcUrl(Chain.Ethereum, 'https:
+  SKConfig.setRpcUrl(Chain.Ethereum, 'https://example.com');
 }
 
 
 if (userHasRadixWallet) {
   SKConfig.setIntegrationConfig('radix', {
     dAppDefinitionAddress: process.env.RADIX_DAPP_ADDRESS!,
-    applicationName: 'My SwapKit App',
+    applicationName: 'My SwapDK App',
     applicationVersion: '1.0.0',
     network: {
       networkId: config.envs.isStagenet ? 2 : 1,
@@ -517,7 +511,7 @@ const currentRpc = SKConfig.get('rpcUrls')[Chain.Ethereum];
 console.log('Current Ethereum RPC:', currentRpc);
 
 
-SKConfig.setRpcUrl(Chain.Ethereum, 'https:
+SKConfig.setRpcUrl(Chain.Ethereum, 'https://example.com');
 ```
 
 ### API Key Validation
@@ -530,9 +524,9 @@ import { SwapKitApi } from "@swapdk/sdk";
 
 try {
   const price = await SwapKitApi.getPrice("ETH");
-  console.log("SwapKit API key is valid");
+  console.log("SwapDK API key is valid");
 } catch (error) {
-  console.error("SwapKit API key issue:", error);
+  console.error("SwapDK API key issue:", error);
 }
 ```
 

@@ -37,9 +37,9 @@ bun add @swapdk/toolboxes @swapdk/plugins
 // @noErrorValidation
 import { createSwapKit, Chain } from '@swapdk/sdk';
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-const dogeWallet = await swapKit.getWallet(Chain.Dogecoin);
+const dogeWallet = await swapDK.getWallet(Chain.Dogecoin);
 
 ````
 </TabItem>
@@ -75,11 +75,11 @@ Connect to Dogecoin using various wallet types:
 // @noErrorValidation
 import { Chain, FeeOption } from "@swapdk/sdk";
 
-await swapKit.connectKeystore([Chain.Dogecoin], "your mnemonic phrase");
+await swapDK.connectKeystore([Chain.Dogecoin], "your mnemonic phrase");
 
-await swapKit.connectLedger([Chain.Dogecoin]);
+await swapDK.connectLedger([Chain.Dogecoin]);
 
-await swapKit.connectTrezor([Chain.Dogecoin]);
+await swapDK.connectTrezor([Chain.Dogecoin]);
 ```
 
 ### Address Generation
@@ -89,7 +89,7 @@ Dogecoin uses a legacy address format:
 ```typescript
 // @noErrorValidation
 
-const dogeAddress = swapKit.getAddress(Chain.Dogecoin);
+const dogeAddress = swapDK.getAddress(Chain.Dogecoin);
 
 console.log("Dogecoin address:", dogeAddress);
 
@@ -106,7 +106,7 @@ console.log("Valid DOGE address:", validateDogeAddress(dogeAddress));
 // @noErrorValidation
 import { AssetValue } from "@swapdk/sdk";
 
-const txHash = await swapKit.transfer({
+const txHash = await swapDK.transfer({
   recipient: "DH5yaieqoZN36fDVciNyRueRGvGLR3mr7L",
   assetValue: AssetValue.from({
     chain: Chain.Dogecoin,
@@ -269,12 +269,12 @@ Dogecoin is supported in THORChain cross-chain swaps:
 ```typescript
 // @noErrorValidation
 
-const dogeToBtcQuote = await swapKit.getQuote({
+const dogeToBtcQuote = await swapDK.getQuote({
   sellAsset: "DOGE.DOGE",
   sellAmount: "10000",
   buyAsset: "BTC.BTC",
-  senderAddress: swapKit.getAddress(Chain.Dogecoin),
-  recipientAddress: swapKit.getAddress(Chain.Bitcoin),
+  senderAddress: swapDK.getAddress(Chain.Dogecoin),
+  recipientAddress: swapDK.getAddress(Chain.Bitcoin),
 });
 
 console.log("DOGE -> BTC quote:", {
@@ -283,25 +283,25 @@ console.log("DOGE -> BTC quote:", {
   priceImpact: dogeToBtcQuote.priceImpact,
 });
 
-const swapTx = await swapKit.swap({
+const swapTx = await swapDK.swap({
   route: dogeToBtcQuote.routes[0],
   feeOptionKey: FeeOption.Fast,
 });
 
-const dogeToUsdcQuote = await swapKit.getQuote({
+const dogeToUsdcQuote = await swapDK.getQuote({
   sellAsset: "DOGE.DOGE",
   sellAmount: "5000",
   buyAsset: "ETH.USDC-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-  senderAddress: swapKit.getAddress(Chain.Dogecoin),
-  recipientAddress: swapKit.getAddress(Chain.Ethereum),
+  senderAddress: swapDK.getAddress(Chain.Dogecoin),
+  recipientAddress: swapDK.getAddress(Chain.Ethereum),
 });
 
-const dogeToRuneQuote = await swapKit.getQuote({
+const dogeToRuneQuote = await swapDK.getQuote({
   sellAsset: "DOGE.DOGE",
   sellAmount: "1000",
   buyAsset: "THOR.RUNE",
-  senderAddress: swapKit.getAddress(Chain.Dogecoin),
-  recipientAddress: swapKit.getAddress(Chain.THORChain),
+  senderAddress: swapDK.getAddress(Chain.Dogecoin),
+  recipientAddress: swapDK.getAddress(Chain.THORChain),
 });
 
 console.log("Much swap! Very cross-chain! Wow!");
@@ -527,20 +527,20 @@ import { SKConfig } from '@swapdk/sdk';
 
 
 SKConfig.setRpcUrl(Chain.Dogecoin, [
-  "https:
-  "https:
-  "https:
+  "https://example.com"
+  "https://example.com"
+  "https://example.com"
 ]);
 
 
-const customDogeRpc = "https:
+const customDogeRpc = "https://example.com"
 SKConfig.setRpcUrl(Chain.Dogecoin, customDogeRpc);
 
 
 const dogeToolbox = await getDogecoinToolbox({
   phrase: "your mnemonic",
   network: "mainnet",
-  apiUrl: "https:
+  apiUrl: "https://example.com"
 });
 ```
 
@@ -549,7 +549,7 @@ const dogeToolbox = await getDogecoinToolbox({
 ```typescript
 // @noErrorValidation
 
-SKConfig.setRpcUrl(Chain.Dogecoin, "https:
+SKConfig.setRpcUrl(Chain.Dogecoin, "https://example.com"
 SKConfig.setEnv('isMainnet', false);
 
 
@@ -573,7 +573,7 @@ Handle Dogecoin-specific errors:
 import { SwapKitError } from "@swapdk/sdk";
 
 try {
-  await swapKit.transfer({
+  await swapDK.transfer({
     /* ... */
   });
 } catch (error) {

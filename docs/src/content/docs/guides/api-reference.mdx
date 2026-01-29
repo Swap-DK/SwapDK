@@ -197,7 +197,7 @@ const tokens = await SwapKitApi.getTokenList('UNISWAP_V2');
     identifier: 'ETH.USDC-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     decimals: 6,
-    logoURL: 'https:
+    logoURL: 'https://example.com',
     name: 'USD Coin'
   }
 ]
@@ -213,9 +213,9 @@ const providers = await SwapKitApi.getTokenListProviders();
 
 
 [
-  { name: '1inch', url: 'https:
-  { name: 'coingecko', url: 'https:
-  { name: 'uniswap', url: 'https:
+  { name: '1inch', url: 'https://example.com' },
+  { name: 'coingecko', url: 'https://example.com' },
+  { name: 'uniswap', url: 'https://example.com' },
 ]
 ```
 
@@ -269,7 +269,7 @@ const tokens = await SwapKitApi.getStaticTokenList('UNISWAP_V2');
     identifier: 'ETH.USDC-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     decimals: 6,
-    logoURL: 'https:
+    logoURL: 'https://example.com',
     name: 'USD Coin'
   }
 ]
@@ -291,8 +291,8 @@ const providers = await SwapKitApi.getProviders();
     name: 'CHAINFLIP',
     provider: 'CHAINFLIP',
     count: 45,
-    logoURI: 'https:
-    url: 'https:
+    logoURI: 'https://example.com',
+    url: 'https://example.com',
     keywords: ['defi', 'cross-chain', 'swap'],
     enabledChainIds: ['1', '43114', '137', 'bitcoin', 'polkadot'],
     supportedChainIds: ['1', '43114', '137', 'bitcoin', 'polkadot'],
@@ -302,8 +302,8 @@ const providers = await SwapKitApi.getProviders();
     name: 'THORCHAIN',
     provider: 'THORCHAIN',
     count: 128,
-    logoURI: 'https:
-    url: 'https:
+    logoURI: 'https://example.com',
+    url: 'https://example.com',
     keywords: ['defi', 'thorchain', 'native-swap'],
     enabledChainIds: ['1', '43114', '56', 'bitcoin', 'thorchain-1'],
     supportedChainIds: ['1', '43114', '56', 'bitcoin', 'thorchain-1'],
@@ -342,7 +342,7 @@ const jupiterTokens = await SwapKitApi.getTokenList('JUPITER');
       symbol: 'USDC',
       name: 'USD Coin',
       decimals: 6,
-      logoURI: 'https:
+      logoURI: 'https://example.com',
       extensions: {},
       shortCode: 'USDC',
       coingeckoId: 'usd-coin'
@@ -716,7 +716,7 @@ Configure your API key in [Configuration](/start/configuration):
 // @noErrorValidation
 import { createSwapKit } from "@swapdk/sdk";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -771,7 +771,7 @@ if (routes.length > 0) {
   });
 
   if (minOutput.gte(requiredAmount)) {
-    await swapKit.swap({ route: bestRoute });
+    await swapDK.swap({ route: bestRoute });
   }
 }
 ```
@@ -839,9 +839,9 @@ const apiHeaders = SKConfig.get('apiHeaders');
 
 
 SKConfig.set({
-  rpcUrls: { ETH: 'https://eth-mainnet.g.alchemy.com/v2/your-key',
+  rpcUrls: { ETH: 'https://eth-mainnet.g.alchemy.com/v2/your-key' },
   apiKeys: { swapKit: 'new-key' },
-  midgardUrls: { THOR: 'https:
+  midgardUrls: { THOR: 'https://example.com' },
   apiHeaders: { midgard: { 'X-API-Key': 'secret' } }
 });
 ```
@@ -851,7 +851,7 @@ SKConfig.set({
 ```typescript
 // @noErrorValidation
 
-SKConfig.setApiKey("swapKit", "your-swapkit-key");
+SKConfig.setApiKey("swapKit", "your-swapdk-key");
 SKConfig.setApiKey("blockchair", "your-blockchair-key");
 SKConfig.setApiKey("walletConnectProjectId", "your-wc-id");
 ```
@@ -863,8 +863,8 @@ SKConfig.setApiKey("walletConnectProjectId", "your-wc-id");
 import { Chain } from '@swapdk/sdk';
 
 
-SKConfig.setRpcUrl(Chain.Ethereum, 'https:
-SKConfig.setRpcUrl(Chain.Avalanche, 'https:
+SKConfig.setRpcUrl(Chain.Ethereum, 'https://example.com');
+SKConfig.setRpcUrl(Chain.Avalanche, 'https://example.com');
 ```
 
 ### Midgard URLs
@@ -874,12 +874,8 @@ SKConfig.setRpcUrl(Chain.Avalanche, 'https:
 import { Chain } from '@swapdk/sdk';
 
 
-SKConfig.setMidgardUrl(Chain.THORChain, 'https:
-SKConfig.setMidgardUrl(Chain.Maya, 'https:
-
-
-
-
+SKConfig.setMidgardUrl(Chain.THORChain, 'https://example.com');
+SKConfig.setMidgardUrl(Chain.Maya, 'https://example.com');
 ```
 
 ### API Headers
@@ -909,8 +905,8 @@ SKConfig.setEnv('isDev', true);
 SKConfig.setEnv('isStagenet', true);
 
 
-SKConfig.setEnv('apiUrl', 'https:
-SKConfig.setEnv('devApiUrl', 'https:
+SKConfig.setEnv('apiUrl', 'https://example.com');
+SKConfig.setEnv('devApiUrl', 'https://example.com');
 ```
 
 ### Integration Configurations
@@ -925,14 +921,14 @@ SKConfig.setIntegrationConfig('radix', {
   network: {
     networkId: 1,
     networkName: 'mainnet',
-    dashboardBase: 'https:
+    dashboardBase: 'https://example.com'
   }
 });
 
 
 SKConfig.setIntegrationConfig('chainflip', {
   useSDKBroker: true,
-  brokerUrl: 'https:
+  brokerUrl: 'https://example.com'
 });
 ```
 
@@ -941,8 +937,8 @@ SKConfig.setIntegrationConfig('chainflip', {
 ```typescript
 // @noErrorValidation
 
-SKConfig.setExplorerUrl(Chain.Ethereum, 'https:
-SKConfig.setExplorerUrl(Chain.Bitcoin, 'https:
+SKConfig.setExplorerUrl(Chain.Ethereum, 'https://example.com');
+SKConfig.setExplorerUrl(Chain.Bitcoin, 'https://example.com');
 ```
 
 ### Complete Example
@@ -954,16 +950,16 @@ import { SKConfig, Chain, StagenetChain } from '@swapdk/sdk';
 
 SKConfig.set({
   apiKeys: {
-    swapKit: process.env.SWAPKIT_API_KEY,
+    swapKit: process.env.SWAPDK_API_KEY,
     blockchair: process.env.BLOCKCHAIR_API_KEY
   },
   rpcUrls: {
-    [Chain.Ethereum]: 'https:
-    [Chain.Polygon]: 'https:
+    [Chain.Ethereum]: 'https://example.com',
+    [Chain.Polygon]: 'https://example.com'
   },
   midgardUrls: {
-    [Chain.THORChain]: 'https:
-    [StagenetChain.THORChain]: 'https:
+    [Chain.THORChain]: 'https://example.com',
+    [StagenetChain.THORChain]: 'https://example.com'
   },
   apiHeaders: {
     midgard: {

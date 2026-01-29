@@ -17,11 +17,13 @@ that interact with cross-chain and on-chain swap systems.
 
 ## Installation
 
-Installation instructions will be added once the first stable version is released.
+```bash
+bun bootstrap
+```
 
 ## Usage
 
-Usage examples and API documentation are currently in progress.
+[Documentation](https://swap-dk.github.io/SwapDK)
 
 ## Contributing
 

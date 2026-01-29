@@ -35,11 +35,11 @@ import {
   keystoreWallet,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keystoreWallet },
 });
 
-await swapKit.connectKeystore([Chain.Ethereum], "your secret phrase here");
+await swapDK.connectKeystore([Chain.Ethereum], "your secret phrase here");
 
 const amount = AssetValue.from({
   chain: Chain.Ethereum,
@@ -49,14 +49,14 @@ const amount = AssetValue.from({
 
 async function transferAsset() {
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
       memo: "Payment for services",
       feeOptionKey: FeeOption.Fast,
     });
 
-    const txUrl = swapKit.getExplorerTxUrl({
+    const txUrl = swapDK.getExplorerTxUrl({
       chain: Chain.Ethereum,
       txHash,
     });
@@ -73,9 +73,9 @@ async function transferAsset() {
 ```ts twoslash
 import { AssetValue, Chain, FeeOption, createSwapKit } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-await swapKit.connectKeystore([Chain.Ethereum], "your secret phrase here");
+await swapDK.connectKeystore([Chain.Ethereum], "your secret phrase here");
 
 const amount = AssetValue.from({
   chain: Chain.Ethereum,
@@ -85,7 +85,7 @@ const amount = AssetValue.from({
 
 async function transferAsset() {
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
       feeOptionKey: FeeOption.Fast,
@@ -105,11 +105,11 @@ async function transferAsset() {
 ```ts twoslash
 import { AssetValue, Chain, FeeOption, SwapKit, evmWallet } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
-await swapKit.connectEVMWallet([Chain.Ethereum]);
+await swapDK.connectEVMWallet([Chain.Ethereum]);
 
 async function transferERC20() {
   const usdcAmount = AssetValue.from({
@@ -120,7 +120,7 @@ async function transferERC20() {
     value: "10",
   });
 
-  const txHash = await swapKit.transfer({
+  const txHash = await swapDK.transfer({
     assetValue: usdcAmount,
     recipient: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
     feeOptionKey: FeeOption.Average,
@@ -141,11 +141,11 @@ import {
   keystoreWallet,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keystoreWallet },
 });
 
-await swapKit.connectKeystore([Chain.Bitcoin], "your secret phrase here");
+await swapDK.connectKeystore([Chain.Bitcoin], "your secret phrase here");
 
 async function transferBitcoin() {
   const btcAmount = AssetValue.from({
@@ -154,7 +154,7 @@ async function transferBitcoin() {
     value: "0.001",
   });
 
-  const txHash = await swapKit.transfer({
+  const txHash = await swapDK.transfer({
     assetValue: btcAmount,
     recipient: "bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq",
     feeOptionKey: FeeOption.Fast,
@@ -176,11 +176,11 @@ import {
   keplrWallet,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
-await swapKit.connectKeplr([Chain.Cosmos]);
+await swapDK.connectKeplr([Chain.Cosmos]);
 
 async function transferCosmos() {
   const atomAmount = AssetValue.from({
@@ -189,7 +189,7 @@ async function transferCosmos() {
     value: "0.1",
   });
 
-  const txHash = await swapKit.transfer({
+  const txHash = await swapDK.transfer({
     assetValue: atomAmount,
     recipient: "cosmos1abcd1234abcd1234abcd1234abcd1234abcd12",
     feeOptionKey: FeeOption.Average,

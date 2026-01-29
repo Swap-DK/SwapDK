@@ -65,10 +65,10 @@ import {
   EVMPlugin,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
-      swapKit: "your-swapkit-api-key",
+      swapKit: "your-swapdk-api-key",
       blockchair: "your-blockchair-api-key",
       walletConnectProjectId: "your-walletconnect-project-id",
     },
@@ -78,11 +78,11 @@ const swapKit = SwapKit({
 });
 
 async function connectWallets() {
-  await swapKit.connectEVMWallet([Chain.Ethereum]);
+  await swapDK.connectEVMWallet([Chain.Ethereum]);
 
-  await swapKit.connectKeystore([Chain.Bitcoin], "your secret phrase here");
+  await swapDK.connectKeystore([Chain.Bitcoin], "your secret phrase here");
 
-  const connectedWallets = Object.keys(swapKit.getAllWallets());
+  const connectedWallets = Object.keys(swapDK.getAllWallets());
 }
 ```
 
@@ -91,10 +91,10 @@ async function connectWallets() {
 ```ts twoslash
 import { Chain, createSwapKit } from "@swapdk/sdk";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
-      swapKit: "your-swapkit-api-key",
+      swapKit: "your-swapdk-api-key",
       blockchair: "your-blockchair-api-key",
       walletConnectProjectId: "your-walletconnect-project-id",
     },
@@ -102,7 +102,7 @@ const swapKit = createSwapKit({
 });
 
 async function connectWallets() {
-  await swapKit.connectKeystore(
+  await swapDK.connectKeystore(
     [Chain.Ethereum, Chain.Bitcoin],
     "your secret phrase here"
   );
@@ -178,12 +178,12 @@ import {
   EVMPlugin,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   plugins: { ...EVMPlugin },
   wallets: { ...evmWallet },
 });
 
-await swapKit.connectEVMWallet([Chain.Ethereum]);
+await swapDK.connectEVMWallet([Chain.Ethereum]);
 
 async function executeSwap() {
   try {
@@ -191,7 +191,7 @@ async function executeSwap() {
       sellAsset: "ETH.ETH",
       buyAsset: "ETH.USDC-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       sellAmount: "0.1",
-      sourceAddress: swapKit.getAddress(Chain.Ethereum),
+      sourceAddress: swapDK.getAddress(Chain.Ethereum),
       slippage: 1,
     });
 
@@ -208,22 +208,22 @@ async function executeSwap() {
     });
 
     if (!assetValue.isGasAsset && selectedRoute.tx) {
-      const isApproved = await swapKit.isAssetValueApproved(
+      const isApproved = await swapDK.isAssetValueApproved(
         assetValue,
         selectedRoute.tx.from
       );
 
       if (!isApproved) {
-        await swapKit.approveAssetValue(assetValue, selectedRoute.tx.from);
+        await swapDK.approveAssetValue(assetValue, selectedRoute.tx.from);
       }
     }
 
-    const txHash = (await swapKit.swap({
+    const txHash = (await swapDK.swap({
       route: selectedRoute,
       feeOptionKey: FeeOption.Fast,
     })) as string;
 
-    const txUrl = swapKit.getExplorerTxUrl({
+    const txUrl = swapDK.getExplorerTxUrl({
       chain: assetValue.chain as Chain,
       txHash,
     });
@@ -246,9 +246,9 @@ import {
   createSwapKit,
 } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-await swapKit.connectKeystore([Chain.Ethereum], "your secret phrase here");
+await swapDK.connectKeystore([Chain.Ethereum], "your secret phrase here");
 
 async function executeSwap() {
   try {
@@ -256,7 +256,7 @@ async function executeSwap() {
       sellAsset: "ETH.ETH",
       buyAsset: "ETH.USDC-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       sellAmount: "0.1",
-      sourceAddress: swapKit.getAddress(Chain.Ethereum),
+      sourceAddress: swapDK.getAddress(Chain.Ethereum),
     });
 
     if (!quoteResponse.success || !quoteResponse.data.routes.length) {
@@ -265,7 +265,7 @@ async function executeSwap() {
 
     const selectedRoute = quoteResponse.data.routes[0];
 
-    const txHash = await swapKit.swap({
+    const txHash = await swapDK.swap({
       route: selectedRoute,
       feeOptionKey: FeeOption.Fast,
     });
@@ -294,20 +294,20 @@ import {
 } from "@swapdk/sdk";
 
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   plugins: { ...ChainflipPlugin },
   wallets: { ...evmWallet },
   config: {
     integrations: {
       chainflip: {
-        brokerUrl: "https:
+        brokerUrl: "https://example.com"
       },
     },
   },
 });
 
 
-await swapKit.connectEVMWallet([Chain.Ethereum]);
+await swapDK.connectEVMWallet([Chain.Ethereum]);
 
 
 async function crossChainSwap() {
@@ -318,7 +318,7 @@ async function crossChainSwap() {
       buyAsset: "BTC.BTC",
       sellAmount: "0.1",
       providers: [ProviderName.CHAINFLIP],
-      sourceAddress: swapKit.getAddress(Chain.Ethereum),
+      sourceAddress: swapDK.getAddress(Chain.Ethereum),
       destinationAddress: "bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq",
     });
 
@@ -330,7 +330,7 @@ async function crossChainSwap() {
     const route = quoteResponse.data.routes[0];
 
 
-    const txHash = await swapKit.swap({
+    const txHash = await swapDK.swap({
       route,
       feeOptionKey: FeeOption.Fast,
 
@@ -360,15 +360,15 @@ import {
   ThorchainPlugin,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   plugins: { ...ThorchainPlugin },
   wallets: { ...evmWallet, ...keystoreWallet },
 });
 
 async function setupAndSwap() {
-  await swapKit.connectEVMWallet([Chain.Ethereum]);
+  await swapDK.connectEVMWallet([Chain.Ethereum]);
 
-  await swapKit.connectKeystore([Chain.THORChain], "your secret phrase here");
+  await swapDK.connectKeystore([Chain.THORChain], "your secret phrase here");
 
   try {
     const quoteResponse = await SwapKitApi.getSwapQuote({
@@ -376,8 +376,8 @@ async function setupAndSwap() {
       buyAsset: "THOR.RUNE",
       sellAmount: "0.1",
       providers: [ProviderName.THORCHAIN],
-      sourceAddress: swapKit.getAddress(Chain.Ethereum),
-      destinationAddress: swapKit.getAddress(Chain.THORChain),
+      sourceAddress: swapDK.getAddress(Chain.Ethereum),
+      destinationAddress: swapDK.getAddress(Chain.THORChain),
     });
 
     if (!quoteResponse.success || !quoteResponse.data.routes.length) {
@@ -386,7 +386,7 @@ async function setupAndSwap() {
 
     const route = quoteResponse.data.routes[0];
 
-    const txHash = await swapKit.swap({
+    const txHash = await swapDK.swap({
       route,
       feeOptionKey: FeeOption.Fast,
     });
@@ -413,12 +413,12 @@ import {
   EVMPlugin,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   plugins: { ...EVMPlugin },
   wallets: { ...evmWallet },
 });
 
-await swapKit.connectEVMWallet([Chain.Ethereum]);
+await swapDK.connectEVMWallet([Chain.Ethereum]);
 
 async function estimateSwapFees() {
   try {
@@ -426,7 +426,7 @@ async function estimateSwapFees() {
       sellAsset: "ETH.ETH",
       buyAsset: "ETH.USDC-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       sellAmount: "0.1",
-      sourceAddress: swapKit.getAddress(Chain.Ethereum),
+      sourceAddress: swapDK.getAddress(Chain.Ethereum),
     });
 
     if (!quoteResponse.success || !quoteResponse.data.routes.length) {
@@ -441,7 +441,7 @@ async function estimateSwapFees() {
       asyncTokenLookup: true,
     });
 
-    const estimatedFee = await swapKit.estimateTransactionFee({
+    const estimatedFee = await swapDK.estimateTransactionFee({
       type: "swap",
       feeOptionKey: FeeOption.Fast,
       params: {
@@ -473,12 +473,12 @@ import {
   ChainflipPlugin,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   plugins: { ...ThorchainPlugin, ...ChainflipPlugin },
   wallets: { ...evmWallet },
 });
 
-await swapKit.connectEVMWallet([Chain.Ethereum, Chain.BinanceSmartChain]);
+await swapDK.connectEVMWallet([Chain.Ethereum, Chain.BinanceSmartChain]);
 
 async function advancedSwap() {
   try {
@@ -489,8 +489,8 @@ async function advancedSwap() {
 
       providers: [ProviderName.THORCHAIN, ProviderName.CHAINFLIP],
 
-      sourceAddress: swapKit.getAddress(Chain.Ethereum),
-      destinationAddress: swapKit.getAddress(Chain.BinanceSmartChain),
+      sourceAddress: swapDK.getAddress(Chain.Ethereum),
+      destinationAddress: swapDK.getAddress(Chain.BinanceSmartChain),
 
       slippage: 2.5,
     });
@@ -501,7 +501,7 @@ async function advancedSwap() {
 
     const route = quoteResponse.data.routes[0];
 
-    const txHash = await swapKit.swap({
+    const txHash = await swapDK.swap({
       route,
       feeOptionKey: FeeOption.Fast,
     });

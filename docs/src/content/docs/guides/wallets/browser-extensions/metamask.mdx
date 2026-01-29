@@ -31,11 +31,10 @@ All EVM-compatible chains are supported:
 
 Install your preferred EVM wallet extension:
 
-- **MetaMask**: [Chrome Web Store](https:
+- **MetaMask**: [Chrome Web Store](https://example.com)
 - **Brave Wallet**: Built into Brave browser
-- **Coinbase Wallet**: [Chrome Web Store](https:
-- **Trust Wallet**: [Chrome Web Store](https:
-
+- **Coinbase Wallet**: [Chrome Web Store](https://example.com)
+- **Trust Wallet**: [Chrome Web Store](https://example.com)
 ### 2. Set Up Wallet
 
 1. Create or import a wallet using your seed phrase
@@ -61,7 +60,7 @@ EVM extensions work in:
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -76,7 +75,7 @@ const swapKit = SwapKit({
 ```ts twoslash
 import { createSwapKit, Chain } from "@swapdk/sdk";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -92,16 +91,16 @@ const swapKit = createSwapKit({
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
 async function connectMetaMask() {
   try {
-    await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
+    await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
-    const balance = await swapKit.getBalance(Chain.Ethereum, true);
+    const address = swapDK.getAddress(Chain.Ethereum);
+    const balance = await swapDK.getBalance(Chain.Ethereum, true);
 
     console.log("Connected address:", address);
     console.log("ETH balance:", balance);
@@ -119,7 +118,7 @@ async function connectMetaMask() {
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
@@ -133,14 +132,14 @@ async function connectMultipleEVMChains() {
   ];
 
   try {
-    await swapKit.connectEVMWallet(evmChains, WalletOption.METAMASK);
+    await swapDK.connectEVMWallet(evmChains, WalletOption.METAMASK);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("EVM address (same on all chains):", address);
 
     const balances = await Promise.all(
       evmChains.map(async (chain) => {
-        const balance = await swapKit.getBalance(chain, true);
+        const balance = await swapDK.getBalance(chain, true);
         return { chain, balance };
       })
     );
@@ -160,15 +159,15 @@ async function connectMultipleEVMChains() {
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
 async function connectBraveWallet() {
   try {
-    await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.BRAVE);
+    await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.BRAVE);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("Brave Wallet address:", address);
 
     return { success: true, address };
@@ -184,15 +183,15 @@ async function connectBraveWallet() {
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
 async function connectCoinbaseWallet() {
   try {
-    await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.COINBASE_WEB);
+    await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.COINBASE_WEB);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("Coinbase Wallet address:", address);
 
     return { success: true, address };
@@ -208,18 +207,18 @@ async function connectCoinbaseWallet() {
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
 async function connectTrustWallet() {
   try {
-    await swapKit.connectEVMWallet(
+    await swapDK.connectEVMWallet(
       [Chain.Ethereum],
       WalletOption.TRUSTWALLET_WEB
     );
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("Trust Wallet address:", address);
 
     return { success: true, address };
@@ -235,7 +234,7 @@ async function connectTrustWallet() {
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
@@ -257,13 +256,13 @@ async function connectEIP6963Wallet(providerDetail) {
   try {
     const { provider } = providerDetail;
 
-    await swapKit.connectEVMWallet(
+    await swapDK.connectEVMWallet(
       [Chain.Ethereum],
       WalletOption.EIP6963,
       provider
     );
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log(`${providerDetail.info.name} address:`, address);
 
     return { success: true, address };
@@ -295,12 +294,12 @@ async function showAvailableWallets() {
 
 import { SwapKit, evmWallet, Chain, AssetValue, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
 
-await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
+await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
 
 async function sendEther() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -311,14 +310,13 @@ async function sendEther() {
     console.log("Amount:", amount.toSignificant(6), "ETH");
     console.log("To:", recipient);
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ Transaction sent:", txHash);
-    console.log("🔍 View on Etherscan:", `https:
-
+    console.log("🔍 View on Etherscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ Transaction failed:", error);
@@ -338,11 +336,11 @@ import {
   WalletOption,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
-await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
+await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
 
 async function sendERC20Token() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -353,7 +351,7 @@ async function sendERC20Token() {
   );
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -378,7 +376,7 @@ async function sendAnyERC20Token(
   );
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: tokenAsset,
       recipient,
     });
@@ -398,26 +396,25 @@ async function sendAnyERC20Token(
 
 import { SwapKit, evmWallet, Chain, AssetValue, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
 
-await swapKit.connectEVMWallet([Chain.Ethereum, Chain.Polygon, Chain.Arbitrum], WalletOption.METAMASK);
+await swapDK.connectEVMWallet([Chain.Ethereum, Chain.Polygon, Chain.Arbitrum], WalletOption.METAMASK);
 
 async function sendOnPolygon() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
   const amount = AssetValue.fromChainOrSignature("MATIC.MATIC", 1);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ MATIC transfer sent:", txHash);
-    console.log("🔍 View on PolygonScan:", `https:
-
+    console.log("🔍 View on PolygonScan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ MATIC transfer failed:", error);
@@ -430,14 +427,13 @@ async function sendOnArbitrum() {
   const amount = AssetValue.fromChainOrSignature("ARB.ETH", 0.001);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ Arbitrum ETH transfer sent:", txHash);
-    console.log("🔍 View on Arbiscan:", `https:
-
+    console.log("🔍 View on Arbiscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ Arbitrum transfer failed:", error);
@@ -453,20 +449,20 @@ async function sendOnArbitrum() {
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
 async function switchAndTransact() {
   try {
-    await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
+    await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
 
-    await swapKit.connectEVMWallet([Chain.Polygon], WalletOption.METAMASK);
+    await swapDK.connectEVMWallet([Chain.Polygon], WalletOption.METAMASK);
 
     const amount = AssetValue.fromChainOrSignature("MATIC.MATIC", 1);
     const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -525,7 +521,7 @@ async function addCustomNetwork() {
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
@@ -544,9 +540,9 @@ async function diagnosticConnection() {
 
     console.log("🔍 Attempting to connect...");
 
-    await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
+    await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("✅ Successfully connected:", address);
 
     return { success: true, address };
@@ -604,7 +600,7 @@ async function checkWalletStatus() {
 async function handleTransactionErrors() {
   try {
     const amount = AssetValue.fromChainOrSignature("ETH.ETH", 0.01);
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient: "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC",
     });
@@ -613,7 +609,7 @@ async function handleTransactionErrors() {
     if (error.message.includes("insufficient funds")) {
       console.error("❌ Insufficient ETH for transaction + gas fees");
 
-      const balance = await swapKit.getBalance(Chain.Ethereum, true);
+      const balance = await swapDK.getBalance(Chain.Ethereum, true);
       console.log("Current balance:", balance);
       console.log(
         "🔧 Add more ETH to your wallet or reduce transaction amount"
@@ -653,7 +649,7 @@ async function handleTransactionErrors() {
 
 async function handleNetworkIssues() {
   try {
-    await swapKit.connectEVMWallet([Chain.Polygon], WalletOption.METAMASK);
+    await swapDK.connectEVMWallet([Chain.Polygon], WalletOption.METAMASK);
   } catch (error) {
     if (error.message.includes("failed_to_switch_network")) {
       console.error("❌ Failed to switch to Polygon network");
@@ -671,7 +667,7 @@ async function handleNetworkIssues() {
                 symbol: 'MATIC',
                 decimals: 18,
               },
-              rpcUrls: ['https:'],
+              rpcUrls: ['https://example.com'],
             },
           ],
         });
@@ -694,10 +690,10 @@ async function handleNetworkIssues() {
 
 ```ts twoslash
 async function verifyConnection() {
-  const swapKit = SwapKit({ wallets: { ...evmWallet } });
-  await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
+  const swapDK = SwapKit({ wallets: { ...evmWallet } });
+  await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
 
-  const address = swapKit.getAddress(Chain.Ethereum);
+  const address = swapDK.getAddress(Chain.Ethereum);
 
   console.log("Connected address:", address);
   console.log("⚠️ Please verify this is your intended address");
@@ -715,7 +711,7 @@ async function secureTransaction() {
     console.log("Recipient:", recipient);
     console.log("⚠️ Please verify these details in MetaMask before confirming");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -742,7 +738,7 @@ async function safeTransfer(recipient: string, amount: number) {
     throw new Error("Amount must be positive");
   }
 
-  return await swapKit.transfer({
+  return await swapDK.transfer({
     assetValue,
     recipient,
   });
@@ -754,17 +750,17 @@ async function safeTransfer(recipient: string, amount: number) {
 ```ts twoslash
 
 
-const secureSwapKit = SwapKit({
+const secureSwapDK = SwapKit({
   config: {
 
     rpcUrls: {
-      [Chain.Ethereum]: "https:
-      [Chain.Polygon]: "https:
-      [Chain.Arbitrum]: "https:
+      [Chain.Ethereum]: "https://example.com"
+      [Chain.Polygon]: "https://example.com"
+      [Chain.Arbitrum]: "https://example.com"
     },
 
     apiKeys: {
-      swapKit: process.env.SWAPKIT_API_KEY,
+      swapKit: process.env.SWAPDK_API_KEY,
     },
   },
   wallets: { ...evmWallet },
@@ -789,7 +785,7 @@ export function MetaMaskWallet({ onConnect, onError }: MetaMaskWalletProps) {
   const [address, setAddress] = useState<string>("");
   const [selectedChain, setSelectedChain] = useState<Chain>(Chain.Ethereum);
 
-  const swapKit = SwapKit({ wallets: { ...evmWallet } });
+  const swapDK = SwapKit({ wallets: { ...evmWallet } });
 
 
   const isMetaMaskInstalled = typeof window !== 'undefined' &&
@@ -837,8 +833,8 @@ export function MetaMaskWallet({ onConnect, onError }: MetaMaskWalletProps) {
     setIsConnecting(true);
 
     try {
-      await swapKit.connectEVMWallet([selectedChain], WalletOption.METAMASK);
-      const walletAddress = swapKit.getAddress(selectedChain);
+      await swapDK.connectEVMWallet([selectedChain], WalletOption.METAMASK);
+      const walletAddress = swapDK.getAddress(selectedChain);
 
       setAddress(walletAddress);
       setIsConnected(true);
@@ -852,7 +848,7 @@ export function MetaMaskWallet({ onConnect, onError }: MetaMaskWalletProps) {
 
   const disconnect = async () => {
     try {
-      swapKit.disconnectAll();
+      swapDK.disconnectAll();
       setIsConnected(false);
       setAddress("");
     } catch (error) {
@@ -865,7 +861,7 @@ export function MetaMaskWallet({ onConnect, onError }: MetaMaskWalletProps) {
       <div>
         <p>MetaMask not installed</p>
         <a
-          href="https:
+          href="https://example.com"
           target="_blank"
           rel="noopener noreferrer"
         >

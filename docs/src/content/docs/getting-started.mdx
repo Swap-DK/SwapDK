@@ -95,12 +95,12 @@ The fastest way to integrate SwapDK into your application.
    ```typescript
    import { createSwapKit } from "@swapdk/sdk";
 
-   const defaultSwapKit = createSwapKit();
+   const defaultSwapDK = createSwapKit();
 
-   const swapKit = createSwapKit({
+   const swapDK = createSwapKit({
      config: {
        apiKeys: {
-         swapKit: "your-swapkit-api-key",
+         swapKit: "your-swapdk-api-key",
        },
      },
    });
@@ -113,16 +113,16 @@ The fastest way to integrate SwapDK into your application.
    ```typescript
    import { createSwapKit, Chain } from "@swapdk/sdk";
 
-   const swapKit = createSwapKit({
-     config: { apiKeys: { swapKit: "your-swapkit-api-key" } },
+   const swapDK = createSwapKit({
+     config: { apiKeys: { swapKit: "your-swapdk-api-key" } },
    });
 
-   const wallet = await swapKit.connectKeystore(
+   const wallet = await swapDK.connectKeystore(
      [Chain.Ethereum],
      "your mnemonic phrase here"
    );
 
-   const address = swapKit.getAddress(Chain.Ethereum);
+   const address = swapDK.getAddress(Chain.Ethereum);
    ```
 </Steps>
 
@@ -220,17 +220,17 @@ For developers who need more control and custom configurations.
    ```typescript
    import { SwapKit, Chain, ThorchainPlugin, EVMPlugin, keystoreWallet, ledgerWallet } from '@swapdk/sdk';
 
-   const swapKit = SwapKit({
+   const swapDK = SwapKit({
      config: { 
-       apiKeys: { swapKit: 'your-swapkit-api-key' } 
+       apiKeys: { swapKit: 'your-swapdk-api-key' } 
      },
      plugins: { ...ThorchainPlugin, ...EVMPlugin },
      wallets: { ...keystoreWallet, ...ledgerWallet },
    });
 
 
-   await swapKit.connectKeystore([Chain.Ethereum], 'your mnemonic phrase here');
-   const wallet = swapKit.getWallet(Chain.Ethereum);
+   await swapDK.connectKeystore([Chain.Ethereum], 'your mnemonic phrase here');
+   const wallet = swapDK.getWallet(Chain.Ethereum);
    ```
 </Steps>
 
@@ -249,14 +249,14 @@ No matter which implementation you choose, you can use these common patterns:
 
     import { SwapKit, Chain } from '@swapdk/sdk';
 
-    const swapKit = SwapKit({
-      config: { apiKeys: { swapKit: 'your-swapkit-api-key' } },
+    const swapDK = SwapKit({
+      config: { apiKeys: { swapKit: 'your-swapdk-api-key' } },
     });
 
-    const balance = await swapKit.getBalance(Chain.Bitcoin, true);
+    const balance = await swapDK.getBalance(Chain.Bitcoin, true);
 
 
-    const allWallets = swapKit.getAllWallets();
+    const allWallets = swapDK.getAllWallets();
     ```
 
   </Card>
@@ -267,11 +267,11 @@ No matter which implementation you choose, you can use these common patterns:
     import { AssetValue, Chain, SwapKit, keystoreWallet } from '@swapdk/sdk';
 
 
-    const swapKit = SwapKit({
-      config: { apiKeys: { swapKit: 'your-swapkit-api-key' }, wallets: { ...keystoreWallet } },
+    const swapDK = SwapKit({
+      config: { apiKeys: { swapKit: 'your-swapdk-api-key' }, wallets: { ...keystoreWallet } },
     });
 
-    await swapKit.connectKeystore([Chain.Ethereum], 'your mnemonic phrase here');
+    await swapDK.connectKeystore([Chain.Ethereum], 'your mnemonic phrase here');
 
 
     const assetValue = AssetValue.from({
@@ -282,7 +282,7 @@ No matter which implementation you choose, you can use these common patterns:
     });
 
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue,
       recipient: '0xRecipientAddressHere',
       memo: 'Optional memo',
@@ -297,12 +297,12 @@ No matter which implementation you choose, you can use these common patterns:
     import { AssetValue, Chain, SwapKitApi, SwapKit, keystoreWallet } from '@swapdk/sdk';
 
 
-    const swapKit = SwapKit({
-      config: { apiKeys: { swapKit: 'your-swapkit-api-key' }, wallets: { ...keystoreWallet } },
+    const swapDK = SwapKit({
+      config: { apiKeys: { swapKit: 'your-swapdk-api-key' }, wallets: { ...keystoreWallet } },
     });
 
 
-    await swapKit.connectKeystore([Chain.Ethereum], 'your mnemonic phrase here');
+    await swapDK.connectKeystore([Chain.Ethereum], 'your mnemonic phrase here');
 
 
     const quoteResponse = await SwapKitApi.getSwapQ({
@@ -318,7 +318,7 @@ No matter which implementation you choose, you can use these common patterns:
     });
 
 
-    const swapTx = await swapKit.swap({ route: quoteResponse.routes[0] });
+    const swapTx = await swapDK.swap({ route: quoteResponse.routes[0] });
     ```
 
   </Card>

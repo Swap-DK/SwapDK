@@ -22,10 +22,10 @@ SwapDK supports Bitget Wallet for these chains:
 Install Bitget Wallet from official sources:
 
 - **Mobile App**:
-  - iOS: [App Store](https:
-  - Android: [Google Play](https:
+  - iOS: [App Store](https://example.com)
+  - Android: [Google Play](https://example.com)
 - **Browser Extension**:
-  - [Chrome Web Store](https:
+  - [Chrome Web Store](https://example.com)
   - Available for Chrome, Firefox, Edge
 
 ### 2. Set Up Bitget Wallet
@@ -54,7 +54,7 @@ Bitget Wallet works in:
 ```ts twoslash
 import { SwapKit, bitgetWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -69,7 +69,7 @@ const swapKit = SwapKit({
 ```ts twoslash
 import { createSwapKit, Chain } from "@swapdk/sdk";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -85,16 +85,16 @@ const swapKit = createSwapKit({
 ```ts twoslash
 import { SwapKit, bitgetWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
 async function connectBitgetEthereum() {
   try {
-    await swapKit.connectBitget([Chain.Ethereum]);
+    await swapDK.connectBitget([Chain.Ethereum]);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
-    const balance = await swapKit.getBalance(Chain.Ethereum, true);
+    const address = swapDK.getAddress(Chain.Ethereum);
+    const balance = await swapDK.getBalance(Chain.Ethereum, true);
 
     console.log("Ethereum address:", address);
     console.log("ETH balance:", balance);
@@ -112,7 +112,7 @@ async function connectBitgetEthereum() {
 ```ts twoslash
 import { SwapKit, bitgetWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
@@ -129,18 +129,18 @@ async function connectMultipleChains() {
   ];
 
   try {
-    await swapKit.connectBitget(supportedChains);
+    await swapDK.connectBitget(supportedChains);
 
     const addresses = {};
     for (const chain of supportedChains) {
-      addresses[chain] = swapKit.getAddress(chain);
+      addresses[chain] = swapDK.getAddress(chain);
       console.log(`${chain} address:`, addresses[chain]);
     }
 
     const balances = await Promise.all(
       supportedChains.map(async (chain) => {
         try {
-          const balance = await swapKit.getBalance(chain, true);
+          const balance = await swapDK.getBalance(chain, true);
           return { chain, balance };
         } catch (error) {
           return { chain, balance: [], error: error.message };
@@ -161,15 +161,15 @@ async function connectMultipleChains() {
 ```ts twoslash
 import { SwapKit, bitgetWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
 async function connectBitgetBitcoin() {
   try {
-    await swapKit.connectBitget([Chain.Bitcoin]);
+    await swapDK.connectBitget([Chain.Bitcoin]);
 
-    const address = swapKit.getAddress(Chain.Bitcoin);
+    const address = swapDK.getAddress(Chain.Bitcoin);
     console.log("Bitget Bitcoin address:", address);
 
     return { success: true, address };
@@ -181,9 +181,9 @@ async function connectBitgetBitcoin() {
 
 async function connectBitgetSolana() {
   try {
-    await swapKit.connectBitget([Chain.Solana]);
+    await swapDK.connectBitget([Chain.Solana]);
 
-    const address = swapKit.getAddress(Chain.Solana);
+    const address = swapDK.getAddress(Chain.Solana);
     console.log("Bitget Solana address:", address);
 
     return { success: true, address };
@@ -204,12 +204,12 @@ async function connectBitgetSolana() {
 
 import { SwapKit, bitgetWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
 
-await swapKit.connectBitget([Chain.Ethereum]);
+await swapDK.connectBitget([Chain.Ethereum]);
 
 async function sendEthereum() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -221,14 +221,13 @@ async function sendEthereum() {
     console.log("To:", recipient);
     console.log("📱 Approve the transaction in Bitget Wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ ETH transfer sent:", txHash);
-    console.log("🔍 View on Etherscan:", `https:
-
+    console.log("🔍 View on Etherscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ ETH transfer failed:", error);
@@ -242,11 +241,11 @@ async function sendEthereum() {
 ```ts twoslash
 import { SwapKit, bitgetWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
-await swapKit.connectBitget([Chain.Ethereum]);
+await swapDK.connectBitget([Chain.Ethereum]);
 
 async function sendERC20Token() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -259,7 +258,7 @@ async function sendERC20Token() {
   try {
     console.log("📱 Approve USDC transfer in Bitget Wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -279,12 +278,12 @@ async function sendERC20Token() {
 
 import { SwapKit, bitgetWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
 
-await swapKit.connectBitget([Chain.Bitcoin]);
+await swapDK.connectBitget([Chain.Bitcoin]);
 
 async function sendBitcoin() {
   const recipient = "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
@@ -296,14 +295,13 @@ async function sendBitcoin() {
     console.log("To:", recipient);
     console.log("📱 Approve the Bitcoin transaction in Bitget Wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ Bitcoin transfer sent:", txHash);
-    console.log("🔍 View on Blockstream:", `https:
-
+    console.log("🔍 View on Blockstream:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ Bitcoin transfer failed:", error);
@@ -320,12 +318,12 @@ async function sendBitcoin() {
 
 import { SwapKit, bitgetWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
 
-await swapKit.connectBitget([Chain.Solana]);
+await swapDK.connectBitget([Chain.Solana]);
 
 async function sendSolana() {
   const recipient = "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM";
@@ -336,14 +334,13 @@ async function sendSolana() {
     console.log("Amount:", amount.toSignificant(6), "SOL");
     console.log("To:", recipient);
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ SOL transfer sent:", txHash);
-    console.log("🔍 View on Solscan:", `https:
-
+    console.log("🔍 View on Solscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ SOL transfer failed:", error);
@@ -357,11 +354,11 @@ async function sendSolana() {
 ```ts twoslash
 import { SwapKit, bitgetWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
-await swapKit.connectBitget([Chain.Solana]);
+await swapDK.connectBitget([Chain.Solana]);
 
 async function sendSPLToken() {
   const recipient = "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM";
@@ -372,7 +369,7 @@ async function sendSPLToken() {
   );
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -392,12 +389,12 @@ async function sendSPLToken() {
 
 import { SwapKit, bitgetWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
 
-await swapKit.connectBitget([Chain.Ethereum, Chain.Polygon, Chain.Arbitrum]);
+await swapDK.connectBitget([Chain.Ethereum, Chain.Polygon, Chain.Arbitrum]);
 
 async function sendOnPolygon() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -406,14 +403,13 @@ async function sendOnPolygon() {
   try {
     console.log("📱 Approve MATIC transfer in Bitget Wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ MATIC transfer sent via Bitget:", txHash);
-    console.log("🔍 View on PolygonScan:", `https:
-
+    console.log("🔍 View on PolygonScan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ MATIC transfer failed:", error);
@@ -428,27 +424,26 @@ async function sendOnPolygon() {
 
 import { SwapKit, bitgetWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
 
-await swapKit.connectBitget([Chain.Cosmos]);
+await swapDK.connectBitget([Chain.Cosmos]);
 
 async function sendCosmos() {
   const recipient = "cosmos1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
   const amount = AssetValue.fromChainOrSignature("GAIA.ATOM", 1);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
       memo: "Bitget Cosmos transaction",
     });
 
     console.log("✅ ATOM transfer sent via Bitget:", txHash);
-    console.log("🔍 View on Mintscan:", `https:
-
+    console.log("🔍 View on Mintscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ ATOM transfer failed:", error);
@@ -463,26 +458,25 @@ async function sendCosmos() {
 
 import { SwapKit, bitgetWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
 
-await swapKit.connectBitget([Chain.Tron]);
+await swapDK.connectBitget([Chain.Tron]);
 
 async function sendTron() {
   const recipient = "TLPwm9iGkMiTUERrQ8KXWCFzPn5Q3wz5jc";
   const amount = AssetValue.fromChainOrSignature("TRON.TRX", 10);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ TRX transfer sent via Bitget:", txHash);
-    console.log("🔍 View on TronScan:", `https:
-
+    console.log("🔍 View on TronScan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ TRX transfer failed:", error);
@@ -498,7 +492,7 @@ async function sendTron() {
 ```ts twoslash
 import { SwapKit, bitgetWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
@@ -514,15 +508,15 @@ async function manageEVMChains() {
   ];
 
   try {
-    await swapKit.connectBitget(evmChains);
+    await swapDK.connectBitget(evmChains);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("EVM address (same on all chains):", address);
 
     const balances = {};
     for (const chain of evmChains) {
       try {
-        const balance = await swapKit.getBalance(chain, true);
+        const balance = await swapDK.getBalance(chain, true);
         balances[chain] = balance;
       } catch (error) {
         console.log(`Could not fetch balance for ${chain}:`, error.message);
@@ -541,7 +535,7 @@ async function manageEVMChains() {
 ```ts twoslash
 import { SwapKit, bitgetWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
@@ -557,13 +551,13 @@ async function getPortfolioOverview() {
   ];
 
   try {
-    await swapKit.connectBitget(allChains);
+    await swapDK.connectBitget(allChains);
 
     const portfolio = {};
     for (const chain of allChains) {
       try {
-        const address = swapKit.getAddress(chain);
-        const balance = await swapKit.getBalance(chain, true);
+        const address = swapDK.getAddress(chain);
+        const balance = await swapDK.getBalance(chain, true);
 
         portfolio[chain] = {
           address,
@@ -593,7 +587,7 @@ async function getPortfolioOverview() {
 
 import { SwapKit, bitgetWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...bitgetWallet },
 });
 
@@ -602,15 +596,15 @@ async function diagnosticConnection() {
 
     if (typeof window.bitkeep === 'undefined') {
       console.error("❌ Bitget Wallet extension not found");
-      console.log("🔧 Install Bitget Wallet from https:
+      console.log("🔧 Install Bitget Wallet from https://web3.bitget.com/en/wallet-download");
       return { success: false, error: "Bitget Wallet not installed" };
     }
 
     console.log("🔍 Bitget Wallet detected, attempting connection...");
 
-    await swapKit.connectBitget([Chain.Ethereum]);
+    await swapDK.connectBitget([Chain.Ethereum]);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("✅ Successfully connected:", address);
 
     return { success: true, address };
@@ -658,7 +652,7 @@ async function checkBitgetProviders() {
 async function handleTransactionErrors() {
   try {
     const amount = AssetValue.fromChainOrSignature("ETH.ETH", 0.01);
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient: "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC",
     });
@@ -667,7 +661,7 @@ async function handleTransactionErrors() {
     if (error.message.includes("insufficient funds")) {
       console.error("❌ Insufficient balance for transaction + gas fees");
 
-      const balance = await swapKit.getBalance(Chain.Ethereum, true);
+      const balance = await swapDK.getBalance(Chain.Ethereum, true);
       console.log("Current balance:", balance);
       console.log("🔧 Add more funds to your Bitget Wallet");
     }
@@ -702,7 +696,7 @@ async function handleTransactionErrors() {
 ```ts twoslash
 async function handleChainSpecificIssues(chain: Chain) {
   try {
-    await swapKit.connectBitget([chain]);
+    await swapDK.connectBitget([chain]);
   } catch (error) {
     switch (chain) {
       case Chain.Bitcoin:
@@ -791,8 +785,8 @@ async function secureTransfer(chain: Chain, recipient: string, amount: number) {
     throw new Error("Amount must be positive");
   }
 
-  const swapKit = SwapKit({ wallets: { ...bitgetWallet } });
-  await swapKit.connectBitget([chain]);
+  const swapDK = SwapKit({ wallets: { ...bitgetWallet } });
+  await swapDK.connectBitget([chain]);
 
   let assetValue: AssetValue;
   switch (chain) {
@@ -819,7 +813,7 @@ async function secureTransfer(chain: Chain, recipient: string, amount: number) {
   );
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue,
       recipient,
     });
@@ -837,18 +831,18 @@ async function secureTransfer(chain: Chain, recipient: string, amount: number) {
 ```ts twoslash
 
 
-const secureSwapKit = SwapKit({
+const secureSwapDK = SwapKit({
   config: {
 
     rpcUrls: {
-      [Chain.Ethereum]: "https:
-      [Chain.Bitcoin]: "https:
-      [Chain.Solana]: "https:
-      [Chain.Cosmos]: "https:
-      [Chain.Tron]: "https:
+      [Chain.Ethereum]: "https://example.com"
+      [Chain.Bitcoin]: "https://example.com"
+      [Chain.Solana]: "https://example.com"
+      [Chain.Cosmos]: "https://example.com"
+      [Chain.Tron]: "https://example.com"
     },
     apiKeys: {
-      swapKit: process.env.SWAPKIT_API_KEY,
+      swapKit: process.env.SWAPDK_API_KEY,
     },
   },
   wallets: { ...bitgetWallet },
@@ -873,7 +867,7 @@ export function BitgetWallet({ onConnect, onError }: BitgetWalletProps) {
   const [addresses, setAddresses] = useState<Partial<Record<Chain, string>>>({});
   const [selectedChains, setSelectedChains] = useState<Chain[]>([Chain.Ethereum]);
 
-  const swapKit = SwapKit({ wallets: { ...bitgetWallet } });
+  const swapDK = SwapKit({ wallets: { ...bitgetWallet } });
 
 
   const isBitgetInstalled = typeof window !== 'undefined' &&
@@ -888,11 +882,11 @@ export function BitgetWallet({ onConnect, onError }: BitgetWalletProps) {
     setIsConnecting(true);
 
     try {
-      await swapKit.connectBitget(selectedChains);
+      await swapDK.connectBitget(selectedChains);
 
       const connectedAddresses: Partial<Record<Chain, string>> = {};
       for (const chain of selectedChains) {
-        connectedAddresses[chain] = swapKit.getAddress(chain);
+        connectedAddresses[chain] = swapDK.getAddress(chain);
       }
 
       setAddresses(connectedAddresses);
@@ -906,7 +900,7 @@ export function BitgetWallet({ onConnect, onError }: BitgetWalletProps) {
   };
 
   const disconnect = () => {
-    swapKit.disconnectAll();
+    swapDK.disconnectAll();
     setIsConnected(false);
     setAddresses({});
   };
@@ -938,7 +932,7 @@ export function BitgetWallet({ onConnect, onError }: BitgetWalletProps) {
         <h3>Bitget Wallet</h3>
         <p>Bitget Wallet extension not detected</p>
         <a
-          href="https:
+          href="https://example.com"
           target="_blank"
           rel="noopener noreferrer"
         >

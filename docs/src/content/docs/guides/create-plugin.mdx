@@ -186,7 +186,7 @@ export const ExchangePlugin = createPlugin({
     }) {
       try {
 
-        const response = await fetch("https:
+        const response = await fetch("https://example.com"
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -245,7 +245,7 @@ import { createSwapKit, Chain, keystoreWallet } from "@swapdk/sdk";
 
 import { ExamplePlugin } from "./example-plugin";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   plugins: { examplePlugin: ExamplePlugin },
   wallets: { ...keystoreWallet },
 });

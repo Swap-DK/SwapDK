@@ -37,9 +37,9 @@ bun add @swapdk/toolboxes @swapdk/plugins
 // @noErrorValidation
 import { createSwapKit, Chain } from '@swapdk/sdk';
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-const radixWallet = await swapKit.getWallet(Chain.Radix);
+const radixWallet = await swapDK.getWallet(Chain.Radix);
 
 ````
 </TabItem>
@@ -75,11 +75,11 @@ Connect to Radix using various wallet types:
 // @noErrorValidation
 import { Chain, FeeOption } from "@swapdk/sdk";
 
-await swapKit.connectKeystore([Chain.Radix], "your mnemonic phrase");
+await swapDK.connectKeystore([Chain.Radix], "your mnemonic phrase");
 
-await swapKit.connectRadix([Chain.Radix]);
+await swapDK.connectRadix([Chain.Radix]);
 
-await swapKit.connectLedger([Chain.Radix]);
+await swapDK.connectLedger([Chain.Radix]);
 ```
 
 ### Address Generation
@@ -89,7 +89,7 @@ Radix uses bech32 addresses with different prefixes:
 ```typescript
 // @noErrorValidation
 
-const radixAddress = swapKit.getAddress(Chain.Radix);
+const radixAddress = swapDK.getAddress(Chain.Radix);
 
 console.log("Radix address:", radixAddress);
 
@@ -108,7 +108,7 @@ console.log("Radix public key:", publicKey);
 // @noErrorValidation
 import { AssetValue } from "@swapdk/sdk";
 
-const txHash = await swapKit.transfer({
+const txHash = await swapDK.transfer({
   recipient:
     "account_rdx12yy34s8nfpdtjgzcmnqkjlcl5h5lh7x5hljgykgs5p9w4hxm0h6fkr",
   assetValue: AssetValue.from({
@@ -168,7 +168,7 @@ Radix uses a resource-oriented model where everything is a resource:
 // @noErrorValidation
 
 const accountResources = await radixToolbox.getAccountResources(
-  swapKit.getAddress(Chain.Radix)
+  swapDK.getAddress(Chain.Radix)
 );
 
 console.log("Account resources:");
@@ -191,7 +191,7 @@ const createToken = async () => {
     name: "MyDefiToken",
     symbol: "MDT",
     description: "A DeFi token on Radix",
-    iconUrl: "https:
+    iconUrl: "https://example.com"
     divisibility: 18,
     mintable: true,
     burnable: true
@@ -308,7 +308,7 @@ const claimRewards = async () => {
   const claimTx = await radixToolbox.claimFarmingRewards({
     farmAddress:
       "component_rdx1cpxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    stakingAddress: swapKit.getAddress(Chain.Radix),
+    stakingAddress: swapDK.getAddress(Chain.Radix),
   });
 
   console.log("Rewards claimed:", claimTx);
@@ -325,13 +325,13 @@ const createNFTCollection = async () => {
     name: "Radix Heroes",
     symbol: "RHERO",
     description: "A collection of Radix heroes",
-    iconUrl: "https:
+    iconUrl: "https://example.com"
     nftData: [
       {
         id: "1",
         name: "Radix Warrior",
         description: "A brave warrior of the Radix network",
-        imageUrl: "https:
+        imageUrl: "https://example.com"
         attributes: {
           strength: 95,
           magic: 80,
@@ -358,7 +358,7 @@ const transferNFT = async () => {
 
 
 const getOwnedNFTs = async () => {
-  const nfts = await radixToolbox.getNFTs(swapKit.getAddress(Chain.Radix));
+  const nfts = await radixToolbox.getNFTs(swapDK.getAddress(Chain.Radix));
 
   console.log("Owned NFTs:");
   nfts.forEach((nft) => {
@@ -375,16 +375,16 @@ const getOwnedNFTs = async () => {
 // @noErrorValidation
 
 const bridgeToEthereum = async () => {
-  const bridgeQuote = await swapKit.getQuote({
+  const bridgeQuote = await swapDK.getQuote({
     sellAsset: "XRD.XRD",
     sellAmount: "1000",
     buyAsset: "ETH.XRD",
-    senderAddress: swapKit.getAddress(Chain.Radix),
-    recipientAddress: swapKit.getAddress(Chain.Ethereum),
+    senderAddress: swapDK.getAddress(Chain.Radix),
+    recipientAddress: swapDK.getAddress(Chain.Ethereum),
   });
 
   if (bridgeQuote.routes.length > 0) {
-    const bridgeTx = await swapKit.swap({
+    const bridgeTx = await swapDK.swap({
       route: bridgeQuote.routes[0],
       feeOptionKey: FeeOption.Fast,
     });
@@ -426,19 +426,19 @@ import { SKConfig } from '@swapdk/sdk';
 
 
 SKConfig.setRpcUrl(Chain.Radix, [
-  "https:
-  "https:
-  "https:
+  "https://example.com"
+  "https://example.com"
+  "https://example.com"
 ]);
 
 
-const customRadixGateway = "https:
+const customRadixGateway = "https://example.com"
 SKConfig.setRpcUrl(Chain.Radix, customRadixGateway);
 
 
 const radixToolbox = await getRadixToolbox({
   phrase: "your mnemonic",
-  gatewayUrl: "https:
+  gatewayUrl: "https://example.com"
   networkId: 1
 });
 ```
@@ -448,18 +448,18 @@ const radixToolbox = await getRadixToolbox({
 ```typescript
 // @noErrorValidation
 
-SKConfig.setRpcUrl(Chain.Radix, "https:
+SKConfig.setRpcUrl(Chain.Radix, "https://example.com"
 SKConfig.setEnv('isMainnet', false);
 
 const testnetToolbox = await getRadixToolbox({
   phrase: "your mnemonic",
-  gatewayUrl: "https:
+  gatewayUrl: "https://example.com"
   networkId: 2
 });
 
 
 const faucetRequest = await testnetToolbox.requestFaucetTokens(
-  swapKit.getAddress(Chain.Radix)
+  swapDK.getAddress(Chain.Radix)
 );
 
 console.log("Faucet tokens requested:", faucetRequest);
@@ -477,7 +477,7 @@ const batchOperations = async () => {
     .createTransactionManifest()
 
     .withdrawFromAccount(
-      swapKit.getAddress(Chain.Radix),
+      swapDK.getAddress(Chain.Radix),
       "resource_rdx1tknxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
       "100"
     )
@@ -492,7 +492,7 @@ const batchOperations = async () => {
     )
 
     .callMethodWithAllResources(
-      swapKit.getAddress(Chain.Radix),
+      swapDK.getAddress(Chain.Radix),
       "deposit_batch"
     )
     .build();
@@ -507,7 +507,7 @@ const batchOperations = async () => {
 
 const optimizeResources = async () => {
   const resources = await radixToolbox.getAccountResources(
-    swapKit.getAddress(Chain.Radix)
+    swapDK.getAddress(Chain.Radix)
   );
 
   const consolidationTxs = [];
@@ -515,7 +515,7 @@ const optimizeResources = async () => {
   for (const resource of resources) {
     if (resource.amount < 1 && resource.amount > 0) {
       const consolidateTx = await radixToolbox.transferResource({
-        recipient: swapKit.getAddress(Chain.Radix),
+        recipient: swapDK.getAddress(Chain.Radix),
         resourceAddress: resource.resourceAddress,
         amount: resource.amount.toString(),
         message: "Consolidation",
@@ -541,7 +541,7 @@ const optimizeResources = async () => {
 
      handleDeposits: async (resourceAddress: string, amount: string) => {
        const balance = await radixToolbox.getResourceBalance(
-         swapKit.getAddress(Chain.Radix),
+         swapDK.getAddress(Chain.Radix),
          resourceAddress
        );
 
@@ -561,7 +561,7 @@ const optimizeResources = async () => {
      const manifest = radixToolbox
        .createTransactionManifest()
        .withdrawFromAccount(
-         swapKit.getAddress(Chain.Radix),
+         swapDK.getAddress(Chain.Radix),
          "resource_rdx1tknxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
          "100"
        )
@@ -578,7 +578,7 @@ const optimizeResources = async () => {
          "95"
        )
        .callMethodWithAllResources(
-         swapKit.getAddress(Chain.Radix),
+         swapDK.getAddress(Chain.Radix),
          "deposit_batch"
        )
        .build();

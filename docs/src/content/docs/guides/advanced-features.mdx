@@ -18,9 +18,9 @@ Fetch balances across all connected chains efficiently:
 import { createSwapKit, Chain } from "@swapdk/sdk";
 import { SwapKitApi } from "@swapdk/helpers/api";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-await swapKit.connectKeystore(
+await swapDK.connectKeystore(
   [Chain.Ethereum, Chain.Bitcoin, Chain.Avalanche, Chain.THORChain],
   "your mnemonic phrase"
 );
@@ -32,7 +32,7 @@ const chains = [
   Chain.THORChain,
 ];
 const balances = await Promise.all(
-  chains.map((chain) => swapKit.getBalance(chain, true))
+  chains.map((chain) => swapDK.getBalance(chain, true))
 );
 
 const allAssets = balances
@@ -85,7 +85,7 @@ const transactions = [
 
 const results = await Promise.allSettled(
   transactions.map((tx) =>
-    swapKit.transfer({
+    swapDK.transfer({
       ...tx,
       feeOptionKey: FeeOption.Fast,
     })
@@ -125,12 +125,12 @@ const mintQuote = await SwapKitApi.getSwapQuote({
   sellAsset: "BTC.BTC",
   sellAmount: "10000000",
   buyAsset: "BTC/BTC",
-  sourceAddress: swapKit.getAddress(Chain.Bitcoin),
-  destinationAddress: swapKit.getAddress(Chain.THORChain),
+  sourceAddress: swapDK.getAddress(Chain.Bitcoin),
+  destinationAddress: swapDK.getAddress(Chain.THORChain),
   slippage: 3,
 });
 
-const mintTx = await swapKit.swap({
+const mintTx = await swapDK.swap({
   route: mintQuote.routes[0],
 });
 ```
@@ -146,12 +146,12 @@ const synthSwapQuote = await SwapKitApi.getSwapQuote({
   sellAsset: "BTC/BTC",
   sellAmount: "10000000",
   buyAsset: "ETH/ETH",
-  sourceAddress: swapKit.getAddress(Chain.THORChain),
-  destinationAddress: swapKit.getAddress(Chain.THORChain),
+  sourceAddress: swapDK.getAddress(Chain.THORChain),
+  destinationAddress: swapDK.getAddress(Chain.THORChain),
   slippage: 1,
 });
 
-const swapTx = await swapKit.swap({
+const swapTx = await swapDK.swap({
   route: synthSwapQuote.routes[0],
 });
 ```
@@ -167,12 +167,12 @@ const redeemQuote = await SwapKitApi.getSwapQuote({
   sellAsset: "ETH/ETH",
   sellAmount: "1000000000000000000",
   buyAsset: "ETH.ETH",
-  sourceAddress: swapKit.getAddress(Chain.THORChain),
-  destinationAddress: swapKit.getAddress(Chain.Ethereum),
+  sourceAddress: swapDK.getAddress(Chain.THORChain),
+  destinationAddress: swapDK.getAddress(Chain.Ethereum),
   slippage: 3,
 });
 
-const redeemTx = await swapKit.swap({
+const redeemTx = await swapDK.swap({
   route: redeemQuote.routes[0],
 });
 ```
@@ -229,8 +229,8 @@ const { routes } = await SwapKitApi.getSwapQuote({
   sellAsset: "ETH.ETH",
   sellAmount: "1000000000000000000",
   buyAsset: "BTC.BTC",
-  sourceAddress: swapKit.getAddress(Chain.Ethereum),
-  destinationAddress: swapKit.getAddress(Chain.Bitcoin),
+  sourceAddress: swapDK.getAddress(Chain.Ethereum),
+  destinationAddress: swapDK.getAddress(Chain.Bitcoin),
   slippage: 3,
   providers: ["thorchain", "chainflip", "1inch"],
 });
@@ -254,7 +254,7 @@ const modifiedRoute = {
   expiration: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
 };
 
-await swapKit.swap({ route: modifiedRoute });
+await swapDK.swap({ route: modifiedRoute });
 ```
 
 ## Gas Optimization
@@ -303,7 +303,7 @@ async function getOptimalFeeOption(
 }
 
 const customFees = await getOptimalFeeOption(Chain.Ethereum, "low");
-const tx = await swapKit.transfer({
+const tx = await swapDK.transfer({
   assetValue,
   recipient,
   customTxFee: customFees,
@@ -387,7 +387,7 @@ registry.addCustomToken({
   symbol: 'CUSTOM',
   decimals: 18,
   name: 'Custom Token',
-  logoURI: 'https:
+  logoURI: 'https://example.com'
 });
 ```
 
@@ -433,7 +433,7 @@ class TransactionTracker {
 
 const tracker = new TransactionTracker();
 
-const txHash = await swapKit.swap({ route });
+const txHash = await swapDK.swap({ route });
 await tracker.trackTransaction(txHash, Chain.Ethereum);
 ```
 
@@ -481,7 +481,7 @@ class SwapKitRetry {
 const retry = new SwapKitRetry();
 
 const result = await retry.executeWithRetry(async () => {
-  return await swapKit.swap({ route });
+  return await swapDK.swap({ route });
 });
 ```
 
@@ -529,4 +529,4 @@ async function getCachedQuote(params: any) {
 
 - Explore [THORChain Features](/guides/thorchain-features) for protocol-specific operations
 - Review [API Reference](/guides/api-reference) for all available methods
-- Check [Playgrounds](https:
+- Check [Playgrounds](https://example.com)

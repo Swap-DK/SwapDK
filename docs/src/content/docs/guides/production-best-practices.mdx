@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 
   const quote = await SwapKitApi.getSwapQuote({
     ...params,
-    apiKey: process.env.SWAPKIT_API_KEY,
+    apiKey: process.env.SWAPDK_API_KEY,
   });
 
   return Response.json(quote);
@@ -43,11 +43,11 @@ Always use secure wallet connections instead of handling private keys directly:
 // @noErrorValidation
 import { createSwapKit, Chain } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-await swapKit.connectEVMWallet([Chain.Ethereum]);
-await swapKit.connectLedger([Chain.Bitcoin]);
-await swapKit.connectTrezor([Chain.Bitcoin]);
+await swapDK.connectEVMWallet([Chain.Ethereum]);
+await swapDK.connectLedger([Chain.Bitcoin]);
+await swapDK.connectTrezor([Chain.Bitcoin]);
 ```
 
 ### Input Validation
@@ -58,10 +58,10 @@ Always validate user inputs:
 // @noErrorValidation
 import { createSwapKit, SwapKitError } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
 function validateSwapInput(params: any): void {
-  if (!swapKit.validateAddress(params.recipient, params.chain)) {
+  if (!swapDK.validateAddress(params.recipient, params.chain)) {
     throw new SwapKitError("core_swap_invalid_params", {
       message: "Invalid recipient address",
     });
@@ -94,7 +94,7 @@ Use the modular approach for smaller bundles:
 
     import { SwapKit, ThorchainPlugin, evmWallet } from '@swapdk/sdk';
 
-    const swapKit = SwapKit({
+    const swapDK = SwapKit({
       plugins: { ...ThorchainPlugin },
       wallets: { ...evmWallet }
     });
@@ -106,7 +106,7 @@ Use the modular approach for smaller bundles:
 
     import { createSwapKit } from '@swapdk/sdk';
 
-    const swapKit = createSwapKit();
+    const swapDK = createSwapKit();
     ```
 
   </TabItem>
@@ -185,13 +185,13 @@ Batch multiple operations for efficiency:
 // @noErrorValidation
 import { Chain } from "@swapdk/sdk";
 
-const ethBalance = await swapKit.getBalance(Chain.Ethereum);
-const btcBalance = await swapKit.getBalance(Chain.Bitcoin);
-const avaxBalance = await swapKit.getBalance(Chain.Avalanche);
+const ethBalance = await swapDK.getBalance(Chain.Ethereum);
+const btcBalance = await swapDK.getBalance(Chain.Bitcoin);
+const avaxBalance = await swapDK.getBalance(Chain.Avalanche);
 
 const chains = [Chain.Ethereum, Chain.Bitcoin, Chain.Avalanche];
 const balances = await Promise.all(
-  chains.map((chain) => swapKit.getBalance(chain))
+  chains.map((chain) => swapDK.getBalance(chain))
 );
 ```
 
@@ -207,7 +207,7 @@ import { SwapKitError } from "@swapdk/sdk";
 
 async function executeSwap(route: SwapRoute) {
   try {
-    const txHash = await swapKit.swap({ route });
+    const txHash = await swapDK.swap({ route });
     return { success: true, txHash };
   } catch (error) {
     if (error instanceof SwapKitError) {
@@ -296,10 +296,10 @@ async function performSwap(params: SwapParams) {
     const quote = await SwapKitApi.getSwapQuote(params);
 
     setState({ status: "approving", message: "Approving tokens..." });
-    await swapKit.approveAssetValue(assetValue);
+    await swapDK.approveAssetValue(assetValue);
 
     setState({ status: "swapping", message: "Executing swap..." });
-    const txHash = await swapKit.swap({ route: quote.routes[0] });
+    const txHash = await swapDK.swap({ route: quote.routes[0] });
 
     setState({ status: "success", txHash });
   } catch (error) {
@@ -360,12 +360,12 @@ const rpcEndpoints = {
   [Chain.Ethereum]: [
     process.env.ALCHEMY_ETH_RPC,
     process.env.INFURA_ETH_RPC,
-    'https:
+    'https://example.com'
   ].filter(Boolean),
 
   [Chain.Avalanche]: [
     process.env.AVALANCHE_RPC,
-    'https:
+    'https://example.com'
   ].filter(Boolean)
 };
 
@@ -440,7 +440,7 @@ Sentry.init({
 });
 
 try {
-  await swapKit.swap({ route });
+  await swapDK.swap({ route });
 } catch (error) {
   Sentry.captureException(error, {
     tags: {
@@ -486,7 +486,7 @@ class PerformanceTracker {
 
 const tracker = new PerformanceTracker();
 
-const txHash = await tracker.track("swap", () => swapKit.swap({ route }));
+const txHash = await tracker.track("swap", () => swapDK.swap({ route }));
 ```
 
 ## Deployment Checklist
@@ -530,7 +530,7 @@ import { SwapKitApi, Chain } from "@swapdk/sdk";
 async function healthCheck(): Promise<HealthStatus> {
   const checks = await Promise.allSettled([
     SwapKitApi.getPrice("ETH"),
-    swapKit.validateAddress("0x...", Chain.Ethereum),
+    swapDK.validateAddress("0x...", Chain.Ethereum),
     fetch(rpcUrls[Chain.Ethereum]),
   ]);
 
@@ -544,6 +544,6 @@ async function healthCheck(): Promise<HealthStatus> {
 
 ## Next Steps
 
-- Review [Security considerations](https:
+- Review [Security considerations](https://example.com)
 - Implement [Advanced Features](/guides/advanced-features)
 - Monitor performance with [API Reference](/guides/api-reference)

@@ -37,9 +37,9 @@ npm install @swapdk/toolboxes @swapdk/plugins
 // @noErrorValidation
 import { createSwapKit } from '@swapdk/sdk';
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-const nearWallet = await swapKit.getWallet(Chain.Near);
+const nearWallet = await swapDK.getWallet(Chain.Near);
 
 ````
 </TabItem>
@@ -249,12 +249,12 @@ NEAR Names is a decentralized naming service similar to ENS on Ethereum:
 // @noErrorValidation
 import { SwapKit } from "@swapdk/sdk";
 
-const swapKit = SwapKit.create();
+const swapDK = SwapKit.create();
 
-const isAvailable = await swapKit.nearNames.isAvailable("myname");
+const isAvailable = await swapDK.nearNames.isAvailable("myname");
 
 if (isAvailable) {
-  const txHash = await swapKit.nearNames.register({
+  const txHash = await swapDK.nearNames.register({
     name: "myname",
 
     publicKey: "ed25519:...",
@@ -262,18 +262,18 @@ if (isAvailable) {
   console.log(`Registered myname.near: ${txHash}`);
 }
 
-const owner = await swapKit.nearNames.resolve("alice");
+const owner = await swapDK.nearNames.resolve("alice");
 console.log(`alice.near is owned by: ${owner}`);
 
-const info = await swapKit.nearNames.getInfo("alice");
+const info = await swapDK.nearNames.getInfo("alice");
 console.log(info);
 
-const names = await swapKit.nearNames.lookupNames(
+const names = await swapDK.nearNames.lookupNames(
   "8fac9c5b1f4e8b4c9a7d2e6f1a3b5c7d9e2f4a6b8c1d3e5f7a9b1c3d5e7f9a1b"
 );
 console.log(`Names owned: ${names}`);
 
-const transferTx = await swapKit.nearNames.transfer("myname", "new-owner.near");
+const transferTx = await swapDK.nearNames.transfer("myname", "new-owner.near");
 ```
 
 ### Cross-Chain Swaps via NEAR
@@ -283,7 +283,7 @@ The NEAR plugin supports cross-chain swaps using NEAR as an intermediary:
 ```typescript
 // @noErrorValidation
 
-const quote = await swapKit.getQuote({
+const quote = await swapDK.getQuote({
   sellAsset: "ETH.ETH",
   sellAmount: "0.1",
   buyAsset: "NEAR.NEAR",
@@ -291,7 +291,7 @@ const quote = await swapKit.getQuote({
   recipientAddress: "receiver.near",
 });
 
-const swapTx = await swapKit.swap({
+const swapTx = await swapDK.swap({
   route: quote.routes[0],
   recipient: "receiver.near",
 });
@@ -386,9 +386,7 @@ import { SKConfig } from '@swapdk/sdk';
 
 
 SKConfig.setEnv('isStagenet', true);
-SKConfig.setRpcUrl(Chain.Near, 'https:
-
-
+SKConfig.setRpcUrl(Chain.Near, 'https://example.com'
 const toolbox = await getNearToolbox({ phrase: "..." });
 ```
 

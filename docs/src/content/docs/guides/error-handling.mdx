@@ -550,7 +550,7 @@ async function diagnoseNetwork(): Promise<NetworkDiagnostics> {
 
 
   try {
-    await fetch('https:
+    await fetch('https://example.com'
     diagnostics.connectivity = true;
   } catch {
     diagnostics.connectivity = false;
@@ -558,8 +558,8 @@ async function diagnoseNetwork(): Promise<NetworkDiagnostics> {
 
 
   const rpcTests = [
-    { name: 'ethereum', url: 'https:
-    { name: 'thorchain', url: 'https:
+    { name: 'ethereum', url: 'https://example.com'
+    { name: 'thorchain', url: 'https://example.com'
   ];
 
   await Promise.allSettled(
@@ -583,8 +583,8 @@ async function diagnoseNetwork(): Promise<NetworkDiagnostics> {
 
 
   const apiTests = [
-    { name: 'swapkit', url: 'https:
-    { name: 'thorchain', url: 'https:
+    { name: 'swapkit', url: 'https://example.com'
+    { name: 'thorchain', url: 'https://example.com'
   ];
 
   await Promise.allSettled(

@@ -34,7 +34,7 @@ For mobile integration:
 
 For browser extension:
 
-1. Install from [Chrome Web Store](https:
+1. Install from [Chrome Web Store](https://example.com)
 2. Set up wallet with seed phrase
 3. Extension works like MetaMask with EIP-1193 provider
 
@@ -55,7 +55,7 @@ For browser extension:
 import { SwapKit, coinbaseWallet, Chain } from "@swapdk/sdk";
 
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -64,7 +64,7 @@ const swapKit = SwapKit({
     integrations: {
       coinbase: {
         appName: "Your DApp Name",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
         darkMode: false,
       },
     },
@@ -80,7 +80,7 @@ const swapKit = SwapKit({
 import { createSwapKit, Chain } from "@swapdk/sdk";
 
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -88,7 +88,7 @@ const swapKit = createSwapKit({
     integrations: {
       coinbase: {
         appName: "Your DApp Name",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
       },
     },
   },
@@ -103,12 +103,12 @@ const swapKit = createSwapKit({
 
 import { SwapKit, coinbaseWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     integrations: {
       coinbase: {
         appName: "My DApp",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
         darkMode: false,
       },
     },
@@ -122,10 +122,10 @@ async function connectCoinbaseWallet() {
     console.log("📱 This will open Coinbase Wallet app on mobile or connect via browser extension");
 
 
-    await swapKit.connectCoinbaseWallet([Chain.Ethereum]);
+    await swapDK.connectCoinbaseWallet([Chain.Ethereum]);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
-    const balance = await swapKit.getBalance(Chain.Ethereum, true);
+    const address = swapDK.getAddress(Chain.Ethereum);
+    const balance = await swapDK.getBalance(Chain.Ethereum, true);
 
     console.log("✅ Connected to Coinbase Wallet:", address);
     console.log("ETH balance:", balance);
@@ -144,12 +144,12 @@ async function connectCoinbaseWallet() {
 
 import { SwapKit, coinbaseWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     integrations: {
       coinbase: {
         appName: "Multi-Chain DApp",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
       },
     },
   },
@@ -169,17 +169,17 @@ async function connectMultipleChains() {
 
   try {
 
-    await swapKit.connectCoinbaseWallet(supportedChains);
+    await swapDK.connectCoinbaseWallet(supportedChains);
 
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("EVM address (same on all chains):", address);
 
 
     const balances = await Promise.all(
       supportedChains.map(async (chain) => {
         try {
-          const balance = await swapKit.getBalance(chain, true);
+          const balance = await swapDK.getBalance(chain, true);
           return { chain, balance };
         } catch (error) {
           return { chain, balance: [], error: error.message };
@@ -200,15 +200,15 @@ async function connectMultipleChains() {
 ```ts twoslash
 import { SwapKit, evmWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...evmWallet },
 });
 
 async function connectCoinbaseExtension() {
   try {
-    await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.COINBASE_WEB);
+    await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.COINBASE_WEB);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("Coinbase Extension address:", address);
 
     return { success: true, address };
@@ -227,12 +227,12 @@ async function connectCoinbaseExtension() {
 
 import { SwapKit, coinbaseWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     integrations: {
       coinbase: {
         appName: "My DApp",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
       },
     },
   },
@@ -240,7 +240,7 @@ const swapKit = SwapKit({
 });
 
 
-await swapKit.connectCoinbaseWallet([Chain.Ethereum]);
+await swapDK.connectCoinbaseWallet([Chain.Ethereum]);
 
 async function sendEther() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -252,14 +252,13 @@ async function sendEther() {
     console.log("To:", recipient);
     console.log("📱 Approve the transaction in Coinbase Wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ ETH transfer sent:", txHash);
-    console.log("🔍 View on Etherscan:", `https:
-
+    console.log("🔍 View on Etherscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ ETH transfer failed:", error);
@@ -274,12 +273,12 @@ async function sendEther() {
 
 import { SwapKit, coinbaseWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     integrations: {
       coinbase: {
         appName: "Token DApp",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
       },
     },
   },
@@ -287,7 +286,7 @@ const swapKit = SwapKit({
 });
 
 
-await swapKit.connectCoinbaseWallet([Chain.Ethereum]);
+await swapDK.connectCoinbaseWallet([Chain.Ethereum]);
 
 async function sendERC20Token() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -298,7 +297,7 @@ async function sendERC20Token() {
   try {
     console.log("📱 Approve USDC transfer in Coinbase Wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -318,12 +317,12 @@ async function sendERC20Token() {
 
 import { SwapKit, coinbaseWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     integrations: {
       coinbase: {
         appName: "Base DApp",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
       },
     },
   },
@@ -331,7 +330,7 @@ const swapKit = SwapKit({
 });
 
 
-await swapKit.connectCoinbaseWallet([Chain.Base]);
+await swapDK.connectCoinbaseWallet([Chain.Base]);
 
 async function sendOnBase() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -340,14 +339,13 @@ async function sendOnBase() {
   try {
     console.log("📱 Sending ETH on Base via Coinbase Wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ Base ETH transfer sent:", txHash);
-    console.log("🔍 View on BaseScan:", `https:
-
+    console.log("🔍 View on BaseScan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ Base transfer failed:", error);
@@ -361,7 +359,7 @@ async function sendBaseToken() {
   const amount = AssetValue.fromChainOrSignature("BASE.USDC-0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", 10);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -381,12 +379,12 @@ async function sendBaseToken() {
 
 import { SwapKit, coinbaseWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     integrations: {
       coinbase: {
         appName: "Multi-Chain DApp",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
       },
     },
   },
@@ -394,7 +392,7 @@ const swapKit = SwapKit({
 });
 
 
-await swapKit.connectCoinbaseWallet([Chain.Ethereum, Chain.Polygon, Chain.Arbitrum]);
+await swapDK.connectCoinbaseWallet([Chain.Ethereum, Chain.Polygon, Chain.Arbitrum]);
 
 async function sendOnPolygon() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -403,14 +401,13 @@ async function sendOnPolygon() {
   try {
     console.log("📱 Approve MATIC transfer in Coinbase Wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ MATIC transfer sent:", txHash);
-    console.log("🔍 View on PolygonScan:", `https:
-
+    console.log("🔍 View on PolygonScan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ MATIC transfer failed:", error);
@@ -423,14 +420,13 @@ async function sendOnArbitrum() {
   const amount = AssetValue.fromChainOrSignature("ARB.ETH", 0.001);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ Arbitrum ETH transfer sent:", txHash);
-    console.log("🔍 View on Arbiscan:", `https:
-
+    console.log("🔍 View on Arbiscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ Arbitrum transfer failed:", error);
@@ -447,12 +443,12 @@ async function sendOnArbitrum() {
 
 import { SwapKit, coinbaseWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     integrations: {
       coinbase: {
         appName: "Network Manager",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
       },
     },
   },
@@ -472,13 +468,13 @@ async function manageNetworks() {
 
   try {
 
-    await swapKit.connectCoinbaseWallet(allChains);
+    await swapDK.connectCoinbaseWallet(allChains);
 
 
     const networkStatus = {};
     for (const chain of allChains) {
       try {
-        const balance = await swapKit.getBalance(chain, false);
+        const balance = await swapDK.getBalance(chain, false);
         networkStatus[chain] = {
           connected: true,
           hasBalance: balance.length > 0
@@ -527,19 +523,19 @@ async function connectOptimalCoinbaseWallet() {
   try {
     if (preferredMethod === 'extension' && hasCoinbaseExtension) {
 
-      const evmSwapKit = SwapKit({ wallets: { ...evmWallet } });
-      await evmSwapKit.connectEVMWallet([Chain.Ethereum], WalletOption.COINBASE_WEB);
+      const evmSwapDK = SwapKit({ wallets: { ...evmWallet } });
+      await evmSwapDK.connectEVMWallet([Chain.Ethereum], WalletOption.COINBASE_WEB);
 
       console.log("✅ Connected via Coinbase Browser Extension");
-      return evmSwapKit;
+      return evmSwapDK;
     } else {
 
-      const sdkSwapKit = SwapKit({
+      const sdkSwapDK = SwapKit({
         config: {
           integrations: {
             coinbase: {
               appName: "Auto-Detect DApp",
-              appLogoUrl: "https:
+              appLogoUrl: "https://example.com"
               darkMode: false,
             },
           },
@@ -547,10 +543,10 @@ async function connectOptimalCoinbaseWallet() {
         wallets: { ...coinbaseWallet },
       });
 
-      await sdkSwapKit.connectCoinbaseWallet([Chain.Ethereum]);
+      await sdkSwapDK.connectCoinbaseWallet([Chain.Ethereum]);
 
       console.log("✅ Connected via Coinbase Wallet SDK");
-      return sdkSwapKit;
+      return sdkSwapDK;
     }
   } catch (error) {
     console.error("Failed to connect optimal Coinbase Wallet:", error);
@@ -567,12 +563,12 @@ async function connectOptimalCoinbaseWallet() {
 
 import { SwapKit, coinbaseWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     integrations: {
       coinbase: {
         appName: "Diagnostic App",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
       },
     },
   },
@@ -583,9 +579,9 @@ async function diagnosticConnection() {
   try {
     console.log("🔍 Attempting Coinbase Wallet connection...");
 
-    await swapKit.connectCoinbaseWallet([Chain.Ethereum]);
+    await swapDK.connectCoinbaseWallet([Chain.Ethereum]);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("✅ Successfully connected:", address);
 
     return { success: true, address };
@@ -635,7 +631,7 @@ function checkCoinbaseAvailability() {
   if (!available) {
     console.log("❌ No Coinbase Wallet detected");
     console.log("🔧 Install Coinbase Wallet:");
-    console.log("- Mobile: https:
+    console.log("- Mobile: https://www.coinbase.com/wallet");
     console.log("- Extension: Chrome Web Store");
   }
 
@@ -649,7 +645,7 @@ function checkCoinbaseAvailability() {
 async function handleTransactionErrors() {
   try {
     const amount = AssetValue.fromChainOrSignature("ETH.ETH", 0.01);
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient: "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC",
     });
@@ -658,7 +654,7 @@ async function handleTransactionErrors() {
     if (error.message.includes("insufficient funds")) {
       console.error("❌ Insufficient ETH balance");
 
-      const balance = await swapKit.getBalance(Chain.Ethereum, true);
+      const balance = await swapDK.getBalance(Chain.Ethereum, true);
       console.log("Current balance:", balance);
       console.log("🔧 Add more ETH to your Coinbase Wallet");
     }
@@ -695,7 +691,7 @@ async function handleTransactionErrors() {
 ```ts twoslash
 async function handleSDKIssues() {
   try {
-    await swapKit.connectCoinbaseWallet([Chain.Ethereum]);
+    await swapDK.connectCoinbaseWallet([Chain.Ethereum]);
   } catch (error) {
     if (error.message.includes("Wallet connection")) {
       console.error("❌ SDK connection failed");
@@ -728,12 +724,12 @@ async function handleSDKIssues() {
 import { SwapKit, coinbaseWallet, Chain } from "@swapdk/sdk";
 
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     integrations: {
       coinbase: {
         appName: "Your App Name",
-        appLogoUrl: "https:
+        appLogoUrl: "https://example.com"
         darkMode: false,
 
         overrideIsMetaMask: false,
@@ -742,8 +738,8 @@ const swapKit = SwapKit({
     },
 
     rpcUrls: {
-      [Chain.Ethereum]: "https:
-      [Chain.Base]: "https:
+      [Chain.Ethereum]: "https://example.com"
+      [Chain.Base]: "https://example.com"
     },
   },
   wallets: { ...coinbaseWallet },
@@ -774,7 +770,7 @@ async function secureTransfer(recipient: string, amount: number) {
   console.log("⚠️ Please verify these details in Coinbase Wallet");
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue,
       recipient,
     });
@@ -793,7 +789,7 @@ function getSecureConfig() {
     integrations: {
       coinbase: {
         appName: process.env.APP_NAME || "My DApp",
-        appLogoUrl: process.env.APP_LOGO_URL || "https:
+        appLogoUrl: process.env.APP_LOGO_URL || "https://example.com"
         darkMode: process.env.THEME === 'dark',
       },
     },
@@ -850,7 +846,7 @@ export function CoinbaseWallet({ onConnect, onError }: CoinbaseWalletProps) {
     Chain.Ethereum,
   ]);
 
-  const swapKit = SwapKit({
+  const swapDK = SwapKit({
     config: {
       integrations: {
         coinbase: {
@@ -867,8 +863,8 @@ export function CoinbaseWallet({ onConnect, onError }: CoinbaseWalletProps) {
     setIsConnecting(true);
 
     try {
-      await swapKit.connectCoinbaseWallet(selectedChains);
-      const walletAddress = swapKit.getAddress(selectedChains[0]);
+      await swapDK.connectCoinbaseWallet(selectedChains);
+      const walletAddress = swapDK.getAddress(selectedChains[0]);
 
       setAddress(walletAddress);
       setIsConnected(true);
@@ -881,7 +877,7 @@ export function CoinbaseWallet({ onConnect, onError }: CoinbaseWalletProps) {
   };
 
   const disconnect = () => {
-    swapKit.disconnectAll();
+    swapDK.disconnectAll();
     setIsConnected(false);
     setAddress("");
   };

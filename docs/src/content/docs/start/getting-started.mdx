@@ -53,7 +53,7 @@ Before starting, ensure you have:
 
 import { createSwapKit } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 ```
 
 <TryItYourself
@@ -76,12 +76,12 @@ For production applications, you'll want to add your own API keys and custom set
 
 import { createSwapKit } from "@swapdk/sdk";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "your-project-id",
       blockchair: "your-blockchair-key",
-      swapKit: "your-swapkit-key",
+      swapKit: "your-swapdk-key",
     },
     rpcUrls: {
       ETH: "https://eth-mainnet.g.alchemy.com/v2/your-key",
@@ -154,20 +154,20 @@ const keystore = WalletOption.KEYSTORE;
 
 import { createSwapKit, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-await swapKit.connectKeystore(
+await swapDK.connectKeystore(
   [Chain.Ethereum, Chain.Bitcoin],
   "your twelve word mnemonic phrase here"
 );
 
-await swapKit.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
+await swapDK.connectEVMWallet([Chain.Ethereum], WalletOption.METAMASK);
 
-await swapKit.connectKeplr([Chain.Cosmos, Chain.THORChain]);
+await swapDK.connectKeplr([Chain.Cosmos, Chain.THORChain]);
 
-await swapKit.connectCosmostation([Chain.Cosmos, Chain.THORChain]);
+await swapDK.connectCosmostation([Chain.Cosmos, Chain.THORChain]);
 
-const wallets = swapKit.getAllWallets();
+const wallets = swapDK.getAllWallets();
 ```
 
 ### Get Wallet Balances
@@ -177,14 +177,14 @@ const wallets = swapKit.getAllWallets();
 
 import { createSwapKit, Chain } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-const ethBalance = await swapKit.getBalance(Chain.Ethereum);
-const btcBalance = await swapKit.getBalance(Chain.Bitcoin);
+const ethBalance = await swapDK.getBalance(Chain.Ethereum);
+const btcBalance = await swapDK.getBalance(Chain.Bitcoin);
 
-const freshBalance = await swapKit.getBalance(Chain.Ethereum, true);
+const freshBalance = await swapDK.getBalance(Chain.Ethereum, true);
 
-const walletWithBalance = await swapKit.getWalletWithBalance(Chain.Ethereum);
+const walletWithBalance = await swapDK.getWalletWithBalance(Chain.Ethereum);
 console.log(`Address: ${walletWithBalance.address}`);
 console.log(`Balance: ${walletWithBalance.balance}`);
 ```
@@ -198,14 +198,14 @@ Use the [SwapDK API](/guides/api-reference) to get quotes and execute swaps:
 
 import { createSwapKit, Chain, FeeOption, SwapKitApi } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
 const quoteParams = {
   sellAsset: "ETH.ETH",
   sellAmount: "1000000000000000000",
   buyAsset: "BTC.BTC",
-  sourceAddress: swapKit.getAddress(Chain.Ethereum),
-  destinationAddress: swapKit.getAddress(Chain.Bitcoin),
+  sourceAddress: swapDK.getAddress(Chain.Ethereum),
+  destinationAddress: swapDK.getAddress(Chain.Bitcoin),
   slippage: 3,
 };
 
@@ -215,7 +215,7 @@ const bestRoute = routes[0];
 console.log(`Expected output: ${bestRoute.expectedBuyAmount}`);
 console.log(`Fees:`, bestRoute.fee);
 
-const txHash = await swapKit.swap({
+const txHash = await swapDK.swap({
   route: bestRoute,
   feeOptionKey: FeeOption.Fast,
 });
@@ -231,7 +231,7 @@ console.log(`Swap transaction: ${txHash}`);
     {
       title: "Install and Initialize SwapDK",
       description: "Set up SwapDK in your project with the required dependencies",
-      code: `bun add @swapdk/sdk\n\nimport { createSwapKit } from '@swapdk/sdk';\n\nconst swapKit = createSwapKit({
+      code: `bun add @swapdk/sdk\n\nimport { createSwapKit } from '@swapdk/sdk';\n\nconst swapDK = createSwapKit({
   config: {
     apiKeys: {
       swapKit: 'your-api-key-here'
@@ -250,14 +250,14 @@ console.log(`Swap transaction: ${txHash}`);
       title: "Connect Your Wallet",
       description: "Connect a wallet to access blockchain functionality",
       code: `
-await swapKit.connectEVMWallet([Chain.Ethereum]);
+await swapDK.connectEVMWallet([Chain.Ethereum]);
 
-await swapKit.connectKeystore(
+await swapDK.connectKeystore(
 [Chain.Ethereum, Chain.Bitcoin],
 'your twelve word mnemonic phrase'
 );
 
-const ethAddress = swapKit.getAddress(Chain.Ethereum);
+const ethAddress = swapDK.getAddress(Chain.Ethereum);
 console.log('Connected:', ethAddress);`,
       action: "Connect your preferred wallet type",
       result: "Wallet connected and ready for transactions",
@@ -276,8 +276,8 @@ const quoteResponse = await SwapKitApi.getSwapQuote({
 sellAsset: 'ETH.ETH',
 buyAsset: 'BTC.BTC',
 sellAmount: '0.1',
-sourceAddress: swapKit.getAddress(Chain.Ethereum),
-destinationAddress: swapKit.getAddress(Chain.Bitcoin),
+sourceAddress: swapDK.getAddress(Chain.Ethereum),
+destinationAddress: swapDK.getAddress(Chain.Bitcoin),
 slippage: 1
 });
 
@@ -296,14 +296,14 @@ console.log('Expected output:', bestRoute.expectedBuyAmount);`,
       description: "Perform the cross-chain swap using the selected route",
       code: `import { FeeOption } from '@swapdk/sdk';
 
-const txHash = await swapKit.swap({
+const txHash = await swapDK.swap({
 route: bestRoute,
 feeOptionKey: FeeOption.Fast
 });
 
 console.log('Transaction hash:', txHash);
 
-const txUrl = swapKit.getExplorerTxUrl({
+const txUrl = swapDK.getExplorerTxUrl({
 chain: Chain.Ethereum,
 txHash
 });`,
@@ -325,11 +325,11 @@ tips: [
 
 import { createSwapKit, AssetValue, FeeOption, Chain } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
 const ethAmount = AssetValue.from({ asset: "ETH.ETH", value: "0.1" });
 
-const txHash = await swapKit.transfer({
+const txHash = await swapDK.transfer({
   assetValue: ethAmount,
   recipient: "0x742d35Cc6634C0532925a3b844Bc9e7595f6E321",
   memo: "Payment for services",
@@ -338,7 +338,7 @@ const txHash = await swapKit.transfer({
 
 const btcAmount = AssetValue.from({ asset: "BTC.BTC", value: "0.001" });
 
-const btcTxHash = await swapKit.transfer({
+const btcTxHash = await swapDK.transfer({
   assetValue: btcAmount,
   recipient: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
   feeOptionKey: FeeOption.Average,
@@ -346,7 +346,7 @@ const btcTxHash = await swapKit.transfer({
 
 const xrpAmount = AssetValue.from({ asset: "XRP.XRP", value: "10" });
 
-const xrpTxHash = await swapKit.transfer({
+const xrpTxHash = await swapDK.transfer({
   assetValue: xrpAmount,
   recipient: "rBaaxNpAKxELKXkJpSCCJQTkQMTYrcPQPv",
   memo: "Invoice #12345",
@@ -370,7 +370,7 @@ import {
   ledgerWallet,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   plugins: {
     ...ThorchainPlugin,
   },
@@ -418,14 +418,14 @@ const MyCustomPlugin = {
   },
 };
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   plugins: {
     ...MyCustomPlugin,
   },
 });
 
-await swapKit.myCustomMethod({ customParam: "value" });
-await swapKit.getCustomData();
+await swapDK.myCustomMethod({ customParam: "value" });
+await swapDK.getCustomData();
 ```
 
 ## Error Handling
@@ -437,7 +437,7 @@ SwapDK uses typed errors for better debugging:
 
 import { createSwapKit, SwapKitError, FeeOption } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
 try {
   const route = {
@@ -445,13 +445,13 @@ try {
     buyAsset: "BTC.BTC",
     expectedBuyAmount: "0.001",
   };
-  await swapKit.swap({
+  await swapDK.swap({
     route,
     feeOptionKey: FeeOption.Fast,
   });
 } catch (error) {
   if (error instanceof SwapKitError) {
-    console.error("SwapKit Error:", error.message);
+    console.error("SwapDK Error:", error.message);
 
     console.error("Full error:", error);
   } else {
@@ -563,7 +563,6 @@ If you're upgrading from v3 or want to explore the latest features:
 
 ## Need Help?
 
-- 💬 [Join our Discord](https://discord.gg/swapdk) for community support
 - 🐛 [Report issues on GitHub](https://github.com/Swap-DK/SwapDK/issues)
 - 📚 [Browse the API Reference](/guides/api-reference) for detailed documentation
 

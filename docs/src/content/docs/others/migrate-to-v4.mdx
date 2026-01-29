@@ -94,13 +94,13 @@ v4 introduces a centralized configuration system:
 
 - const client = SwapKit({
 -   apis: { [Chain.Ethereum]: customEthApi },
--   rpcUrls: { [Chain.Ethereum]: "https:
+-   rpcUrls: { [Chain.Ethereum]: "https://example.com" }
 - });
 
 
 + import { SKConfig } from "@swapdk/helpers";
 + SKConfig.set({
-+   rpcUrls: { [Chain.Ethereum]: "https:
++   rpcUrls: { [Chain.Ethereum]: "https://example.com" },
 +   apiKeys: {
 +     blockchair: "YOUR_KEY",
 +     swapKit: "YOUR_KEY"
@@ -159,7 +159,7 @@ Toolboxes no longer accept RPC URLs directly:
 
 - const toolbox = getToolboxByChain(chain, {
 -   api: customApi,
--   rpcUrl: "https:
+-   rpcUrl: "https://example.com",
 -   signer
 - });
 
@@ -304,13 +304,13 @@ The biggest improvement in v4 is the ability to update configuration at runtime 
 // @noErrorValidation
 
 const client1 = SwapKit({
-  rpcUrls: { [Chain.Ethereum]: "https:
+  rpcUrls: { [Chain.Ethereum]: "https://example.com" },
   apis: { [Chain.Bitcoin]: customBtcApi }
 });
 
 
 const client2 = SwapKit({
-  rpcUrls: { [Chain.Ethereum]: "https:
+  rpcUrls: { [Chain.Ethereum]: "https://example.com" },
   apis: { [Chain.Bitcoin]: customBtcApi }
 });
 ```
@@ -322,22 +322,22 @@ const client2 = SwapKit({
 import { createSwapKit, SKConfig, Chain } from '@swapdk/sdk';
 
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
-    rpcUrls: { [Chain.Ethereum]: "https:
+    rpcUrls: { [Chain.Ethereum]: "https://example.com" },
     apiKeys: { blockchair: "basic-key" }
   }
 });
 
 
-SKConfig.setRpcUrl(Chain.Ethereum, "https:
+SKConfig.setRpcUrl(Chain.Ethereum, "https://example.com");
 SKConfig.setApiKey("blockchair", "premium-api-key");
 
 
 SKConfig.setEnv("isStagenet", true);
 
 
-const balance = await swapKit.getBalance(Chain.Ethereum);
+const balance = await swapDK.getBalance(Chain.Ethereum);
 ```
 
 ### 2. Individual Configuration Updates
@@ -347,16 +347,14 @@ Update specific parts of configuration without affecting others:
 ```typescript
 // @noErrorValidation
 
-SKConfig.setApiKey("swapKit", "your-swapkit-api-key");
+SKConfig.setApiKey("swapKit", "your-swapdk-api-key");
 SKConfig.setApiKey("walletConnectProjectId", "your-wc-project-id");
 SKConfig.setApiKey("blockchair", "your-blockchair-key");
 
 
-SKConfig.setRpcUrl(Chain.Ethereum, "https:
-SKConfig.setRpcUrl(Chain.Arbitrum, "https:
-SKConfig.setRpcUrl(Chain.Avalanche, "https:
-
-
+SKConfig.setRpcUrl(Chain.Ethereum, "https://example.com");
+SKConfig.setRpcUrl(Chain.Arbitrum, "https://example.com");
+SKConfig.setRpcUrl(Chain.Avalanche, "https://example.com");
 SKConfig.setEnv("isDev", false);
 SKConfig.setEnv("isStagenet", true);
 
@@ -378,13 +376,13 @@ Update multiple configurations at once:
 
 SKConfig.set({
   rpcUrls: {
-    [Chain.Ethereum]: "https:
-    [Chain.Arbitrum]: "https:
-    [Chain.Avalanche]: "https:
+    [Chain.Ethereum]: "https://example.com",
+    [Chain.Arbitrum]: "https://example.com",
+    [Chain.Avalanche]: "https://example.com"
   },
   apiKeys: {
     blockchair: "premium-blockchair-key",
-    swapKit: "premium-swapkit-key",
+    swapKit: "premium-swapdk-key",
     walletConnectProjectId: "your-project-id"
   },
   envs: {
@@ -401,19 +399,17 @@ Switch between mainnet and testnet without recreating client:
 ```typescript
 // @noErrorValidation
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
 
 SKConfig.setEnv("isStagenet", true);
-SKConfig.setRpcUrl(Chain.THORChain, "https:
-
-
-await swapKit.connectKeystore([Chain.THORChain], phrase);
-const balance = await swapKit.getBalance(Chain.THORChain);
+SKConfig.setRpcUrl(Chain.THORChain, "https://example.com");
+await swapDK.connectKeystore([Chain.THORChain], phrase);
+const balance = await swapDK.getBalance(Chain.THORChain);
 
 
 SKConfig.setEnv("isStagenet", false);
-SKConfig.setRpcUrl(Chain.THORChain, "https:
+SKConfig.setRpcUrl(Chain.THORChain, "https://example.com");
 ```
 
 ### 5. How Toolboxes Automatically Use Updated Config
@@ -430,9 +426,7 @@ const rpcUrl = SKConfig.get("rpcUrls")[Chain.Ethereum];
 const provider = new JsonRpcProvider(rpcUrl);
 
 
-SKConfig.setRpcUrl(Chain.Ethereum, "https:
-
-
+SKConfig.setRpcUrl(Chain.Ethereum, "https://example.com");
 const newEthToolbox = await getEvmToolbox(Chain.Ethereum);
 ```
 
@@ -484,7 +478,7 @@ import { SwapKitApi } from "@swapdk/sdk";
 
 import { SKConfig, Chain, getEvmToolbox } from "@swapdk/sdk";
 
-SKConfig.set({ rpcUrls: { [Chain.Ethereum]: "https:
+SKConfig.set({ rpcUrls: { [Chain.Ethereum]: "https://example.com" } });
 const signer = /* your signer instance */;
 const toolbox = getEvmToolbox(Chain.Ethereum, { signer });
 ```
@@ -519,6 +513,5 @@ export const MyPlugin = createPlugin({
 
 ## Need Help?
 
-- 💬 [Join our Discord](https://discord.gg/swapdk) for community support
 - 🐛 [Report issues on GitHub](https://github.com/Swap-DK/SwapDK/issues)
 - 📚 Check the [Getting Started guide](/start/getting-started) for v4 patterns

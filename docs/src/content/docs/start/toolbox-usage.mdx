@@ -699,7 +699,7 @@ async function crossChainOperation() {
   const zcashToolbox = await getUtxoToolbox(Chain.Zcash);
 
 
-  const provider = new ethers.JsonRpcProvider("https:
+  const provider = new ethers.JsonRpcProvider("https://example.com"
   const signer = new ethers.Wallet("your-eth-private-key", provider);
   const ethToolbox = await getEvmToolbox(Chain.Ethereum, { provider, signer });
 

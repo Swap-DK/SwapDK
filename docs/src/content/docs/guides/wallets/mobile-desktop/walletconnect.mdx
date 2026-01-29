@@ -27,7 +27,7 @@ WalletConnect works with hundreds of wallets including:
 
 ### 1. Get WalletConnect Project ID
 
-1. Visit [WalletConnect Cloud](https:
+1. Visit [WalletConnect Cloud](https://example.com)
 2. Create a new project
 3. Copy your Project ID
 4. Configure your project settings (name, description, icons, URLs)
@@ -40,8 +40,8 @@ Add WalletConnect metadata to your application:
 {
   "name": "Your DApp Name",
   "description": "Your DApp Description",
-  "url": "https:
-  "icons": ["https:
+  "url": "https://example.com"
+  "icons": ["https://example.com"
 }
 ```
 
@@ -64,7 +64,7 @@ WalletConnect works in all modern browsers:
 ```ts twoslash
 import { SwapKit, walletconnectWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -80,7 +80,7 @@ const swapKit = SwapKit({
 ```ts twoslash
 import { createSwapKit, Chain } from "@swapdk/sdk";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -97,7 +97,7 @@ const swapKit = createSwapKit({
 ```ts twoslash
 import { SwapKit, walletconnectWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -113,10 +113,10 @@ async function connectWalletConnect() {
       "📱 Scan QR code with your mobile wallet or click a wallet to connect"
     );
 
-    await swapKit.connectWalletconnect([Chain.Ethereum]);
+    await swapDK.connectWalletconnect([Chain.Ethereum]);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
-    const balance = await swapKit.getBalance(Chain.Ethereum, true);
+    const address = swapDK.getAddress(Chain.Ethereum);
+    const balance = await swapDK.getBalance(Chain.Ethereum, true);
 
     console.log("✅ Connected via WalletConnect:", address);
     console.log("ETH balance:", balance);
@@ -134,7 +134,7 @@ async function connectWalletConnect() {
 ```ts twoslash
 import { SwapKit, walletconnectWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -154,18 +154,18 @@ async function connectMultipleChains() {
   ];
 
   try {
-    await swapKit.connectWalletconnect(supportedChains);
+    await swapDK.connectWalletconnect(supportedChains);
 
     const addresses = {};
     for (const chain of supportedChains) {
-      addresses[chain] = swapKit.getAddress(chain);
+      addresses[chain] = swapDK.getAddress(chain);
       console.log(`${chain} address:`, addresses[chain]);
     }
 
     const balances = await Promise.all(
       supportedChains.map(async (chain) => {
         try {
-          const balance = await swapKit.getBalance(chain, true);
+          const balance = await swapDK.getBalance(chain, true);
           return { chain, balance };
         } catch (error) {
           return { chain, balance: [], error: error.message };
@@ -187,7 +187,7 @@ async function connectMultipleChains() {
 
 import { SwapKit, walletconnectWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -201,17 +201,17 @@ async function connectWithAdvancedOptions() {
     metadata: {
       name: "My DApp",
       description: "My DApp Description",
-      url: "https:
-      icons: ["https:
+      url: "https://example.com"
+      icons: ["https://example.com"
     },
 
 
   };
 
   try {
-    await swapKit.connectWalletconnect([Chain.Ethereum], walletconnectOptions);
+    await swapDK.connectWalletconnect([Chain.Ethereum], walletconnectOptions);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("Connected with custom options:", address);
 
     return { success: true, address };
@@ -232,7 +232,7 @@ async function connectWithAdvancedOptions() {
 
 import { SwapKit, walletconnectWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -242,7 +242,7 @@ const swapKit = SwapKit({
 });
 
 
-await swapKit.connectWalletconnect([Chain.Ethereum]);
+await swapDK.connectWalletconnect([Chain.Ethereum]);
 
 async function sendEthereum() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -254,14 +254,13 @@ async function sendEthereum() {
     console.log("To:", recipient);
     console.log("📱 Approve the transaction on your mobile wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ ETH transfer sent:", txHash);
-    console.log("🔍 View on Etherscan:", `https:
-
+    console.log("🔍 View on Etherscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ ETH transfer failed:", error);
@@ -275,7 +274,7 @@ async function sendEthereum() {
 ```ts twoslash
 import { SwapKit, walletconnectWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -284,7 +283,7 @@ const swapKit = SwapKit({
   wallets: { ...walletconnectWallet },
 });
 
-await swapKit.connectWalletconnect([Chain.Ethereum]);
+await swapDK.connectWalletconnect([Chain.Ethereum]);
 
 async function sendERC20Token() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -297,7 +296,7 @@ async function sendERC20Token() {
   try {
     console.log("📱 Approve USDC transfer on your mobile wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -317,7 +316,7 @@ async function sendERC20Token() {
 
 import { SwapKit, walletconnectWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -327,7 +326,7 @@ const swapKit = SwapKit({
 });
 
 
-await swapKit.connectWalletconnect([Chain.Ethereum, Chain.Polygon, Chain.Arbitrum]);
+await swapDK.connectWalletconnect([Chain.Ethereum, Chain.Polygon, Chain.Arbitrum]);
 
 async function sendOnPolygon() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
@@ -336,14 +335,13 @@ async function sendOnPolygon() {
   try {
     console.log("📱 Approve MATIC transfer on your mobile wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ MATIC transfer sent via WalletConnect:", txHash);
-    console.log("🔍 View on PolygonScan:", `https:
-
+    console.log("🔍 View on PolygonScan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ MATIC transfer failed:", error);
@@ -358,14 +356,13 @@ async function sendOnArbitrum() {
   try {
     console.log("📱 Approve Arbitrum ETH transfer on your mobile wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
 
     console.log("✅ Arbitrum ETH transfer sent:", txHash);
-    console.log("🔍 View on Arbiscan:", `https:
-
+    console.log("🔍 View on Arbiscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ Arbitrum transfer failed:", error);
@@ -382,7 +379,7 @@ async function sendOnArbitrum() {
 
 import { SwapKit, walletconnectWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -392,7 +389,7 @@ const swapKit = SwapKit({
 });
 
 
-await swapKit.connectWalletconnect([Chain.Cosmos]);
+await swapDK.connectWalletconnect([Chain.Cosmos]);
 
 async function sendCosmos() {
   const recipient = "cosmos1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
@@ -401,15 +398,14 @@ async function sendCosmos() {
   try {
     console.log("📱 Approve ATOM transfer on your mobile wallet (Keplr, etc.)");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
       memo: "WalletConnect Cosmos transaction",
     });
 
     console.log("✅ ATOM transfer sent via WalletConnect:", txHash);
-    console.log("🔍 View on Mintscan:", `https:
-
+    console.log("🔍 View on Mintscan:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ ATOM transfer failed:", error);
@@ -424,7 +420,7 @@ async function sendCosmos() {
 
 import { SwapKit, walletconnectWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -434,7 +430,7 @@ const swapKit = SwapKit({
 });
 
 
-await swapKit.connectWalletconnect([Chain.THORChain]);
+await swapDK.connectWalletconnect([Chain.THORChain]);
 
 async function sendTHORChain() {
   const recipient = "thor1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
@@ -443,15 +439,14 @@ async function sendTHORChain() {
   try {
     console.log("📱 Approve RUNE transfer on your mobile wallet");
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
       memo: "WalletConnect THORChain transaction",
     });
 
     console.log("✅ RUNE transfer sent via WalletConnect:", txHash);
-    console.log("🔍 View on THORChain Explorer:", `https:
-
+    console.log("🔍 View on THORChain Explorer:", `https://example.com`
     return txHash;
   } catch (error) {
     console.error("❌ RUNE transfer failed:", error);
@@ -466,7 +461,7 @@ async function depositToTHORChain() {
 
   try {
 
-    const wallet = await swapKit.getWalletWithBalance(Chain.THORChain);
+    const wallet = await swapDK.getWalletWithBalance(Chain.THORChain);
     const txHash = await wallet.deposit({
       assetValue: amount,
       memo,
@@ -488,7 +483,7 @@ async function depositToTHORChain() {
 ```ts twoslash
 import { SwapKit, walletconnectWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -509,15 +504,15 @@ async function connectEVMChains() {
   ];
 
   try {
-    await swapKit.connectWalletconnect(evmChains);
+    await swapDK.connectWalletconnect(evmChains);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("EVM address (same on all chains):", address);
 
     const chainStatus = {};
     for (const chain of evmChains) {
       try {
-        const balance = await swapKit.getBalance(chain, false);
+        const balance = await swapDK.getBalance(chain, false);
         chainStatus[chain] = { connected: true, balance };
       } catch (error) {
         chainStatus[chain] = { connected: false, error: error.message };
@@ -536,7 +531,7 @@ async function connectEVMChains() {
 ```ts twoslash
 import { SwapKit, walletconnectWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -554,11 +549,11 @@ async function connectCosmosEcosystem() {
   ];
 
   try {
-    await swapKit.connectWalletconnect(cosmosChains);
+    await swapDK.connectWalletconnect(cosmosChains);
 
     const addresses = {};
     for (const chain of cosmosChains) {
-      addresses[chain] = swapKit.getAddress(chain);
+      addresses[chain] = swapDK.getAddress(chain);
       console.log(`${chain} address:`, addresses[chain]);
     }
 
@@ -577,7 +572,7 @@ async function connectCosmosEcosystem() {
 
 import { SwapKit, walletconnectWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: "YOUR_WALLETCONNECT_PROJECT_ID",
@@ -591,9 +586,9 @@ async function diagnosticConnection() {
     console.log("🔍 Attempting WalletConnect connection...");
     console.log("📱 Please scan QR code or select a wallet from the modal");
 
-    await swapKit.connectWalletconnect([Chain.Ethereum]);
+    await swapDK.connectWalletconnect([Chain.Ethereum]);
 
-    const address = swapKit.getAddress(Chain.Ethereum);
+    const address = swapDK.getAddress(Chain.Ethereum);
     console.log("✅ Successfully connected via WalletConnect:", address);
 
     return { success: true, address };
@@ -603,7 +598,7 @@ async function diagnosticConnection() {
     if (error.message.includes("project_id")) {
       console.log("🔧 Troubleshooting steps:");
       console.log("1. Ensure WalletConnect Project ID is set correctly");
-      console.log("2. Check your project configuration at https:
+      console.log("2. Check your project configuration at https://cloud.walletconnect.com/");
       console.log("3. Verify the project ID is valid and active");
     }
 
@@ -625,12 +620,12 @@ async function diagnosticConnection() {
 
 
 function checkWalletConnectConfig() {
-  const config = swapKit.getConfig();
+  const config = swapDK.getConfig();
   const projectId = config.apiKeys?.walletConnectProjectId;
 
   if (!projectId) {
     console.error("❌ WalletConnect Project ID not configured");
-    console.log("🔧 Add your project ID to SwapKit config");
+    console.log("🔧 Add your project ID to SwapDK config");
     return { configured: false };
   }
 
@@ -651,7 +646,7 @@ function checkWalletConnectConfig() {
 async function handleTransactionErrors() {
   try {
     const amount = AssetValue.fromChainOrSignature("ETH.ETH", 0.01);
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient: "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC",
     });
@@ -660,7 +655,7 @@ async function handleTransactionErrors() {
     if (error.message.includes("insufficient funds")) {
       console.error("❌ Insufficient ETH balance");
 
-      const balance = await swapKit.getBalance(Chain.Ethereum, true);
+      const balance = await swapDK.getBalance(Chain.Ethereum, true);
       console.log("Current balance:", balance);
       console.log("🔧 Add more ETH to your wallet");
     }
@@ -696,7 +691,7 @@ async function handleTransactionErrors() {
 ```ts twoslash
 async function handleSessionIssues() {
   try {
-    await swapKit.connectWalletconnect([Chain.Ethereum]);
+    await swapDK.connectWalletconnect([Chain.Ethereum]);
   } catch (error) {
     if (
       error.message.includes("session") ||
@@ -708,14 +703,14 @@ async function handleSessionIssues() {
       console.log("3. Try connecting again to establish a new session");
 
       try {
-        swapKit.disconnectAll();
+        swapDK.disconnectAll();
         console.log("✅ Old sessions cleared");
       } catch {
         console.error("❌ Failed to clear old sessions");
       }
 
       console.log("🔄 Attempting to reconnect...");
-      await swapKit.connectWalletconnect([Chain.Ethereum]);
+      await swapDK.connectWalletconnect([Chain.Ethereum]);
     }
 
     throw error;
@@ -732,15 +727,15 @@ async function handleSessionIssues() {
 import { SwapKit, walletconnectWallet, Chain } from "@swapdk/sdk";
 
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       walletConnectProjectId: process.env.WALLETCONNECT_PROJECT_ID,
     },
 
     rpcUrls: {
-      [Chain.Ethereum]: "https:
-      [Chain.Polygon]: "https:
+      [Chain.Ethereum]: "https://example.com"
+      [Chain.Polygon]: "https://example.com"
     },
   },
   wallets: { ...walletconnectWallet },
@@ -783,7 +778,7 @@ async function secureWalletConnectTransaction() {
   console.log("⚠️ Please verify these details on your mobile wallet before confirming");
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -799,11 +794,11 @@ async function secureWalletConnectTransaction() {
 
 async function secureSessionManagement() {
   try {
-    await swapKit.connectWalletconnect([Chain.Ethereum]);
+    await swapDK.connectWalletconnect([Chain.Ethereum]);
 
 
     window.addEventListener('beforeunload', () => {
-      swapKit.disconnectAll();
+      swapDK.disconnectAll();
     });
 
   } catch (error) {
@@ -834,7 +829,7 @@ const getWalletConnectConfig = () => {
   };
 };
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: getWalletConnectConfig(),
   },
@@ -860,7 +855,7 @@ export function WalletConnect({ onConnect, onError }: WalletConnectProps) {
   const [addresses, setAddresses] = useState<Partial<Record<Chain, string>>>({});
   const [selectedChains, setSelectedChains] = useState<Chain[]>([Chain.Ethereum]);
 
-  const swapKit = SwapKit({
+  const swapDK = SwapKit({
     config: {
       apiKeys: {
         walletConnectProjectId: process.env.REACT_APP_WALLETCONNECT_PROJECT_ID,
@@ -873,11 +868,11 @@ export function WalletConnect({ onConnect, onError }: WalletConnectProps) {
     setIsConnecting(true);
 
     try {
-      await swapKit.connectWalletconnect(selectedChains);
+      await swapDK.connectWalletconnect(selectedChains);
 
       const connectedAddresses: Partial<Record<Chain, string>> = {};
       for (const chain of selectedChains) {
-        connectedAddresses[chain] = swapKit.getAddress(chain);
+        connectedAddresses[chain] = swapDK.getAddress(chain);
       }
 
       setAddresses(connectedAddresses);
@@ -891,7 +886,7 @@ export function WalletConnect({ onConnect, onError }: WalletConnectProps) {
   };
 
   const disconnect = () => {
-    swapKit.disconnectAll();
+    swapDK.disconnectAll();
     setIsConnected(false);
     setAddresses({});
   };
@@ -916,7 +911,7 @@ export function WalletConnect({ onConnect, onError }: WalletConnectProps) {
         <p>⚠️ WalletConnect Project ID not configured</p>
         <p>Add REACT_APP_WALLETCONNECT_PROJECT_ID to your environment variables</p>
         <a
-          href="https:
+          href="https://example.com"
           target="_blank"
           rel="noopener noreferrer"
         >

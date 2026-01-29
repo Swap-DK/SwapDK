@@ -21,8 +21,8 @@ SwapDK supports Keplr for these Cosmos ecosystem chains:
 
 Install Keplr from the official sources:
 
-- **Chrome/Chromium**: [Chrome Web Store](https:
-- **Firefox**: [Firefox Add-ons](https:
+- **Chrome/Chromium**: [Chrome Web Store](https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap)
+- **Firefox**: [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/keplr/)
 - **Brave**: Available through Chrome Web Store
 
 ### 2. Set Up Keplr Wallet
@@ -51,7 +51,7 @@ Keplr works in:
 ```ts twoslash
 import { SwapKit, keplrWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -66,7 +66,7 @@ const swapKit = SwapKit({
 ```ts twoslash
 import { createSwapKit, Chain } from "@swapdk/sdk";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -82,16 +82,16 @@ const swapKit = createSwapKit({
 ```ts twoslash
 import { SwapKit, keplrWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
 async function connectKeplr() {
   try {
-    await swapKit.connectKeplr([Chain.Cosmos]);
+    await swapDK.connectKeplr([Chain.Cosmos]);
 
-    const address = swapKit.getAddress(Chain.Cosmos);
-    const balance = await swapKit.getBalance(Chain.Cosmos, true);
+    const address = swapDK.getAddress(Chain.Cosmos);
+    const balance = await swapDK.getBalance(Chain.Cosmos, true);
 
     console.log("Cosmos address:", address);
     console.log("ATOM balance:", balance);
@@ -109,7 +109,7 @@ async function connectKeplr() {
 ```ts twoslash
 import { SwapKit, keplrWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
@@ -122,17 +122,17 @@ async function connectMultipleCosmosChains() {
   ];
 
   try {
-    await swapKit.connectKeplr(cosmosChains);
+    await swapDK.connectKeplr(cosmosChains);
 
     const addresses = {};
     for (const chain of cosmosChains) {
-      addresses[chain] = swapKit.getAddress(chain);
+      addresses[chain] = swapDK.getAddress(chain);
       console.log(`${chain} address:`, addresses[chain]);
     }
 
     const balances = await Promise.all(
       cosmosChains.map(async (chain) => {
-        const balance = await swapKit.getBalance(chain, true);
+        const balance = await swapDK.getBalance(chain, true);
         return { chain, balance };
       })
     );
@@ -150,15 +150,15 @@ async function connectMultipleCosmosChains() {
 ```ts twoslash
 import { SwapKit, keplrWallet, Chain, WalletOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
 async function connectLeapWallet() {
   try {
-    await swapKit.connectKeplr([Chain.Cosmos], WalletOption.LEAP);
+    await swapDK.connectKeplr([Chain.Cosmos], WalletOption.LEAP);
 
-    const address = swapKit.getAddress(Chain.Cosmos);
+    const address = swapDK.getAddress(Chain.Cosmos);
     console.log("Leap Wallet address:", address);
 
     return { success: true, address };
@@ -177,12 +177,12 @@ async function connectLeapWallet() {
 
 import { SwapKit, keplrWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
 
-await swapKit.connectKeplr([Chain.Cosmos]);
+await swapDK.connectKeplr([Chain.Cosmos]);
 
 async function sendAtom() {
   const recipient = "cosmos1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
@@ -193,14 +193,14 @@ async function sendAtom() {
     console.log("Amount:", amount.toSignificant(6), "ATOM");
     console.log("To:", recipient);
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
-      memo: "Keplr transaction via SwapKit",
+      memo: "Keplr transaction via SwapDK",
     });
 
     console.log("✅ Transaction sent:", txHash);
-    console.log("🔍 View on Mintscan:", `https:
+    console.log("🔍 View on Mintscan:", `https://www.mintscan.io/cosmos/txs/${txHash}`);
 
     return txHash;
   } catch (error) {
@@ -216,26 +216,26 @@ async function sendAtom() {
 
 import { SwapKit, keplrWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
 
-await swapKit.connectKeplr([Chain.THORChain]);
+await swapDK.connectKeplr([Chain.THORChain]);
 
 async function sendRune() {
   const recipient = "thor1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
   const amount = AssetValue.fromChainOrSignature("THOR.RUNE", 10);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
       memo: "THORChain transaction",
     });
 
     console.log("✅ RUNE transfer sent:", txHash);
-    console.log("🔍 View on THORChain Explorer:", `https:
+    console.log("🔍 View on THORChain Explorer:", `https://viewblock.io/thorchain/tx/${txHash}`);
 
     return txHash;
   } catch (error) {
@@ -251,7 +251,7 @@ async function depositToThorchain() {
 
   try {
 
-    const wallet = await swapKit.getWalletWithBalance(Chain.THORChain);
+    const wallet = await swapDK.getWalletWithBalance(Chain.THORChain);
     const txHash = await wallet.deposit({
       assetValue: amount,
       memo,
@@ -271,18 +271,18 @@ async function depositToThorchain() {
 ```ts twoslash
 import { SwapKit, keplrWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
-await swapKit.connectKeplr([Chain.Cosmos, Chain.Noble]);
+await swapDK.connectKeplr([Chain.Cosmos, Chain.Noble]);
 
 async function ibcTransfer() {
   const amount = AssetValue.fromChainOrSignature("GAIA.ATOM", 1);
   const recipient = "noble1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
       memo: "IBC transfer to Noble",
@@ -302,18 +302,18 @@ async function ibcTransfer() {
 ```ts twoslash
 import { SwapKit, keplrWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
-await swapKit.connectKeplr([Chain.Noble]);
+await swapDK.connectKeplr([Chain.Noble]);
 
 async function sendUSDCOnNoble() {
   const recipient = "noble1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
   const amount = AssetValue.fromChainOrSignature("NOBLE.USDC", 100);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
       memo: "USDC transfer on Noble",
@@ -336,7 +336,7 @@ async function sendUSDCOnNoble() {
 
 import { SwapKit, keplrWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
@@ -347,13 +347,13 @@ async function addCustomCosmosChain() {
   try {
 
 
-    await swapKit.connectKeplr([Chain.Cosmos]);
+    await swapDK.connectKeplr([Chain.Cosmos]);
 
     console.log("✅ Custom chain added and connected");
   } catch (error) {
     if (error.message.includes("chain_not_supported")) {
       console.log("🔧 Custom chain configuration needed");
-      console.log("SwapKit will prompt Keplr to add the chain");
+      console.log("SwapDK will prompt Keplr to add the chain");
     }
     throw error;
   }
@@ -367,8 +367,8 @@ async function manuallyAddChain() {
       await window.keplr.experimentalSuggestChain({
         chainId: "custom-chain-1",
         chainName: "Custom Chain",
-        rpc: "https:
-        rest: "https:
+        rpc: "https://rpc.example.com",
+        rest: "https://api.example.com",
         bip44: {
           coinType: 118,
         },
@@ -419,20 +419,20 @@ async function manuallyAddChain() {
 ```ts twoslash
 import { SwapKit, keplrWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
-await swapKit.connectKeplr([Chain.Cosmos]);
+await swapDK.connectKeplr([Chain.Cosmos]);
 
 async function transactionWithCustomGas() {
   const amount = AssetValue.fromChainOrSignature("GAIA.ATOM", 1);
   const recipient = "cosmos1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
 
   try {
-    const wallet = await swapKit.getWalletWithBalance(Chain.Cosmos);
+    const wallet = await swapDK.getWalletWithBalance(Chain.Cosmos);
 
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
       memo: "Custom gas transaction",
@@ -457,7 +457,7 @@ async function transactionWithCustomGas() {
 
 import { SwapKit, keplrWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...keplrWallet },
 });
 
@@ -466,15 +466,15 @@ async function diagnosticConnection() {
 
     if (typeof window.keplr === 'undefined') {
       console.error("❌ Keplr extension not found");
-      console.log("🔧 Install Keplr extension from https:
+      console.log("🔧 Install Keplr extension from https://www.keplr.app/download");
       return { success: false, error: "Keplr not installed" };
     }
 
     console.log("🔍 Keplr detected, attempting connection...");
 
-    await swapKit.connectKeplr([Chain.Cosmos]);
+    await swapDK.connectKeplr([Chain.Cosmos]);
 
-    const address = swapKit.getAddress(Chain.Cosmos);
+    const address = swapDK.getAddress(Chain.Cosmos);
     console.log("✅ Successfully connected:", address);
 
     return { success: true, address };
@@ -532,7 +532,7 @@ async function checkKeplrStatus() {
 async function handleTransactionErrors() {
   try {
     const amount = AssetValue.fromChainOrSignature("GAIA.ATOM", 1);
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient: "cosmos1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
       memo: "Test transaction",
@@ -542,7 +542,7 @@ async function handleTransactionErrors() {
     if (error.message.includes("insufficient funds")) {
       console.error("❌ Insufficient ATOM balance");
 
-      const balance = await swapKit.getBalance(Chain.Cosmos, true);
+      const balance = await swapDK.getBalance(Chain.Cosmos, true);
       console.log("Current balance:", balance);
       console.log("🔧 Add more ATOM to your wallet");
     }
@@ -577,7 +577,7 @@ async function handleTransactionErrors() {
 ```ts twoslash
 async function handleChainAdditionIssues() {
   try {
-    await swapKit.connectKeplr([Chain.THORChain]);
+    await swapDK.connectKeplr([Chain.THORChain]);
   } catch (error) {
     if (error.message.includes("chain_not_supported")) {
       console.log("🔧 Chain not in Keplr, attempting to add...");
@@ -604,10 +604,10 @@ async function handleChainAdditionIssues() {
 import { SwapKit, keplrWallet, Chain } from "@swapdk/sdk";
 
 async function verifyAddress() {
-  const swapKit = SwapKit({ wallets: { ...keplrWallet } });
-  await swapKit.connectKeplr([Chain.Cosmos]);
+  const swapDK = SwapKit({ wallets: { ...keplrWallet } });
+  await swapDK.connectKeplr([Chain.Cosmos]);
 
-  const address = swapKit.getAddress(Chain.Cosmos);
+  const address = swapDK.getAddress(Chain.Cosmos);
 
   console.log("Connected address:", address);
   console.log("⚠️ Please verify this matches your Keplr address");
@@ -634,7 +634,7 @@ async function secureTransaction() {
   console.log("Memo:", memo);
   console.log("⚠️ Please verify these details in Keplr before signing");
 
-  const txHash = await swapKit.transfer({
+  const txHash = await swapDK.transfer({
     assetValue: amount,
     recipient,
     memo,
@@ -660,15 +660,15 @@ async function secureErrorHandling() {
 ```ts twoslash
 
 
-const secureSwapKit = SwapKit({
+const secureSwapDK = SwapKit({
   config: {
     rpcUrls: {
 
-      [Chain.Cosmos]: "https:
-      [Chain.THORChain]: "https:
+      [Chain.Cosmos]: "https://rpc.example.com",
+      [Chain.THORChain]: "https://rpc.example.com",
     },
     apiKeys: {
-      swapKit: process.env.SWAPKIT_API_KEY,
+      swapKit: process.env.SWAPDK_API_KEY,
     },
   },
   wallets: { ...keplrWallet },
@@ -693,7 +693,7 @@ export function KeplrWallet({ onConnect, onError }: KeplrWalletProps) {
   const [addresses, setAddresses] = useState<Record<Chain, string>>({});
   const [selectedChains, setSelectedChains] = useState<Chain[]>([Chain.Cosmos]);
 
-  const swapKit = SwapKit({ wallets: { ...keplrWallet } });
+  const swapDK = SwapKit({ wallets: { ...keplrWallet } });
 
 
   const isKeplrInstalled = typeof window !== 'undefined' &&
@@ -726,11 +726,11 @@ export function KeplrWallet({ onConnect, onError }: KeplrWalletProps) {
     setIsConnecting(true);
 
     try {
-      await swapKit.connectKeplr(selectedChains);
+      await swapDK.connectKeplr(selectedChains);
 
       const connectedAddresses: Record<Chain, string> = {};
       for (const chain of selectedChains) {
-        connectedAddresses[chain] = swapKit.getAddress(chain);
+        connectedAddresses[chain] = swapDK.getAddress(chain);
       }
 
       setAddresses(connectedAddresses);
@@ -744,7 +744,7 @@ export function KeplrWallet({ onConnect, onError }: KeplrWalletProps) {
   };
 
   const disconnect = () => {
-    swapKit.disconnectAll();
+    swapDK.disconnectAll();
     setIsConnected(false);
     setAddresses({});
   };
@@ -765,7 +765,7 @@ export function KeplrWallet({ onConnect, onError }: KeplrWalletProps) {
         <h3>Keplr Wallet</h3>
         <p>Keplr extension not detected</p>
         <a
-          href="https:
+          href="https://www.keplr.app/download"
           target="_blank"
           rel="noopener noreferrer"
         >

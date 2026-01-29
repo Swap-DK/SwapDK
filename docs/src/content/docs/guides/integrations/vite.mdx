@@ -139,7 +139,7 @@ For environment variables in Vite, use the `VITE_` prefix:
 
 ```bash
 # .env
-VITE_SWAPKIT_API_KEY=your_api_key_here
+VITE_SWAPDK_API_KEY=your_api_key_here
 VITE_WALLETCONNECT_PROJECT_ID=your_project_id_here
 ```
 
@@ -150,7 +150,7 @@ Then configure SwapDK:
 
 import { createSwapKit, SKConfig } from "@swapdk/sdk";
 
-SKConfig.setApiKey("swapKit", import.meta.env.VITE_SWAPKIT_API_KEY);
+SKConfig.setApiKey("swapKit", import.meta.env.VITE_SWAPDK_API_KEY);
 SKConfig.setApiKey(
   "walletConnectProjectId",
   import.meta.env.VITE_WALLETCONNECT_PROJECT_ID
@@ -182,4 +182,4 @@ If you encounter WebAssembly-related errors, ensure you have the required plugin
 
 ## Example Repository
 
-For a complete working example, check out the [Vite playground](https:
+For a complete working example, check out the [Vite playground](https://example.com)

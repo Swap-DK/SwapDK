@@ -1,5 +1,5 @@
 ---
-title: SwapDK - Build Cross-Chain DeFi in Minutes
+title: SwapDK - Dev-Ready Infrastructure for Cross-Chain Swaps
 description: SwapDK provides everything you need to integrate blockchain functionality into your application with a single, unified API supporting 20+ blockchains.
 ---
 
@@ -9,7 +9,7 @@ import TryItYourself from "../../components/TryItYourself.astro";
 
 <div class="hero-section">
 
-## Build Cross-Chain DeFi in Minutes
+## SwapDK - Dev-Ready Infrastructure for Cross-Chain Swaps
 
 SwapDK provides everything you need to integrate blockchain functionality into your application with a single, unified API. Now with v4's enhanced architecture and runtime flexibility.
 
@@ -41,28 +41,28 @@ SwapDK provides everything you need to integrate blockchain functionality into y
 
 import { createSwapKit, Chain, SwapKitApi } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-await swapKit.connectKeystore(
+await swapDK.connectKeystore(
   [Chain.Ethereum, Chain.Bitcoin, Chain.Ripple],
   "your mnemonic phrase"
 );
 
-const ethBalance = await swapKit.getBalance(Chain.Ethereum);
-const btcBalance = await swapKit.getBalance(Chain.Bitcoin);
-const xrpBalance = await swapKit.getBalance(Chain.Ripple);
+const ethBalance = await swapDK.getBalance(Chain.Ethereum);
+const btcBalance = await swapDK.getBalance(Chain.Bitcoin);
+const xrpBalance = await swapDK.getBalance(Chain.Ripple);
 
 const { routes } = await SwapKitApi.getSwapQuote({
   sellAsset: "ETH.ETH",
   sellAmount: "1000000000000000000",
   buyAsset: "BTC.BTC",
-  sourceAddress: swapKit.getAddress(Chain.Ethereum),
-  destinationAddress: swapKit.getAddress(Chain.Bitcoin),
+  sourceAddress: swapDK.getAddress(Chain.Ethereum),
+  destinationAddress: swapDK.getAddress(Chain.Bitcoin),
   slippage: 3,
 });
 
 if (routes.length > 0) {
-  const txHash = await swapKit.swap({ route: routes[0] });
+  const txHash = await swapDK.swap({ route: routes[0] });
 }
 ```
 
@@ -160,10 +160,10 @@ Whether you're building a simple wallet connector or a complex DeFi protocol, Sw
 
 import { createSwapKit } from "@swapdk/sdk";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
-      swapKit: "your-swapkit-api-key",
+      swapKit: "your-swapdk-api-key",
     },
   },
 });
@@ -176,18 +176,18 @@ const swapKit = createSwapKit({
 
 import { createSwapKit, Chain, AssetValue, FeeOption } from "@swapdk/sdk";
 
-const swapKit = createSwapKit();
+const swapDK = createSwapKit();
 
-await swapKit.connectEVMWallet([Chain.Ethereum]);
+await swapDK.connectEVMWallet([Chain.Ethereum]);
 
-const balance = await swapKit.getBalance(Chain.Ethereum);
+const balance = await swapDK.getBalance(Chain.Ethereum);
 
 const assetValue = AssetValue.from({
   asset: "ETH.ETH",
   value: "0.1",
 });
 
-const txHash = await swapKit.transfer({
+const txHash = await swapDK.transfer({
   assetValue,
   recipient: "0x742d35Cc6634C0532925a3b844Bc9e7595f6E321",
   feeOptionKey: FeeOption.Fast,
@@ -206,22 +206,5 @@ const txHash = await swapKit.transfer({
     codesandboxUrl="https://codesandbox.io/p/github/Swap-DK/SwapDK/main/playgrounds/nextjs"
   />
 </TryItYourself>
-
-## Join the Community
-
-<CardGrid>
-  <Card title="Discord" icon="open">
-    Join our Discord server for support and discussions with the community.
-
-    [Join Discord →](https:
-
-  </Card>
-  <Card title="GitHub" icon="github">
-    Contribute to SwapDK development or report issues on GitHub.
-
-    [View on GitHub →](https:
-
-  </Card>
-</CardGrid>
 
 </div>

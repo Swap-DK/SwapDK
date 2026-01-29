@@ -103,8 +103,7 @@ describe('SwapKit Configuration', () => {
   });
 
   test('should set explorer URLs', () => {
-    const customUrl = 'https:
-
+    const customUrl = 'https://example.com'
     SKConfig.setExplorerUrl(Chain.Ethereum, customUrl);
 
     const explorerUrls = SKConfig.get('explorerUrls');

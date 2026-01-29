@@ -66,7 +66,7 @@ dom.webusb.enabled = true
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -81,7 +81,7 @@ const swapKit = SwapKit({
 ```ts twoslash
 import { createSwapKit, Chain } from "@swapdk/sdk";
 
-const swapKit = createSwapKit({
+const swapDK = createSwapKit({
   config: {
     apiKeys: {
       swapKit: "your-api-key",
@@ -102,16 +102,16 @@ import {
   NetworkDerivationPath,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...ledgerWallet },
 });
 
 async function connectLedgerBitcoin() {
   try {
-    await swapKit.connectLedger([Chain.Bitcoin]);
+    await swapDK.connectLedger([Chain.Bitcoin]);
 
-    const address = swapKit.getAddress(Chain.Bitcoin);
-    const balance = await swapKit.getBalance(Chain.Bitcoin, true);
+    const address = swapDK.getAddress(Chain.Bitcoin);
+    const balance = await swapDK.getBalance(Chain.Bitcoin, true);
 
     console.log("Bitcoin address:", address);
     console.log("Balance:", balance);
@@ -129,7 +129,7 @@ async function connectLedgerBitcoin() {
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...ledgerWallet },
 });
 
@@ -138,13 +138,13 @@ async function connectMultipleChains() {
 
   try {
     for (const chain of chains) {
-      await swapKit.connectLedger([chain]);
-      console.log(`Connected to ${chain}:`, swapKit.getAddress(chain));
+      await swapDK.connectLedger([chain]);
+      console.log(`Connected to ${chain}:`, swapDK.getAddress(chain));
     }
 
     const balances = await Promise.all(
       chains.map(async (chain) => {
-        const balance = await swapKit.getBalance(chain, true);
+        const balance = await swapDK.getBalance(chain, true);
         return { chain, balance };
       })
     );
@@ -167,7 +167,7 @@ import {
   type DerivationPathArray,
 } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...ledgerWallet },
 });
 
@@ -175,9 +175,9 @@ async function connectWithCustomPath() {
   const customPath: DerivationPathArray = [84, 0, 0, 0, 0];
 
   try {
-    await swapKit.connectLedger([Chain.Bitcoin], customPath);
+    await swapDK.connectLedger([Chain.Bitcoin], customPath);
 
-    const address = swapKit.getAddress(Chain.Bitcoin);
+    const address = swapDK.getAddress(Chain.Bitcoin);
     console.log("Bitcoin address with custom path:", address);
 
     return { success: true, address };
@@ -205,21 +205,21 @@ const DERIVATION_PATHS = {
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...ledgerWallet },
 });
 
-await swapKit.connectLedger([Chain.Bitcoin]);
+await swapDK.connectLedger([Chain.Bitcoin]);
 
 async function sendBitcoin() {
   const recipient = "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
   const amount = AssetValue.fromChainOrSignature("BTC.BTC", 0.001);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
-      memo: "SwapKit Ledger Transaction",
+      memo: "swapDK Ledger Transaction",
     });
 
     console.log("Transaction sent:", txHash);
@@ -236,18 +236,18 @@ async function sendBitcoin() {
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...ledgerWallet },
 });
 
-await swapKit.connectLedger([Chain.Ethereum]);
+await swapDK.connectLedger([Chain.Ethereum]);
 
 async function sendEthereum() {
   const recipient = "0x742d35Cc6632C0532c718C5E6F99d7E89b12c9bC";
   const amount = AssetValue.fromChainOrSignature("ETH.ETH", 0.01);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -268,7 +268,7 @@ async function sendERC20Token() {
   );
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
     });
@@ -287,21 +287,21 @@ async function sendERC20Token() {
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain, AssetValue } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   wallets: { ...ledgerWallet },
 });
 
-await swapKit.connectLedger([Chain.Cosmos]);
+await swapDK.connectLedger([Chain.Cosmos]);
 
 async function sendCosmos() {
   const recipient = "cosmos1xy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
   const amount = AssetValue.fromChainOrSignature("GAIA.ATOM", 1);
 
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       assetValue: amount,
       recipient,
-      memo: "SwapKit Cosmos transaction",
+      memo: "swapDK Cosmos transaction",
     });
 
     console.log("ATOM transaction sent:", txHash);
@@ -322,18 +322,18 @@ For Bitcoin transactions, ensure you have the Bitcoin app installed on your Ledg
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain, FeeOption } from "@swapdk/sdk";
 
-const swapKit = SwapKit({ wallets: { ...ledgerWallet } });
-await swapKit.connectLedger([Chain.Bitcoin]);
+const swapDK = SwapKit({ wallets: { ...ledgerWallet } });
+await swapDK.connectLedger([Chain.Bitcoin]);
 
 async function bitcoinTransactionWithCustomFee() {
   const amount = AssetValue.fromChainOrSignature("BTC.BTC", 0.001);
 
-  const wallet = await swapKit.getWalletWithBalance(Chain.Bitcoin);
+  const wallet = await swapDK.getWalletWithBalance(Chain.Bitcoin);
   const feeRates = await wallet.getFeeRates();
 
   console.log("Available fee rates:", feeRates);
 
-  const txHash = await swapKit.transfer({
+  const txHash = await swapDK.transfer({
     assetValue: amount,
     recipient: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
     feeOptionKey: FeeOption.Fast,
@@ -350,7 +350,7 @@ For Ethereum and EVM chains, install the Ethereum app:
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({ wallets: { ...ledgerWallet } });
+const swapDK = SwapKit({ wallets: { ...ledgerWallet } });
 
 async function setupEVMChains() {
   const evmChains = [
@@ -362,8 +362,8 @@ async function setupEVMChains() {
 
   try {
     for (const chain of evmChains) {
-      await swapKit.connectLedger([chain]);
-      const address = swapKit.getAddress(chain);
+      await swapDK.connectLedger([chain]);
+      const address = swapDK.getAddress(chain);
       console.log(`${chain} address:`, address);
     }
 
@@ -381,15 +381,15 @@ For Cosmos and THORChain, install the respective apps:
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({ wallets: { ...ledgerWallet } });
+const swapDK = SwapKit({ wallets: { ...ledgerWallet } });
 
 async function setupCosmosEcosystem() {
   try {
-    await swapKit.connectLedger([Chain.Cosmos]);
-    const cosmosAddress = swapKit.getAddress(Chain.Cosmos);
+    await swapDK.connectLedger([Chain.Cosmos]);
+    const cosmosAddress = swapDK.getAddress(Chain.Cosmos);
 
-    await swapKit.connectLedger([Chain.THORChain]);
-    const thorAddress = swapKit.getAddress(Chain.THORChain);
+    await swapDK.connectLedger([Chain.THORChain]);
+    const thorAddress = swapDK.getAddress(Chain.THORChain);
 
     console.log("Cosmos address:", cosmosAddress);
     console.log("THORChain address:", thorAddress);
@@ -408,16 +408,16 @@ async function setupCosmosEcosystem() {
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({ wallets: { ...ledgerWallet } });
+const swapDK = SwapKit({ wallets: { ...ledgerWallet } });
 
 async function diagnosticConnection() {
   try {
     console.log("Attempting to connect to Ledger...");
 
-    await swapKit.connectLedger([Chain.Bitcoin]);
+    await swapDK.connectLedger([Chain.Bitcoin]);
     console.log("✅ Ledger connected successfully");
 
-    const address = swapKit.getAddress(Chain.Bitcoin);
+    const address = swapDK.getAddress(Chain.Bitcoin);
     console.log("✅ Address retrieved:", address);
 
     return { success: true, address };
@@ -449,7 +449,7 @@ async function diagnosticConnection() {
 ```ts twoslash
 async function handleTransactionErrors() {
   try {
-    const txHash = await swapKit.transfer({
+    const txHash = await swapDK.transfer({
       /* params */
     });
     return txHash;
@@ -480,12 +480,12 @@ async function handleTransactionErrors() {
 import { SwapKit, ledgerWallet, Chain } from "@swapdk/sdk";
 
 async function verifyAddressOnDevice() {
-  const swapKit = SwapKit({ wallets: { ...ledgerWallet } });
-  await swapKit.connectLedger([Chain.Bitcoin]);
+  const swapDK = SwapKit({ wallets: { ...ledgerWallet } });
+  await swapDK.connectLedger([Chain.Bitcoin]);
 
-  const address = swapKit.getAddress(Chain.Bitcoin);
+  const address = swapDK.getAddress(Chain.Bitcoin);
 
-  console.log("Address from SwapKit:", address);
+  console.log("Address from swapDK:", address);
   console.log(
     "⚠️ Please verify this address matches what's shown on your Ledger screen"
   );
@@ -504,7 +504,7 @@ async function secureTransaction() {
     "⚠️ Please verify these details on your Ledger screen before confirming"
   );
 
-  const txHash = await swapKit.transfer({
+  const txHash = await swapDK.transfer({
     assetValue: amount,
     recipient,
   });
@@ -529,12 +529,12 @@ async function secureErrorHandling() {
 ```ts twoslash
 
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
 
     rpcUrls: {
-      [Chain.Ethereum]: "https:
-      [Chain.Bitcoin]: "https:
+      [Chain.Ethereum]: "https://example.com"
+      [Chain.Bitcoin]: "https://example.com"
     },
   },
   wallets: { ...ledgerWallet },
@@ -550,11 +550,11 @@ class LedgerManager {
   private connections: Map<string, any> = new Map();
 
   async connectDevice(deviceId: string, chains: Chain[]) {
-    const swapKit = SwapKit({ wallets: { ...ledgerWallet } });
+    const swapDK = SwapKit({ wallets: { ...ledgerWallet } });
 
     try {
-      await swapKit.connectLedger(chains);
-      this.connections.set(deviceId, swapKit);
+      await swapDK.connectLedger(chains);
+      this.connections.set(deviceId, swapDK);
       return { success: true };
     } catch (error) {
       return { success: false, error };
@@ -580,7 +580,7 @@ class LedgerManager {
 ```ts twoslash
 import { SwapKit, ledgerWallet, Chain } from "@swapdk/sdk";
 
-const swapKit = SwapKit({
+const swapDK = SwapKit({
   config: {
     ledger: {
       timeout: 30000,
@@ -608,14 +608,14 @@ export function LedgerWallet({ onConnect, onError }: LedgerWalletProps) {
   const [isConnected, setIsConnected] = useState(false);
   const [address, setAddress] = useState<string>("");
 
-  const swapKit = SwapKit({ wallets: { ...ledgerWallet } });
+  const swapDK = SwapKit({ wallets: { ...ledgerWallet } });
 
   const connectLedger = async () => {
     setIsConnecting(true);
 
     try {
-      await swapKit.connectLedger([Chain.Bitcoin]);
-      const btcAddress = swapKit.getAddress(Chain.Bitcoin);
+      await swapDK.connectLedger([Chain.Bitcoin]);
+      const btcAddress = swapDK.getAddress(Chain.Bitcoin);
 
       setAddress(btcAddress);
       setIsConnected(true);
@@ -628,7 +628,7 @@ export function LedgerWallet({ onConnect, onError }: LedgerWalletProps) {
   };
 
   const disconnect = () => {
-    swapKit.disconnectAll();
+    swapDK.disconnectAll();
     setIsConnected(false);
     setAddress("");
   };
