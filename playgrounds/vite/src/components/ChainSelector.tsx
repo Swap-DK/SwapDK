@@ -27,8 +27,8 @@ export const ChainSelector = ({ chains, setChains, loading }: Props) => {
   );
 
   const allChains = SKConfig.get("chains").concat().sort();
-  const availableChains = ['THOR', 'MAYA', 'ETH', 'BSC', 'AVAX', 'BASE']
-  const isChainAvailable = (chain: Chain) => availableChains.includes(chain)
+  const availableChains = import.meta.env.VITE_AVAILABLE_CHAINS;
+  const isChainAvailable = (chain: Chain) => availableChains.includes(chain);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 240 }}>
@@ -52,11 +52,11 @@ export const ChainSelector = ({ chains, setChains, loading }: Props) => {
           const isSelected = chains.includes(chain);
           return (
             <button
+              disabled={!isChainAvailable(chain)}
               key={chain}
               onClick={() => handleChainSelect(chain)}
               onMouseDown={handleMouseDown}
               onMouseEnter={() => handleMouseEnter(chain)}
-              disabled={!isChainAvailable(chain)}
               style={{
                 backgroundColor: isSelected ? "#2563eb" : "#1a2a1a",
                 borderColor: isSelected ? "#2563eb" : "#334433",

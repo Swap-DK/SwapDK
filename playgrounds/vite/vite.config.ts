@@ -27,6 +27,7 @@ export default defineConfig({
       // NOTE: Have to be added to fix: Uncaught ReferenceError: global is not defined
       define: { global: "globalThis" },
     },
+    exclude: ["libsodium-wrappers-sumo", "libsodium"],
   },
   plugins: [
     nodePolyfills({
@@ -47,6 +48,7 @@ export default defineConfig({
   ),
   resolve: {
     alias: {
+      "./libsodium-sumo.mjs": "identity-obj-proxy",
       "@swapdk/core": resolve("../../packages/core/src"),
       "@swapdk/helpers": resolve("../../packages/helpers/src"),
       "@swapdk/plugins": resolve("../../packages/plugins/src"),

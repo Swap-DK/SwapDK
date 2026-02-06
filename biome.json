@@ -16,7 +16,6 @@
       "**",
       "!**/node_modules",
       "!**/dist",
-      "!**/playgrounds",
       "!**/packages/ui/**/*.css",
       "!**/coverage",
       "!**/MsgCompiled.ts",
